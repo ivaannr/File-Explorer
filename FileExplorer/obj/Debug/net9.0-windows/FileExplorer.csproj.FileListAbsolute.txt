@@ -1,0 +1,16 @@
+C:\Users\Usuario\source\repos\FileExplorer\FileExplorer\bin\Debug\net9.0-windows\FileExplorer.exe
+C:\Users\Usuario\source\repos\FileExplorer\FileExplorer\bin\Debug\net9.0-windows\FileExplorer.deps.json
+C:\Users\Usuario\source\repos\FileExplorer\FileExplorer\bin\Debug\net9.0-windows\FileExplorer.runtimeconfig.json
+C:\Users\Usuario\source\repos\FileExplorer\FileExplorer\bin\Debug\net9.0-windows\FileExplorer.dll
+C:\Users\Usuario\source\repos\FileExplorer\FileExplorer\bin\Debug\net9.0-windows\FileExplorer.pdb
+C:\Users\Usuario\source\repos\FileExplorer\FileExplorer\obj\Debug\net9.0-windows\FileExplorer.FileExplorer.resources
+C:\Users\Usuario\source\repos\FileExplorer\FileExplorer\obj\Debug\net9.0-windows\FileExplorer.csproj.GenerateResource.cache
+C:\Users\Usuario\source\repos\FileExplorer\FileExplorer\obj\Debug\net9.0-windows\FileExplorer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Usuario\source\repos\FileExplorer\FileExplorer\obj\Debug\net9.0-windows\FileExplorer.AssemblyInfoInputs.cache
+C:\Users\Usuario\source\repos\FileExplorer\FileExplorer\obj\Debug\net9.0-windows\FileExplorer.AssemblyInfo.cs
+C:\Users\Usuario\source\repos\FileExplorer\FileExplorer\obj\Debug\net9.0-windows\FileExplorer.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\source\repos\FileExplorer\FileExplorer\obj\Debug\net9.0-windows\FileExplorer.dll
+C:\Users\Usuario\source\repos\FileExplorer\FileExplorer\obj\Debug\net9.0-windows\refint\FileExplorer.dll
+C:\Users\Usuario\source\repos\FileExplorer\FileExplorer\obj\Debug\net9.0-windows\FileExplorer.pdb
+C:\Users\Usuario\source\repos\FileExplorer\FileExplorer\obj\Debug\net9.0-windows\FileExplorer.genruntimeconfig.cache
+C:\Users\Usuario\source\repos\FileExplorer\FileExplorer\obj\Debug\net9.0-windows\ref\FileExplorer.dll
