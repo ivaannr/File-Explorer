@@ -1,4 +1,6 @@
-﻿namespace FileExplorer
+﻿using FileExplorer.Properties;
+
+namespace FileExplorer
 {
     partial class FileExplorer
     {
@@ -42,11 +44,15 @@
             sizeListBox = new ListBox();
             extensionListBox = new ListBox();
             directoryListBox = new ListBox();
+            backButton = new Button();
+            utilsWrapperPanel = new Panel();
             sideBar.SuspendLayout();
             mainFoldersWrapper.SuspendLayout();
             pathBar.SuspendLayout();
             pathTextBoxWrapper.SuspendLayout();
+            toolsPanel.SuspendLayout();
             directoryPanel.SuspendLayout();
+            utilsWrapperPanel.SuspendLayout();
             SuspendLayout();
             // 
             // sideBar
@@ -171,6 +177,7 @@
             // toolsPanel
             // 
             toolsPanel.BackColor = Color.FromArgb(30, 30, 30);
+            toolsPanel.Controls.Add(utilsWrapperPanel);
             toolsPanel.Location = new Point(202, 52);
             toolsPanel.Name = "toolsPanel";
             toolsPanel.Size = new Size(796, 52);
@@ -226,6 +233,26 @@
             directoryListBox.Size = new Size(314, 345);
             directoryListBox.TabIndex = 0;
             // 
+            // backButton
+            // 
+            backButton.BackColor = Color.FromArgb(30, 30, 30);
+            backButton.FlatAppearance.BorderSize = 0;
+            backButton.FlatStyle = FlatStyle.Flat;
+            backButton.Image = Resources.ARROW_BACK;
+            backButton.Location = new Point(3, 6);
+            backButton.Name = "backButton";
+            backButton.Size = new Size(20, 20);
+            backButton.TabIndex = 0;
+            backButton.UseVisualStyleBackColor = false;
+            // 
+            // utilsWrapperPanel
+            // 
+            utilsWrapperPanel.Controls.Add(backButton);
+            utilsWrapperPanel.Location = new Point(8, 10);
+            utilsWrapperPanel.Name = "utilsWrapperPanel";
+            utilsWrapperPanel.Size = new Size(539, 32);
+            utilsWrapperPanel.TabIndex = 0;
+            // 
             // FileExplorer
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -246,7 +273,9 @@
             pathBar.ResumeLayout(false);
             pathTextBoxWrapper.ResumeLayout(false);
             pathTextBoxWrapper.PerformLayout();
+            toolsPanel.ResumeLayout(false);
             directoryPanel.ResumeLayout(false);
+            utilsWrapperPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -266,5 +295,7 @@
         private Button documentsButton;
         private Button desktopButton;
         private Button imagesButton;
+        private Panel utilsWrapperPanel;
+        private Button backButton;
     }
 }

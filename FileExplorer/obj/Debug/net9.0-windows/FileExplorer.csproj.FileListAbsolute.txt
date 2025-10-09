@@ -48,3 +48,4 @@ C:\Users\Usuario\Proyectos\Winforms\File-Explorer\FileExplorer\obj\Debug\net9.0-
 C:\Users\Usuario\Proyectos\Winforms\File-Explorer\FileExplorer\obj\Debug\net9.0-windows\FileExplorer.pdb
 C:\Users\Usuario\Proyectos\Winforms\File-Explorer\FileExplorer\obj\Debug\net9.0-windows\FileExplorer.genruntimeconfig.cache
 C:\Users\Usuario\Proyectos\Winforms\File-Explorer\FileExplorer\obj\Debug\net9.0-windows\ref\FileExplorer.dll
+C:\Users\Usuario\Proyectos\Winforms\File-Explorer\FileExplorer\obj\Debug\net9.0-windows\FileExplorer.Properties.Resources.resources
