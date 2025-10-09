@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             sideBar = new Panel();
-            panel1 = new Panel();
+            mainFoldersWrapper = new Panel();
             desktopButton = new Button();
             imagesButton = new Button();
             documentsButton = new Button();
@@ -43,7 +43,7 @@
             extensionListBox = new ListBox();
             directoryListBox = new ListBox();
             sideBar.SuspendLayout();
-            panel1.SuspendLayout();
+            mainFoldersWrapper.SuspendLayout();
             pathBar.SuspendLayout();
             pathTextBoxWrapper.SuspendLayout();
             directoryPanel.SuspendLayout();
@@ -52,23 +52,23 @@
             // sideBar
             // 
             sideBar.BackColor = Color.FromArgb(30, 30, 30);
-            sideBar.Controls.Add(panel1);
+            sideBar.Controls.Add(mainFoldersWrapper);
             sideBar.Location = new Point(0, 0);
             sideBar.Name = "sideBar";
             sideBar.Size = new Size(203, 500);
             sideBar.TabIndex = 0;
             // 
-            // panel1
+            // mainFoldersWrapper
             // 
-            panel1.BackColor = Color.FromArgb(255, 128, 128);
-            panel1.Controls.Add(desktopButton);
-            panel1.Controls.Add(imagesButton);
-            panel1.Controls.Add(documentsButton);
-            panel1.Controls.Add(downloadsButton);
-            panel1.Location = new Point(11, 12);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(181, 108);
-            panel1.TabIndex = 0;
+            mainFoldersWrapper.BackColor = Color.FromArgb(30, 30, 30);
+            mainFoldersWrapper.Controls.Add(desktopButton);
+            mainFoldersWrapper.Controls.Add(imagesButton);
+            mainFoldersWrapper.Controls.Add(documentsButton);
+            mainFoldersWrapper.Controls.Add(downloadsButton);
+            mainFoldersWrapper.Location = new Point(11, 12);
+            mainFoldersWrapper.Name = "mainFoldersWrapper";
+            mainFoldersWrapper.Size = new Size(181, 106);
+            mainFoldersWrapper.TabIndex = 0;
             // 
             // desktopButton
             // 
@@ -84,15 +84,23 @@
             desktopButton.Text = "Desktop";
             desktopButton.TextAlign = ContentAlignment.MiddleLeft;
             desktopButton.UseVisualStyleBackColor = false;
+            desktopButton.Click += desktopButton_Click;
             // 
             // imagesButton
             // 
+            imagesButton.BackColor = Color.FromArgb(30, 30, 30);
+            imagesButton.FlatAppearance.BorderSize = 0;
+            imagesButton.FlatStyle = FlatStyle.Flat;
+            imagesButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            imagesButton.ForeColor = SystemColors.ButtonHighlight;
             imagesButton.Location = new Point(2, 79);
             imagesButton.Name = "imagesButton";
             imagesButton.Size = new Size(176, 23);
             imagesButton.TabIndex = 2;
-            imagesButton.Text = "button1";
-            imagesButton.UseVisualStyleBackColor = true;
+            imagesButton.Text = "Images";
+            imagesButton.TextAlign = ContentAlignment.MiddleLeft;
+            imagesButton.UseVisualStyleBackColor = false;
+            imagesButton.Click += imagesButton_Click;
             // 
             // documentsButton
             // 
@@ -108,6 +116,7 @@
             documentsButton.Text = "Documents";
             documentsButton.TextAlign = ContentAlignment.MiddleLeft;
             documentsButton.UseVisualStyleBackColor = false;
+            documentsButton.Click += documentsButton_Click;
             // 
             // downloadsButton
             // 
@@ -123,6 +132,7 @@
             downloadsButton.Text = "Downloads";
             downloadsButton.TextAlign = ContentAlignment.MiddleLeft;
             downloadsButton.UseVisualStyleBackColor = false;
+            downloadsButton.Click += downloadsButton_Click;
             // 
             // pathBar
             // 
@@ -155,6 +165,7 @@
             pathTextBox.RightToLeft = RightToLeft.No;
             pathTextBox.Size = new Size(616, 16);
             pathTextBox.TabIndex = 0;
+            pathTextBox.Text = "C:\\";
             pathTextBox.TextChanged += pathTextBox_TextChanged;
             // 
             // toolsPanel
@@ -185,6 +196,7 @@
             sizeListBox.FormattingEnabled = true;
             sizeListBox.Location = new Point(472, 10);
             sizeListBox.Name = "sizeListBox";
+            sizeListBox.SelectionMode = SelectionMode.None;
             sizeListBox.Size = new Size(120, 345);
             sizeListBox.TabIndex = 2;
             // 
@@ -197,6 +209,7 @@
             extensionListBox.FormattingEnabled = true;
             extensionListBox.Location = new Point(330, 10);
             extensionListBox.Name = "extensionListBox";
+            extensionListBox.SelectionMode = SelectionMode.None;
             extensionListBox.Size = new Size(136, 345);
             extensionListBox.TabIndex = 1;
             // 
@@ -209,6 +222,7 @@
             directoryListBox.FormattingEnabled = true;
             directoryListBox.Location = new Point(10, 8);
             directoryListBox.Name = "directoryListBox";
+            directoryListBox.SelectionMode = SelectionMode.None;
             directoryListBox.Size = new Size(314, 345);
             directoryListBox.TabIndex = 0;
             // 
@@ -228,7 +242,7 @@
             Text = "FireExplorer";
             Load += FileExplorer_Load;
             sideBar.ResumeLayout(false);
-            panel1.ResumeLayout(false);
+            mainFoldersWrapper.ResumeLayout(false);
             pathBar.ResumeLayout(false);
             pathTextBoxWrapper.ResumeLayout(false);
             pathTextBoxWrapper.PerformLayout();
@@ -247,7 +261,7 @@
         private ListBox directoryListBox;
         private ListBox extensionListBox;
         private ListBox sizeListBox;
-        private Panel panel1;
+        private Panel mainFoldersWrapper;
         private Button downloadsButton;
         private Button documentsButton;
         private Button desktopButton;

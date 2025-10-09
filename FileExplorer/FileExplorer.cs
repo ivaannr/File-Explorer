@@ -7,7 +7,7 @@ namespace FileExplorer
     {
 
         private String path = "C:\\";
-        private List<Dir> directories = new List<Dir>();
+        private List<ISystemFile> systemFiles = new List<ISystemFile>();
 
         public FileExplorer()
         {
@@ -26,27 +26,32 @@ namespace FileExplorer
             pathTextBox.SelectionStart = pathTextBox.Text.Length;
         }
 
-        private List<Dir> GetDirectories(String path)
+        private List<ISystemFile> GetSystemFiles(string path)
         {
             try
             {
+                List<ISystemFile> systemFiles = new List<ISystemFile>();
 
-                var directories = Directory.GetDirectories(path);
-                List<Dir> dirs = new List<Dir>();
-                foreach (var dir in directories)
+                foreach (var dir in Directory.GetDirectories(path))
                 {
-                    dirs.Add(
-                        new Dir(
-                            dir,
-                            new DirectoryInfo(dir).Name,
-                            new FileInfo(dir).Extension,
-                            GetDirectorySize(dir)
-                        )
-                    );
+                    systemFiles.Add(new Dir(
+                        dir,
+                        new DirectoryInfo(dir).Name,
+                        GetDirectorySize(dir)
+                    ));
                 }
-                return dirs;
+                foreach (var dirPath in Directory.GetFiles(path))
+                {
+                    var fileInfo = new FileInfo(dirPath);
+                    systemFiles.Add(new FsFile(
+                        dirPath
+                    ));
+                }
 
-            } catch(Exception ex) {
+                return systemFiles;
+            }
+            catch (Exception ex)
+            {
                 return null;
             }
         }
@@ -55,7 +60,8 @@ namespace FileExplorer
         {
             long size = 0;
 
-            try {
+            try
+            {
 
                 string[] files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
 
@@ -71,11 +77,26 @@ namespace FileExplorer
                         Console.WriteLine($"Error accesing the file {file}: {ex.Message}");
                     }
                 }
-            } catch { 
-            
+            }
+            catch
+            {
+
             }
 
             return size;
+        }
+
+        private long GetFileSize(string filePath)
+        {
+            try
+            {
+                var fileInfo = new FileInfo(filePath);
+                return fileInfo.Length;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
         }
 
         private void directoryPanel_Paint(object sender, PaintEventArgs e)
@@ -93,39 +114,45 @@ namespace FileExplorer
                     AddNotFound();
                 }
                 ChangeDirectory(currentPath);
-            } catch (Exception ex) { 
-                Console.WriteLine(ex.Message); 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 
-        async void ChangeDirectory(String path) {
+        void ChangeDirectory(String path)
+        {
 
             ClearAll();
 
             try
             {
-                directories = GetDirectories(path);
+                systemFiles = GetSystemFiles(path);
 
-                foreach (Dir dir in directories)
+                foreach (ISystemFile dir in systemFiles)
                 {
                     directoryListBox.Items.Add(dir.Name);
-                    extensionListBox.Items.Add(dir.Extension);
+                    extensionListBox.Items.Add(dir.Type);
                     sizeListBox.Items.Add(CastToCorrectSize(dir.Size));
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.Message);
             }
 
         }
 
-        private async void pathTextBox_KeyDown(object sender, KeyEventArgs e) {
-        
-        
+        private async void pathTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+
+
         }
 
-        void ClearAll() {
-            directories.Clear();
+        void ClearAll()
+        {
+            systemFiles.Clear();
             directoryListBox.Items.Clear();
             extensionListBox.Items.Clear();
             sizeListBox.Items.Clear();
@@ -146,10 +173,32 @@ namespace FileExplorer
             };
         }
 
-        private void AddNotFound() {
+        private void AddNotFound()
+        {
             directoryListBox.Items.Add("Directory not found");
             extensionListBox.Items.Add("-");
             sizeListBox.Items.Add("-");
         }
+
+        private void desktopButton_Click(object sender, EventArgs e)
+        {
+            pathTextBox.Text = @"C:\Users\Usuario\Desktop";
+        }
+
+        private void downloadsButton_Click(object sender, EventArgs e)
+        {
+            pathTextBox.Text = @"C:\Users\Usuario\Downloads";
+        }
+
+        private void documentsButton_Click(object sender, EventArgs e)
+        {
+            pathTextBox.Text = @"C:\Users\Usuario\Documents";
+        }
+
+        private void imagesButton_Click(object sender, EventArgs e)
+        {
+            pathTextBox.Text = @"C:\Users\Usuario\Pictures";
+        }
+
     }
 }
