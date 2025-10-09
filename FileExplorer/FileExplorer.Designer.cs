@@ -31,6 +31,10 @@ namespace FileExplorer
         private void InitializeComponent()
         {
             sideBar = new Panel();
+            panel2 = new Panel();
+            driveSpaceBar = new ProgressBar();
+            cDriveButton = new Button();
+            panel1 = new Panel();
             folderSeparator = new Panel();
             mainFoldersWrapper = new Panel();
             desktopButton = new Button();
@@ -60,6 +64,7 @@ namespace FileExplorer
             extensionListBox = new ListBox();
             directoryListBox = new ListBox();
             sideBar.SuspendLayout();
+            panel2.SuspendLayout();
             mainFoldersWrapper.SuspendLayout();
             pathBar.SuspendLayout();
             pathTextBoxWrapper.SuspendLayout();
@@ -71,6 +76,8 @@ namespace FileExplorer
             // sideBar
             // 
             sideBar.BackColor = Color.FromArgb(30, 30, 30);
+            sideBar.Controls.Add(panel2);
+            sideBar.Controls.Add(panel1);
             sideBar.Controls.Add(folderSeparator);
             sideBar.Controls.Add(mainFoldersWrapper);
             sideBar.Location = new Point(0, 0);
@@ -79,10 +86,50 @@ namespace FileExplorer
             sideBar.TabIndex = 0;
             sideBar.Paint += sideBar_Paint;
             // 
+            // panel2
+            // 
+            panel2.Controls.Add(driveSpaceBar);
+            panel2.Controls.Add(cDriveButton);
+            panel2.Location = new Point(12, 152);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(181, 64);
+            panel2.TabIndex = 0;
+            // 
+            // driveSpaceBar
+            // 
+            driveSpaceBar.ForeColor = Color.Lime;
+            driveSpaceBar.Location = new Point(8, 39);
+            driveSpaceBar.Name = "driveSpaceBar";
+            driveSpaceBar.Size = new Size(168, 15);
+            driveSpaceBar.TabIndex = 1;
+            driveSpaceBar.Click += driveSpaceBar_Click;
+            // 
+            // cDriveButton
+            // 
+            cDriveButton.AutoSize = true;
+            cDriveButton.FlatAppearance.BorderSize = 0;
+            cDriveButton.FlatStyle = FlatStyle.Flat;
+            cDriveButton.Image = Resources.HARD_DRIVE_2;
+            cDriveButton.ImageAlign = ContentAlignment.MiddleLeft;
+            cDriveButton.Location = new Point(2, 6);
+            cDriveButton.Name = "cDriveButton";
+            cDriveButton.Size = new Size(168, 30);
+            cDriveButton.TabIndex = 0;
+            cDriveButton.TextAlign = ContentAlignment.MiddleLeft;
+            cDriveButton.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.FromArgb(30, 30, 30);
+            panel1.Location = new Point(12, 149);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(181, 203);
+            panel1.TabIndex = 2;
+            // 
             // folderSeparator
             // 
             folderSeparator.BackColor = Color.FromArgb(227, 226, 227);
-            folderSeparator.Location = new Point(11, 135);
+            folderSeparator.Location = new Point(12, 144);
             folderSeparator.Name = "folderSeparator";
             folderSeparator.Size = new Size(181, 2);
             folderSeparator.TabIndex = 1;
@@ -94,9 +141,9 @@ namespace FileExplorer
             mainFoldersWrapper.Controls.Add(imagesButton);
             mainFoldersWrapper.Controls.Add(documentsButton);
             mainFoldersWrapper.Controls.Add(downloadsButton);
-            mainFoldersWrapper.Location = new Point(11, 12);
+            mainFoldersWrapper.Location = new Point(12, 12);
             mainFoldersWrapper.Name = "mainFoldersWrapper";
-            mainFoldersWrapper.Size = new Size(181, 120);
+            mainFoldersWrapper.Size = new Size(181, 129);
             mainFoldersWrapper.TabIndex = 0;
             // 
             // desktopButton
@@ -109,7 +156,7 @@ namespace FileExplorer
             desktopButton.ForeColor = SystemColors.ButtonFace;
             desktopButton.Image = Resources.FOLDER;
             desktopButton.ImageAlign = ContentAlignment.MiddleLeft;
-            desktopButton.Location = new Point(3, 5);
+            desktopButton.Location = new Point(3, 6);
             desktopButton.Name = "desktopButton";
             desktopButton.Size = new Size(112, 30);
             desktopButton.TabIndex = 3;
@@ -129,7 +176,7 @@ namespace FileExplorer
             imagesButton.ForeColor = SystemColors.ButtonHighlight;
             imagesButton.Image = Resources.FOLDER;
             imagesButton.ImageAlign = ContentAlignment.MiddleLeft;
-            imagesButton.Location = new Point(3, 80);
+            imagesButton.Location = new Point(3, 93);
             imagesButton.Name = "imagesButton";
             imagesButton.Size = new Size(112, 30);
             imagesButton.TabIndex = 2;
@@ -149,7 +196,7 @@ namespace FileExplorer
             documentsButton.ForeColor = SystemColors.ButtonFace;
             documentsButton.Image = Resources.FOLDER;
             documentsButton.ImageAlign = ContentAlignment.MiddleLeft;
-            documentsButton.Location = new Point(3, 55);
+            documentsButton.Location = new Point(3, 64);
             documentsButton.Name = "documentsButton";
             documentsButton.Size = new Size(112, 30);
             documentsButton.TabIndex = 1;
@@ -169,7 +216,7 @@ namespace FileExplorer
             downloadsButton.ForeColor = SystemColors.ButtonHighlight;
             downloadsButton.Image = Resources.FOLDER;
             downloadsButton.ImageAlign = ContentAlignment.MiddleLeft;
-            downloadsButton.Location = new Point(3, 30);
+            downloadsButton.Location = new Point(3, 35);
             downloadsButton.Name = "downloadsButton";
             downloadsButton.Size = new Size(112, 30);
             downloadsButton.TabIndex = 0;
@@ -446,12 +493,15 @@ namespace FileExplorer
             Controls.Add(toolsPanel);
             Controls.Add(pathBar);
             Controls.Add(sideBar);
+            Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "FileExplorer";
             Text = "FireExplorer";
             Load += FileExplorer_Load;
             sideBar.ResumeLayout(false);
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             mainFoldersWrapper.ResumeLayout(false);
             mainFoldersWrapper.PerformLayout();
             pathBar.ResumeLayout(false);
@@ -494,5 +544,9 @@ namespace FileExplorer
         private Button favoriteButton;
         private Button renameButton;
         private Panel folderSeparator;
+        private Panel panel1;
+        private Panel panel2;
+        private Button cDriveButton;
+        private ProgressBar driveSpaceBar;
     }
 }

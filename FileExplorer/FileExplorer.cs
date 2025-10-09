@@ -1,5 +1,4 @@
-using System.IO;
-using System.Numerics;
+using FileExplorer.Properties;
 
 namespace FileExplorer
 {
@@ -8,15 +7,55 @@ namespace FileExplorer
 
         private String path = "C:\\";
         private List<ISystemFile> systemFiles = new List<ISystemFile>();
+        private DriveInfo[] drivesInfo;
 
         public FileExplorer()
         {
             InitializeComponent();
+
+            drivesInfo = DriveInfo.GetDrives()
+                                  .Where(d => d.DriveType == DriveType.Fixed)
+                                  .Where(d => d.IsReady)
+                                  .ToArray();
+            ApplyToDriveButton(drivesInfo[0], cDriveButton);
+
         }
 
         private void FileExplorer_Load(object sender, EventArgs e)
         {
             PreparePathBox();
+
+        }
+
+        private void ApplyToDriveButton(DriveInfo drive, Button button)
+        {
+            String letter = drive.Name[0].ToString();
+            long totalSpace = drive.TotalSize;
+            long availableSpace = drive.AvailableFreeSpace;
+            String totalSpaceText = CastToCorrectSize(totalSpace);
+            String availableSpaceText = CastToCorrectSize(availableSpace);
+            button.AutoSize = true;
+            button.BackColor = Color.FromArgb(30, 30, 30);
+            button.FlatAppearance.BorderSize = 0;
+            button.FlatStyle = FlatStyle.Flat;
+            button.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            button.ForeColor = SystemColors.ButtonFace;
+            button.Image = Resources.HARD_DRIVE_2;
+            button.ImageAlign = ContentAlignment.MiddleLeft;
+            button.Location = new Point(3, 6);
+            button.Name = $"{letter.ToLower()}DriveButton";
+            button.Size = new Size(112, 30);
+            button.TabIndex = 3;
+            button.Text = $"{letter}: Drive   {availableSpaceText} / {totalSpaceText}";
+            button.TextAlign = ContentAlignment.MiddleLeft;
+            button.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button.UseVisualStyleBackColor = false;
+            button.Click += (s, e) =>
+            {
+                pathTextBox.Text = drive.Name;
+            };
+            driveSpaceBar.Value = (int)((totalSpace - availableSpace) * 100 / totalSpace);
+            driveSpaceBar.Maximum = 100;
         }
 
         private async void PreparePathBox()
@@ -82,6 +121,8 @@ namespace FileExplorer
             {
 
             }
+
+
 
             return size;
         }
@@ -236,6 +277,16 @@ namespace FileExplorer
         }
 
         private void sideBar_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void mainFoldersWrapper_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void driveSpaceBar_Click(object sender, EventArgs e)
         {
 
         }

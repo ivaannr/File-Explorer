@@ -123,6 +123,26 @@ namespace FileExplorer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap HARD_DRIVE {
+            get {
+                object obj = ResourceManager.GetObject("HARD_DRIVE", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HARD_DRIVE_2 {
+            get {
+                object obj = ResourceManager.GetObject("HARD_DRIVE_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap KEYBOARD {
             get {
                 object obj = ResourceManager.GetObject("KEYBOARD", resourceCulture);
