@@ -200,5 +200,44 @@ namespace FileExplorer
             pathTextBox.Text = @"C:\Users\Usuario\Pictures";
         }
 
+        private void utilsWrapperPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void returnButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void forwardButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cutButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void favoriteButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void renameButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void sideBar_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

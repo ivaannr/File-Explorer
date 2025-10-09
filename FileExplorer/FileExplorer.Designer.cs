@@ -31,6 +31,7 @@ namespace FileExplorer
         private void InitializeComponent()
         {
             sideBar = new Panel();
+            folderSeparator = new Panel();
             mainFoldersWrapper = new Panel();
             desktopButton = new Button();
             imagesButton = new Button();
@@ -40,29 +41,51 @@ namespace FileExplorer
             pathTextBoxWrapper = new Panel();
             pathTextBox = new TextBox();
             toolsPanel = new Panel();
+            utilsWrapperPanel = new Panel();
+            renameButton = new Button();
+            favoriteButton = new Button();
+            separatorPanel3 = new Panel();
+            cutButton = new Button();
+            deleteButton = new Button();
+            pasteButton = new Button();
+            copyButton = new Button();
+            separatorPanel2 = new Panel();
+            reloadButton = new Button();
+            separatorPanel = new Panel();
+            forwardButton = new Button();
+            returnButton = new Button();
+            backButton = new Button();
             directoryPanel = new Panel();
             sizeListBox = new ListBox();
             extensionListBox = new ListBox();
             directoryListBox = new ListBox();
-            backButton = new Button();
-            utilsWrapperPanel = new Panel();
             sideBar.SuspendLayout();
             mainFoldersWrapper.SuspendLayout();
             pathBar.SuspendLayout();
             pathTextBoxWrapper.SuspendLayout();
             toolsPanel.SuspendLayout();
-            directoryPanel.SuspendLayout();
             utilsWrapperPanel.SuspendLayout();
+            directoryPanel.SuspendLayout();
             SuspendLayout();
             // 
             // sideBar
             // 
             sideBar.BackColor = Color.FromArgb(30, 30, 30);
+            sideBar.Controls.Add(folderSeparator);
             sideBar.Controls.Add(mainFoldersWrapper);
             sideBar.Location = new Point(0, 0);
             sideBar.Name = "sideBar";
             sideBar.Size = new Size(203, 500);
             sideBar.TabIndex = 0;
+            sideBar.Paint += sideBar_Paint;
+            // 
+            // folderSeparator
+            // 
+            folderSeparator.BackColor = Color.FromArgb(227, 226, 227);
+            folderSeparator.Location = new Point(11, 135);
+            folderSeparator.Name = "folderSeparator";
+            folderSeparator.Size = new Size(181, 2);
+            folderSeparator.TabIndex = 1;
             // 
             // mainFoldersWrapper
             // 
@@ -73,70 +96,86 @@ namespace FileExplorer
             mainFoldersWrapper.Controls.Add(downloadsButton);
             mainFoldersWrapper.Location = new Point(11, 12);
             mainFoldersWrapper.Name = "mainFoldersWrapper";
-            mainFoldersWrapper.Size = new Size(181, 106);
+            mainFoldersWrapper.Size = new Size(181, 120);
             mainFoldersWrapper.TabIndex = 0;
             // 
             // desktopButton
             // 
+            desktopButton.AutoSize = true;
             desktopButton.BackColor = Color.FromArgb(30, 30, 30);
             desktopButton.FlatAppearance.BorderSize = 0;
             desktopButton.FlatStyle = FlatStyle.Flat;
             desktopButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             desktopButton.ForeColor = SystemColors.ButtonFace;
+            desktopButton.Image = Resources.FOLDER;
+            desktopButton.ImageAlign = ContentAlignment.MiddleLeft;
             desktopButton.Location = new Point(3, 5);
             desktopButton.Name = "desktopButton";
-            desktopButton.Size = new Size(175, 23);
+            desktopButton.Size = new Size(112, 30);
             desktopButton.TabIndex = 3;
             desktopButton.Text = "Desktop";
             desktopButton.TextAlign = ContentAlignment.MiddleLeft;
+            desktopButton.TextImageRelation = TextImageRelation.ImageBeforeText;
             desktopButton.UseVisualStyleBackColor = false;
             desktopButton.Click += desktopButton_Click;
             // 
             // imagesButton
             // 
+            imagesButton.AutoSize = true;
             imagesButton.BackColor = Color.FromArgb(30, 30, 30);
             imagesButton.FlatAppearance.BorderSize = 0;
             imagesButton.FlatStyle = FlatStyle.Flat;
             imagesButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             imagesButton.ForeColor = SystemColors.ButtonHighlight;
-            imagesButton.Location = new Point(2, 79);
+            imagesButton.Image = Resources.FOLDER;
+            imagesButton.ImageAlign = ContentAlignment.MiddleLeft;
+            imagesButton.Location = new Point(3, 80);
             imagesButton.Name = "imagesButton";
-            imagesButton.Size = new Size(176, 23);
+            imagesButton.Size = new Size(112, 30);
             imagesButton.TabIndex = 2;
             imagesButton.Text = "Images";
             imagesButton.TextAlign = ContentAlignment.MiddleLeft;
+            imagesButton.TextImageRelation = TextImageRelation.ImageBeforeText;
             imagesButton.UseVisualStyleBackColor = false;
             imagesButton.Click += imagesButton_Click;
             // 
             // documentsButton
             // 
+            documentsButton.AutoSize = true;
             documentsButton.BackColor = Color.FromArgb(30, 30, 30);
             documentsButton.FlatAppearance.BorderSize = 0;
             documentsButton.FlatStyle = FlatStyle.Flat;
             documentsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             documentsButton.ForeColor = SystemColors.ButtonFace;
+            documentsButton.Image = Resources.FOLDER;
+            documentsButton.ImageAlign = ContentAlignment.MiddleLeft;
             documentsButton.Location = new Point(3, 55);
             documentsButton.Name = "documentsButton";
-            documentsButton.Size = new Size(175, 23);
+            documentsButton.Size = new Size(112, 30);
             documentsButton.TabIndex = 1;
             documentsButton.Text = "Documents";
             documentsButton.TextAlign = ContentAlignment.MiddleLeft;
+            documentsButton.TextImageRelation = TextImageRelation.ImageBeforeText;
             documentsButton.UseVisualStyleBackColor = false;
             documentsButton.Click += documentsButton_Click;
             // 
             // downloadsButton
             // 
+            downloadsButton.AutoSize = true;
             downloadsButton.BackColor = Color.FromArgb(30, 30, 30);
             downloadsButton.FlatAppearance.BorderSize = 0;
             downloadsButton.FlatStyle = FlatStyle.Flat;
             downloadsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             downloadsButton.ForeColor = SystemColors.ButtonHighlight;
+            downloadsButton.Image = Resources.FOLDER;
+            downloadsButton.ImageAlign = ContentAlignment.MiddleLeft;
             downloadsButton.Location = new Point(3, 30);
             downloadsButton.Name = "downloadsButton";
-            downloadsButton.Size = new Size(175, 23);
+            downloadsButton.Size = new Size(112, 30);
             downloadsButton.TabIndex = 0;
             downloadsButton.Text = "Downloads";
             downloadsButton.TextAlign = ContentAlignment.MiddleLeft;
+            downloadsButton.TextImageRelation = TextImageRelation.ImageBeforeText;
             downloadsButton.UseVisualStyleBackColor = false;
             downloadsButton.Click += downloadsButton_Click;
             // 
@@ -183,6 +222,170 @@ namespace FileExplorer
             toolsPanel.Size = new Size(796, 52);
             toolsPanel.TabIndex = 2;
             // 
+            // utilsWrapperPanel
+            // 
+            utilsWrapperPanel.Controls.Add(renameButton);
+            utilsWrapperPanel.Controls.Add(favoriteButton);
+            utilsWrapperPanel.Controls.Add(separatorPanel3);
+            utilsWrapperPanel.Controls.Add(cutButton);
+            utilsWrapperPanel.Controls.Add(deleteButton);
+            utilsWrapperPanel.Controls.Add(pasteButton);
+            utilsWrapperPanel.Controls.Add(copyButton);
+            utilsWrapperPanel.Controls.Add(separatorPanel2);
+            utilsWrapperPanel.Controls.Add(reloadButton);
+            utilsWrapperPanel.Controls.Add(separatorPanel);
+            utilsWrapperPanel.Controls.Add(forwardButton);
+            utilsWrapperPanel.Controls.Add(returnButton);
+            utilsWrapperPanel.Controls.Add(backButton);
+            utilsWrapperPanel.Location = new Point(8, 10);
+            utilsWrapperPanel.Name = "utilsWrapperPanel";
+            utilsWrapperPanel.Size = new Size(539, 32);
+            utilsWrapperPanel.TabIndex = 0;
+            utilsWrapperPanel.Paint += utilsWrapperPanel_Paint;
+            // 
+            // renameButton
+            // 
+            renameButton.FlatAppearance.BorderSize = 0;
+            renameButton.FlatStyle = FlatStyle.Flat;
+            renameButton.Image = Resources.KEYBOARD;
+            renameButton.Location = new Point(304, 6);
+            renameButton.Name = "renameButton";
+            renameButton.Size = new Size(20, 20);
+            renameButton.TabIndex = 12;
+            renameButton.UseVisualStyleBackColor = true;
+            renameButton.Click += renameButton_Click;
+            // 
+            // favoriteButton
+            // 
+            favoriteButton.FlatAppearance.BorderSize = 0;
+            favoriteButton.FlatStyle = FlatStyle.Flat;
+            favoriteButton.Image = Resources.STAR;
+            favoriteButton.Location = new Point(275, 6);
+            favoriteButton.Name = "favoriteButton";
+            favoriteButton.Size = new Size(20, 20);
+            favoriteButton.TabIndex = 11;
+            favoriteButton.UseVisualStyleBackColor = true;
+            favoriteButton.Click += favoriteButton_Click;
+            // 
+            // separatorPanel3
+            // 
+            separatorPanel3.BackColor = Color.FromArgb(227, 226, 227);
+            separatorPanel3.Location = new Point(263, 5);
+            separatorPanel3.Name = "separatorPanel3";
+            separatorPanel3.Size = new Size(2, 24);
+            separatorPanel3.TabIndex = 10;
+            // 
+            // cutButton
+            // 
+            cutButton.FlatAppearance.BorderSize = 0;
+            cutButton.FlatStyle = FlatStyle.Flat;
+            cutButton.Image = Resources.SCISSORS;
+            cutButton.Location = new Point(230, 6);
+            cutButton.Name = "cutButton";
+            cutButton.Size = new Size(20, 20);
+            cutButton.TabIndex = 9;
+            cutButton.UseVisualStyleBackColor = true;
+            cutButton.Click += cutButton_Click;
+            // 
+            // deleteButton
+            // 
+            deleteButton.FlatAppearance.BorderSize = 0;
+            deleteButton.FlatStyle = FlatStyle.Flat;
+            deleteButton.Image = Resources.PAPER_BIN;
+            deleteButton.Location = new Point(201, 6);
+            deleteButton.Name = "deleteButton";
+            deleteButton.Size = new Size(20, 20);
+            deleteButton.TabIndex = 8;
+            deleteButton.UseVisualStyleBackColor = true;
+            deleteButton.Click += deleteButton_Click;
+            // 
+            // pasteButton
+            // 
+            pasteButton.FlatAppearance.BorderSize = 0;
+            pasteButton.FlatStyle = FlatStyle.Flat;
+            pasteButton.Image = Resources.CONTENT_PASTE;
+            pasteButton.Location = new Point(142, 6);
+            pasteButton.Name = "pasteButton";
+            pasteButton.Size = new Size(20, 20);
+            pasteButton.TabIndex = 7;
+            pasteButton.UseVisualStyleBackColor = true;
+            // 
+            // copyButton
+            // 
+            copyButton.FlatAppearance.BorderSize = 0;
+            copyButton.FlatStyle = FlatStyle.Flat;
+            copyButton.Image = Resources.CONTENT_COPY;
+            copyButton.Location = new Point(172, 6);
+            copyButton.Name = "copyButton";
+            copyButton.Size = new Size(20, 20);
+            copyButton.TabIndex = 6;
+            copyButton.UseVisualStyleBackColor = true;
+            // 
+            // separatorPanel2
+            // 
+            separatorPanel2.BackColor = Color.FromArgb(227, 226, 227);
+            separatorPanel2.Location = new Point(129, 5);
+            separatorPanel2.Name = "separatorPanel2";
+            separatorPanel2.Size = new Size(2, 24);
+            separatorPanel2.TabIndex = 5;
+            // 
+            // reloadButton
+            // 
+            reloadButton.FlatAppearance.BorderSize = 0;
+            reloadButton.FlatStyle = FlatStyle.Flat;
+            reloadButton.Image = Resources.REPEAT;
+            reloadButton.Location = new Point(97, 6);
+            reloadButton.Name = "reloadButton";
+            reloadButton.Size = new Size(20, 20);
+            reloadButton.TabIndex = 4;
+            reloadButton.UseVisualStyleBackColor = true;
+            // 
+            // separatorPanel
+            // 
+            separatorPanel.BackColor = Color.FromArgb(227, 226, 227);
+            separatorPanel.Location = new Point(85, 5);
+            separatorPanel.Name = "separatorPanel";
+            separatorPanel.Size = new Size(2, 24);
+            separatorPanel.TabIndex = 3;
+            // 
+            // forwardButton
+            // 
+            forwardButton.BackColor = Color.FromArgb(30, 30, 30);
+            forwardButton.FlatAppearance.BorderSize = 0;
+            forwardButton.FlatStyle = FlatStyle.Flat;
+            forwardButton.Image = Resources.ARROW_FORWARD;
+            forwardButton.Location = new Point(55, 6);
+            forwardButton.Name = "forwardButton";
+            forwardButton.Size = new Size(20, 20);
+            forwardButton.TabIndex = 2;
+            forwardButton.UseVisualStyleBackColor = false;
+            forwardButton.Click += forwardButton_Click;
+            // 
+            // returnButton
+            // 
+            returnButton.BackColor = Color.FromArgb(30, 30, 30);
+            returnButton.FlatAppearance.BorderSize = 0;
+            returnButton.FlatStyle = FlatStyle.Flat;
+            returnButton.Image = Resources.ARROW_BACK;
+            returnButton.Location = new Point(29, 6);
+            returnButton.Name = "returnButton";
+            returnButton.Size = new Size(20, 20);
+            returnButton.TabIndex = 1;
+            returnButton.UseVisualStyleBackColor = false;
+            returnButton.Click += returnButton_Click;
+            // 
+            // backButton
+            // 
+            backButton.BackColor = Color.FromArgb(30, 30, 30);
+            backButton.FlatAppearance.BorderSize = 0;
+            backButton.FlatStyle = FlatStyle.Flat;
+            backButton.Image = Resources.DOUBLE_ARROW_BACK;
+            backButton.Location = new Point(3, 6);
+            backButton.Name = "backButton";
+            backButton.Size = new Size(20, 20);
+            backButton.TabIndex = 0;
+            backButton.UseVisualStyleBackColor = false;
+            // 
             // directoryPanel
             // 
             directoryPanel.Controls.Add(sizeListBox);
@@ -201,7 +404,7 @@ namespace FileExplorer
             sizeListBox.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             sizeListBox.ForeColor = SystemColors.Menu;
             sizeListBox.FormattingEnabled = true;
-            sizeListBox.Location = new Point(472, 10);
+            sizeListBox.Location = new Point(472, 8);
             sizeListBox.Name = "sizeListBox";
             sizeListBox.SelectionMode = SelectionMode.None;
             sizeListBox.Size = new Size(120, 345);
@@ -227,31 +430,11 @@ namespace FileExplorer
             directoryListBox.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             directoryListBox.ForeColor = SystemColors.Menu;
             directoryListBox.FormattingEnabled = true;
-            directoryListBox.Location = new Point(10, 8);
+            directoryListBox.Location = new Point(6, 8);
             directoryListBox.Name = "directoryListBox";
             directoryListBox.SelectionMode = SelectionMode.None;
             directoryListBox.Size = new Size(314, 345);
             directoryListBox.TabIndex = 0;
-            // 
-            // backButton
-            // 
-            backButton.BackColor = Color.FromArgb(30, 30, 30);
-            backButton.FlatAppearance.BorderSize = 0;
-            backButton.FlatStyle = FlatStyle.Flat;
-            backButton.Image = Resources.ARROW_BACK;
-            backButton.Location = new Point(3, 6);
-            backButton.Name = "backButton";
-            backButton.Size = new Size(20, 20);
-            backButton.TabIndex = 0;
-            backButton.UseVisualStyleBackColor = false;
-            // 
-            // utilsWrapperPanel
-            // 
-            utilsWrapperPanel.Controls.Add(backButton);
-            utilsWrapperPanel.Location = new Point(8, 10);
-            utilsWrapperPanel.Name = "utilsWrapperPanel";
-            utilsWrapperPanel.Size = new Size(539, 32);
-            utilsWrapperPanel.TabIndex = 0;
             // 
             // FileExplorer
             // 
@@ -270,12 +453,13 @@ namespace FileExplorer
             Load += FileExplorer_Load;
             sideBar.ResumeLayout(false);
             mainFoldersWrapper.ResumeLayout(false);
+            mainFoldersWrapper.PerformLayout();
             pathBar.ResumeLayout(false);
             pathTextBoxWrapper.ResumeLayout(false);
             pathTextBoxWrapper.PerformLayout();
             toolsPanel.ResumeLayout(false);
-            directoryPanel.ResumeLayout(false);
             utilsWrapperPanel.ResumeLayout(false);
+            directoryPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -297,5 +481,18 @@ namespace FileExplorer
         private Button imagesButton;
         private Panel utilsWrapperPanel;
         private Button backButton;
+        private Button returnButton;
+        private Button forwardButton;
+        private Panel separatorPanel;
+        private Button reloadButton;
+        private Panel separatorPanel2;
+        private Button copyButton;
+        private Button pasteButton;
+        private Button cutButton;
+        private Button deleteButton;
+        private Panel separatorPanel3;
+        private Button favoriteButton;
+        private Button renameButton;
+        private Panel folderSeparator;
     }
 }

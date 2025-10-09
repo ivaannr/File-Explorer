@@ -73,9 +73,79 @@ namespace FileExplorer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ARROW_FORWARD {
+            get {
+                object obj = ResourceManager.GetObject("ARROW_FORWARD", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CONTENT_COPY {
+            get {
+                object obj = ResourceManager.GetObject("CONTENT_COPY", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CONTENT_PASTE {
+            get {
+                object obj = ResourceManager.GetObject("CONTENT_PASTE", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DOUBLE_ARROW_BACK {
+            get {
+                object obj = ResourceManager.GetObject("DOUBLE_ARROW_BACK", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FOLDER {
+            get {
+                object obj = ResourceManager.GetObject("FOLDER", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap KEYBOARD {
+            get {
+                object obj = ResourceManager.GetObject("KEYBOARD", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PAPER_BIN {
             get {
                 object obj = ResourceManager.GetObject("PAPER_BIN", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap REPEAT {
+            get {
+                object obj = ResourceManager.GetObject("REPEAT", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

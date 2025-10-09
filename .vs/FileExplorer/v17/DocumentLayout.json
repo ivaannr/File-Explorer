@@ -3,11 +3,11 @@
   "WorkspaceRootPath": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|c:\\users\\usuario\\proyectos\\winforms\\file-explorer\\fileexplorer\\properties\\resources.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
-      "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\properties\\resources.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
+      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|c:\\users\\usuario\\proyectos\\winforms\\file-explorer\\fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|c:\\users\\usuario\\proyectos\\winforms\\file-explorer\\fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
@@ -15,8 +15,8 @@
       "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\fileexplorer.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|c:\\users\\usuario\\proyectos\\winforms\\file-explorer\\fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|c:\\users\\usuario\\proyectos\\winforms\\file-explorer\\fileexplorer\\properties\\resources.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
+      "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\properties\\resources.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
@@ -36,14 +36,14 @@
               "RelativeDocumentMoniker": "FileExplorer\\FileExplorer.Designer.cs",
               "ToolTip": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\FileExplorer.Designer.cs",
               "RelativeToolTip": "FileExplorer\\FileExplorer.Designer.cs",
-              "ViewState": "AgIAAOIAAAAAAAAAAAASwP8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAGQAAAAAAAAAAAAQwHgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-09T14:48:00.899Z",
+              "WhenOpened": "2025-10-09T18:39:34.156Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Resources.resx",
               "DocumentMoniker": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\Properties\\Resources.resx",
               "RelativeDocumentMoniker": "FileExplorer\\Properties\\Resources.resx",
@@ -55,13 +55,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "FileExplorer.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\FileExplorer.cs",
               "RelativeDocumentMoniker": "FileExplorer\\FileExplorer.cs",
               "ToolTip": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\FileExplorer.cs",
               "RelativeToolTip": "FileExplorer\\FileExplorer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAFgAAAAAAAAAAADwv1sAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-09T07:05:11.358Z",
               "EditorCaption": ""
