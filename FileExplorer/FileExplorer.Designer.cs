@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             sideBar = new Panel();
+            panel1 = new Panel();
+            desktopButton = new Button();
+            imagesButton = new Button();
+            documentsButton = new Button();
+            downloadsButton = new Button();
             pathBar = new Panel();
             pathTextBoxWrapper = new Panel();
             pathTextBox = new TextBox();
@@ -37,6 +42,8 @@
             sizeListBox = new ListBox();
             extensionListBox = new ListBox();
             directoryListBox = new ListBox();
+            sideBar.SuspendLayout();
+            panel1.SuspendLayout();
             pathBar.SuspendLayout();
             pathTextBoxWrapper.SuspendLayout();
             directoryPanel.SuspendLayout();
@@ -45,10 +52,77 @@
             // sideBar
             // 
             sideBar.BackColor = Color.FromArgb(30, 30, 30);
+            sideBar.Controls.Add(panel1);
             sideBar.Location = new Point(0, 0);
             sideBar.Name = "sideBar";
             sideBar.Size = new Size(203, 500);
             sideBar.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.FromArgb(255, 128, 128);
+            panel1.Controls.Add(desktopButton);
+            panel1.Controls.Add(imagesButton);
+            panel1.Controls.Add(documentsButton);
+            panel1.Controls.Add(downloadsButton);
+            panel1.Location = new Point(11, 12);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(181, 108);
+            panel1.TabIndex = 0;
+            // 
+            // desktopButton
+            // 
+            desktopButton.BackColor = Color.FromArgb(30, 30, 30);
+            desktopButton.FlatAppearance.BorderSize = 0;
+            desktopButton.FlatStyle = FlatStyle.Flat;
+            desktopButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            desktopButton.ForeColor = SystemColors.ButtonFace;
+            desktopButton.Location = new Point(3, 5);
+            desktopButton.Name = "desktopButton";
+            desktopButton.Size = new Size(175, 23);
+            desktopButton.TabIndex = 3;
+            desktopButton.Text = "Desktop";
+            desktopButton.TextAlign = ContentAlignment.MiddleLeft;
+            desktopButton.UseVisualStyleBackColor = false;
+            // 
+            // imagesButton
+            // 
+            imagesButton.Location = new Point(2, 79);
+            imagesButton.Name = "imagesButton";
+            imagesButton.Size = new Size(176, 23);
+            imagesButton.TabIndex = 2;
+            imagesButton.Text = "button1";
+            imagesButton.UseVisualStyleBackColor = true;
+            // 
+            // documentsButton
+            // 
+            documentsButton.BackColor = Color.FromArgb(30, 30, 30);
+            documentsButton.FlatAppearance.BorderSize = 0;
+            documentsButton.FlatStyle = FlatStyle.Flat;
+            documentsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            documentsButton.ForeColor = SystemColors.ButtonFace;
+            documentsButton.Location = new Point(3, 55);
+            documentsButton.Name = "documentsButton";
+            documentsButton.Size = new Size(175, 23);
+            documentsButton.TabIndex = 1;
+            documentsButton.Text = "Documents";
+            documentsButton.TextAlign = ContentAlignment.MiddleLeft;
+            documentsButton.UseVisualStyleBackColor = false;
+            // 
+            // downloadsButton
+            // 
+            downloadsButton.BackColor = Color.FromArgb(30, 30, 30);
+            downloadsButton.FlatAppearance.BorderSize = 0;
+            downloadsButton.FlatStyle = FlatStyle.Flat;
+            downloadsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            downloadsButton.ForeColor = SystemColors.ButtonHighlight;
+            downloadsButton.Location = new Point(3, 30);
+            downloadsButton.Name = "downloadsButton";
+            downloadsButton.Size = new Size(175, 23);
+            downloadsButton.TabIndex = 0;
+            downloadsButton.Text = "Downloads";
+            downloadsButton.TextAlign = ContentAlignment.MiddleLeft;
+            downloadsButton.UseVisualStyleBackColor = false;
             // 
             // pathBar
             // 
@@ -153,6 +227,8 @@
             Name = "FileExplorer";
             Text = "FireExplorer";
             Load += FileExplorer_Load;
+            sideBar.ResumeLayout(false);
+            panel1.ResumeLayout(false);
             pathBar.ResumeLayout(false);
             pathTextBoxWrapper.ResumeLayout(false);
             pathTextBoxWrapper.PerformLayout();
@@ -171,5 +247,10 @@
         private ListBox directoryListBox;
         private ListBox extensionListBox;
         private ListBox sizeListBox;
+        private Panel panel1;
+        private Button downloadsButton;
+        private Button documentsButton;
+        private Button desktopButton;
+        private Button imagesButton;
     }
 }

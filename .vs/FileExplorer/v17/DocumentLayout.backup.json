@@ -1,0 +1,74 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\Proyectos\\File-Explorer\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|e:\\proyectos\\file-explorer\\fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|E:\\Proyectos\\File-Explorer\\fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|e:\\proyectos\\file-explorer\\fileexplorer\\dir.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\dir.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Dir.cs",
+              "DocumentMoniker": "E:\\Proyectos\\File-Explorer\\FileExplorer\\Dir.cs",
+              "RelativeDocumentMoniker": "FileExplorer\\Dir.cs",
+              "ToolTip": "E:\\Proyectos\\File-Explorer\\FileExplorer\\Dir.cs",
+              "RelativeToolTip": "FileExplorer\\Dir.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBgAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-09T08:01:18.171Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FileExplorer.cs",
+              "DocumentMoniker": "E:\\Proyectos\\File-Explorer\\FileExplorer\\FileExplorer.cs",
+              "RelativeDocumentMoniker": "FileExplorer\\FileExplorer.cs",
+              "ToolTip": "E:\\Proyectos\\File-Explorer\\FileExplorer\\FileExplorer.cs",
+              "RelativeToolTip": "FileExplorer\\FileExplorer.cs",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAgwGkAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-09T07:05:11.358Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FileExplorer.cs [Dise\u00F1o]",
+              "DocumentMoniker": "E:\\Proyectos\\File-Explorer\\FileExplorer\\FileExplorer.cs",
+              "RelativeDocumentMoniker": "FileExplorer\\FileExplorer.cs",
+              "ToolTip": "E:\\Proyectos\\File-Explorer\\FileExplorer\\FileExplorer.cs [Dise\u00F1o]",
+              "RelativeToolTip": "FileExplorer\\FileExplorer.cs [Dise\u00F1o]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-09T07:02:47.055Z",
+              "EditorCaption": " [Dise\u00F1o]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

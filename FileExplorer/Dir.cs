@@ -18,7 +18,9 @@ namespace FileExplorer
             Path = path;
             Name = name;
             Extension = string.IsNullOrEmpty(extension) ? "Folder" : extension;
-            Size = size;
+            Size = Extension == "Folder" ? size : size;
         }
+
+
     }
 }
