@@ -54,6 +54,7 @@ namespace FileExplorer
             {
                 pathTextBox.Text = drive.Name;
             };
+
             driveSpaceBar.Value = (int)((totalSpace - availableSpace) * 100 / totalSpace);
             driveSpaceBar.Maximum = 100;
         }
@@ -164,25 +165,25 @@ namespace FileExplorer
 
         void ChangeDirectory(String path)
         {
+            new Thread(() => {
+                ClearAll();
 
-            ClearAll();
-
-            try
-            {
-                systemFiles = GetSystemFiles(path);
-
-                foreach (ISystemFile dir in systemFiles)
+                try
                 {
-                    directoryListBox.Items.Add(dir.Name);
-                    extensionListBox.Items.Add(dir.Type);
-                    sizeListBox.Items.Add(CastToCorrectSize(dir.Size));
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+                    systemFiles = GetSystemFiles(path);
 
+                    foreach (ISystemFile dir in systemFiles)
+                    {
+                        directoryListBox.Items.Add(dir.Name);
+                        extensionListBox.Items.Add(dir.Type);
+                        sizeListBox.Items.Add(CastToCorrectSize(dir.Size));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }).Start();
         }
 
         private async void pathTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -193,10 +194,12 @@ namespace FileExplorer
 
         void ClearAll()
         {
-            systemFiles.Clear();
-            directoryListBox.Items.Clear();
-            extensionListBox.Items.Clear();
-            sizeListBox.Items.Clear();
+            new Thread(() => {
+                systemFiles.Clear();
+                directoryListBox.Items.Clear();
+                extensionListBox.Items.Clear();
+                sizeListBox.Items.Clear();
+            }).Start();
         }
 
         private string CastToCorrectSize(long size)
