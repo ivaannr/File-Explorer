@@ -1,3 +1,4 @@
+using System.Windows.Forms;
 using FileExplorer.Properties;
 
 namespace FileExplorer
@@ -17,7 +18,15 @@ namespace FileExplorer
                                   .Where(d => d.DriveType == DriveType.Fixed)
                                   .Where(d => d.IsReady)
                                   .ToArray();
-            ApplyToDriveButton(drivesInfo[0], cDriveButton);
+
+            //var driveViewer = new DriveViewer(drivesInfo[0]);
+
+            //driveViewer.RenderInto(cDriveWrapperPanel);
+
+            foreach (DriveInfo drive in drivesInfo) {
+                var driveViewer = new DriveViewer(drive, pathTextBox);
+                drivesWrapperPanel.Controls.Add(driveViewer.Render());
+            }
 
         }
 
@@ -27,37 +36,6 @@ namespace FileExplorer
 
         }
 
-        private void ApplyToDriveButton(DriveInfo drive, Button button)
-        {
-            String letter = drive.Name[0].ToString();
-            long totalSpace = drive.TotalSize;
-            long availableSpace = drive.AvailableFreeSpace;
-            String totalSpaceText = CastToCorrectSize(totalSpace);
-            String availableSpaceText = CastToCorrectSize(availableSpace);
-            button.AutoSize = true;
-            button.BackColor = Color.FromArgb(30, 30, 30);
-            button.FlatAppearance.BorderSize = 0;
-            button.FlatStyle = FlatStyle.Flat;
-            button.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            button.ForeColor = SystemColors.ButtonFace;
-            button.Image = Resources.HARD_DRIVE_2;
-            button.ImageAlign = ContentAlignment.MiddleLeft;
-            button.Location = new Point(3, 6);
-            button.Name = $"{letter.ToLower()}DriveButton";
-            button.Size = new Size(112, 30);
-            button.TabIndex = 3;
-            button.Text = $"{letter}: Drive   {availableSpaceText} / {totalSpaceText}";
-            button.TextAlign = ContentAlignment.MiddleLeft;
-            button.TextImageRelation = TextImageRelation.ImageBeforeText;
-            button.UseVisualStyleBackColor = false;
-            button.Click += (s, e) =>
-            {
-                pathTextBox.Text = drive.Name;
-            };
-
-            driveSpaceBar.Value = (int)((totalSpace - availableSpace) * 100 / totalSpace);
-            driveSpaceBar.Maximum = 100;
-        }
 
         private async void PreparePathBox()
         {
@@ -176,7 +154,7 @@ namespace FileExplorer
                     {
                         directoryListBox.Items.Add(dir.Name);
                         extensionListBox.Items.Add(dir.Type);
-                        sizeListBox.Items.Add(CastToCorrectSize(dir.Size));
+                        sizeListBox.Items.Add(Utils.CastToCorrectSize(dir.Size));
                     }
                 }
                 catch (Exception ex)
@@ -202,20 +180,7 @@ namespace FileExplorer
             }).Start();
         }
 
-        private string CastToCorrectSize(long size)
-        {
-            const long KB = 1024;
-            const long MB = KB * 1024;
-            const long GB = MB * 1024;
 
-            return size switch
-            {
-                < KB => $"{size} bytes",
-                < MB => $"{size / KB} KB",
-                < GB => $"{size / MB} MB",
-                _ => $"{size / GB} GB"
-            };
-        }
 
         private void AddNotFound()
         {
