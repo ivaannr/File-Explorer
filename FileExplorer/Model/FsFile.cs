@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace FileExplorer
+namespace FileExplorer.Model
 {
     internal class FsFile : ISystemFile
     {
         public string Path { get; private set; }
         public string Name { get; private set; }
         public long Size { get; private set; }
-        public String Type { get; private set; }
+        public string Type { get; private set; }
         public bool IsDirectory => false;
 
         public FsFile(string path)

@@ -87,6 +87,7 @@ namespace FileExplorer
             // 
             // favoriteDirectoriesPanel
             // 
+            favoriteDirectoriesPanel.AutoScroll = true;
             favoriteDirectoriesPanel.FlowDirection = FlowDirection.TopDown;
             favoriteDirectoriesPanel.Location = new Point(12, 293);
             favoriteDirectoriesPanel.Margin = new Padding(0);
@@ -94,7 +95,6 @@ namespace FileExplorer
             favoriteDirectoriesPanel.Size = new Size(181, 191);
             favoriteDirectoriesPanel.TabIndex = 0;
             favoriteDirectoriesPanel.WrapContents = false;
-            favoriteDirectoriesPanel.AutoScroll = true;
             // 
             // folderSeparator2
             // 

@@ -1,4 +1,6 @@
+using System.Security.Principal;
 using System.Windows.Forms;
+using FileExplorer.Model;
 using FileExplorer.Properties;
 
 namespace FileExplorer
@@ -18,16 +20,27 @@ namespace FileExplorer
                                   .Where(d => d.DriveType == DriveType.Fixed)
                                   .Where(d => d.IsReady)
                                   .ToArray();
+
+            File.WriteAllText("favs.csv", "1;C:\\Users\\Usuario\\Apps\n2;C:\\Users\\Usuario\\Proyectos");
+
             PreparePathBox();
+            SetUpFavoriteDirectories();
             SetUpDrives();
 
-            List<String> dirs = Utils.GetFavoriteDirectories();
+            bool isAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent())
+                .IsInRole(WindowsBuiltInRole.Administrator);
 
-            var favDirectoryViewer = new FavoriteDirectoriesViewer(pathTextBox);
+            Console.WriteLine("Admin: " + (isAdmin ? "Yes" : "No"));
+        }
 
-            foreach (var dir in dirs) {
-                favoriteDirectoriesPanel.Controls.Add(favDirectoryViewer.Render(dir));
-            }
+        private async void SetUpFavoriteDirectories() { 
+            List<FavoriteDirectory> dirs = await Utils.ParseCSVData(await Utils.GetFavoriteDirectories()); 
+
+            var favDirectoryViewer = new FavoriteDirectoriesViewer(pathTextBox); 
+
+            foreach (FavoriteDirectory dir in dirs) { 
+                favoriteDirectoriesPanel.Controls.Add(favDirectoryViewer.Render(dir.Path)); 
+            } 
         }
 
         private void SetUpDrives() {
@@ -45,7 +58,7 @@ namespace FileExplorer
             pathTextBox.SelectionStart = pathTextBox.Text.Length;
         }
 
-        private List<ISystemFile> GetSystemFiles(string path)
+        private static List<ISystemFile> GetSystemFiles(string path)
         {
             try
             {
@@ -56,7 +69,7 @@ namespace FileExplorer
                     systemFiles.Add(new Dir(
                         dir,
                         new DirectoryInfo(dir).Name,
-                        GetDirectorySize(dir)
+                        Utils.CalculateDirectorySize(dir)
                     ));
                 }
                 foreach (var dirPath in Directory.GetFiles(path))
@@ -69,55 +82,12 @@ namespace FileExplorer
 
                 return systemFiles;
             }
-            catch (Exception ex)
-            {
-                return null;
+            catch {
+                return new List<ISystemFile>();
             }
         }
 
-        private long GetDirectorySize(string folderPath)
-        {
-            long size = 0;
-
-            try
-            {
-
-                string[] files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
-
-                foreach (string file in files)
-                {
-                    try
-                    {
-                        FileInfo info = new FileInfo(file);
-                        size += info.Length;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error accesing the file {file}: {ex.Message}");
-                    }
-                }
-            }
-            catch
-            {
-
-            }
-            return size;
-        }
-
-        private long GetFileSize(string filePath)
-        {
-            try
-            {
-                var fileInfo = new FileInfo(filePath);
-                return fileInfo.Length;
-            }
-            catch (Exception ex)
-            {
-                return 0;
-            }
-        }
-
-        private async void pathTextBox_TextChanged(object sender, EventArgs e)
+        private void pathTextBox_TextChanged(object sender, EventArgs e)
         {
             try
             {
@@ -130,7 +100,7 @@ namespace FileExplorer
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("Error: " + ex.Message);
             }
         }
 
@@ -152,12 +122,12 @@ namespace FileExplorer
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    Console.WriteLine("Error: " + ex.Message);
                 }
             }).Start();
         }
 
-        private async void pathTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void pathTextBox_KeyDown(object sender, KeyEventArgs e)
         {
 
 
