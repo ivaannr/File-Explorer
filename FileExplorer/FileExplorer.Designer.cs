@@ -31,6 +31,8 @@ namespace FileExplorer
         private void InitializeComponent()
         {
             sideBar = new Panel();
+            favoriteDirectoriesPanel = new FlowLayoutPanel();
+            folderSeparator2 = new Panel();
             drivesWrapperPanel = new FlowLayoutPanel();
             folderSeparator = new Panel();
             mainFoldersWrapper = new Panel();
@@ -60,7 +62,6 @@ namespace FileExplorer
             sizeListBox = new ListBox();
             extensionListBox = new ListBox();
             directoryListBox = new ListBox();
-            folderSeparator2 = new Panel();
             sideBar.SuspendLayout();
             mainFoldersWrapper.SuspendLayout();
             pathBar.SuspendLayout();
@@ -73,6 +74,7 @@ namespace FileExplorer
             // sideBar
             // 
             sideBar.BackColor = Color.FromArgb(30, 30, 30);
+            sideBar.Controls.Add(favoriteDirectoriesPanel);
             sideBar.Controls.Add(folderSeparator2);
             sideBar.Controls.Add(drivesWrapperPanel);
             sideBar.Controls.Add(folderSeparator);
@@ -82,6 +84,25 @@ namespace FileExplorer
             sideBar.Size = new Size(203, 500);
             sideBar.TabIndex = 0;
             sideBar.Paint += sideBar_Paint;
+            // 
+            // favoriteDirectoriesPanel
+            // 
+            favoriteDirectoriesPanel.FlowDirection = FlowDirection.TopDown;
+            favoriteDirectoriesPanel.Location = new Point(12, 293);
+            favoriteDirectoriesPanel.Margin = new Padding(0);
+            favoriteDirectoriesPanel.Name = "favoriteDirectoriesPanel";
+            favoriteDirectoriesPanel.Size = new Size(181, 191);
+            favoriteDirectoriesPanel.TabIndex = 0;
+            favoriteDirectoriesPanel.WrapContents = false;
+            favoriteDirectoriesPanel.AutoScroll = true;
+            // 
+            // folderSeparator2
+            // 
+            folderSeparator2.BackColor = Color.FromArgb(227, 226, 227);
+            folderSeparator2.Location = new Point(12, 284);
+            folderSeparator2.Name = "folderSeparator2";
+            folderSeparator2.Size = new Size(181, 2);
+            folderSeparator2.TabIndex = 2;
             // 
             // drivesWrapperPanel
             // 
@@ -265,7 +286,7 @@ namespace FileExplorer
             renameButton.Image = Resources.KEYBOARD;
             renameButton.Location = new Point(304, 6);
             renameButton.Name = "renameButton";
-            renameButton.Size = new Size(20, 20);
+            renameButton.Size = new Size(22, 20);
             renameButton.TabIndex = 12;
             renameButton.UseVisualStyleBackColor = true;
             renameButton.Click += renameButton_Click;
@@ -410,7 +431,6 @@ namespace FileExplorer
             directoryPanel.Name = "directoryPanel";
             directoryPanel.Size = new Size(771, 366);
             directoryPanel.TabIndex = 3;
-            directoryPanel.Paint += directoryPanel_Paint;
             // 
             // sizeListBox
             // 
@@ -451,14 +471,6 @@ namespace FileExplorer
             directoryListBox.Size = new Size(314, 345);
             directoryListBox.TabIndex = 0;
             // 
-            // folderSeparator2
-            // 
-            folderSeparator2.BackColor = Color.FromArgb(227, 226, 227);
-            folderSeparator2.Location = new Point(12, 284);
-            folderSeparator2.Name = "folderSeparator2";
-            folderSeparator2.Size = new Size(181, 2);
-            folderSeparator2.TabIndex = 2;
-            // 
             // FileExplorer
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -474,7 +486,6 @@ namespace FileExplorer
             MaximizeBox = false;
             Name = "FileExplorer";
             Text = "FireExplorer";
-            Load += FileExplorer_Load;
             sideBar.ResumeLayout(false);
             mainFoldersWrapper.ResumeLayout(false);
             mainFoldersWrapper.PerformLayout();
@@ -520,5 +531,6 @@ namespace FileExplorer
         private Panel folderSeparator;
         private FlowLayoutPanel drivesWrapperPanel;
         private Panel folderSeparator2;
+        private FlowLayoutPanel favoriteDirectoriesPanel;
     }
 }

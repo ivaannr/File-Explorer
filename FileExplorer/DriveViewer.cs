@@ -1,8 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-using FileExplorer.Properties;
+﻿using FileExplorer.Properties;
 
 namespace FileExplorer
 {
@@ -27,7 +23,7 @@ namespace FileExplorer
         {
             Panel panel = new Panel
             {
-                Location = new Point(-2, 0),
+                Location = new Point(0, 0),
                 Name = $"{driveLetter.ToLower()}DriveWrapperPanel",
                 Size = new Size(181, 64),
                 TabIndex = 0,
@@ -53,7 +49,7 @@ namespace FileExplorer
                 Size = new Size(168, 15),
                 TabIndex = 1,
                 Maximum = 100,
-                Value = totalSpace > 0 ? (int)((totalSpace - availableSpace) * 100 / totalSpace) : 0,
+                Value = totalSpace > 0 ? (int) ((totalSpace - availableSpace) * 100 / totalSpace) : 0,
             };
         }
 

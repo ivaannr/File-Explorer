@@ -18,24 +18,25 @@ namespace FileExplorer
                                   .Where(d => d.DriveType == DriveType.Fixed)
                                   .Where(d => d.IsReady)
                                   .ToArray();
+            PreparePathBox();
+            SetUpDrives();
 
-            //var driveViewer = new DriveViewer(drivesInfo[0]);
+            List<String> dirs = Utils.GetFavoriteDirectories();
 
-            //driveViewer.RenderInto(cDriveWrapperPanel);
+            var favDirectoryViewer = new FavoriteDirectoriesViewer(pathTextBox);
 
-            foreach (DriveInfo drive in drivesInfo) {
+            foreach (var dir in dirs) {
+                favoriteDirectoriesPanel.Controls.Add(favDirectoryViewer.Render(dir));
+            }
+        }
+
+        private void SetUpDrives() {
+            foreach (DriveInfo drive in drivesInfo)
+            {
                 var driveViewer = new DriveViewer(drive, pathTextBox);
                 drivesWrapperPanel.Controls.Add(driveViewer.Render());
             }
-
         }
-
-        private void FileExplorer_Load(object sender, EventArgs e)
-        {
-            PreparePathBox();
-
-        }
-
 
         private async void PreparePathBox()
         {
@@ -100,9 +101,6 @@ namespace FileExplorer
             {
 
             }
-
-
-
             return size;
         }
 
@@ -117,11 +115,6 @@ namespace FileExplorer
             {
                 return 0;
             }
-        }
-
-        private void directoryPanel_Paint(object sender, PaintEventArgs e)
-        {
-            // TODO
         }
 
         private async void pathTextBox_TextChanged(object sender, EventArgs e)

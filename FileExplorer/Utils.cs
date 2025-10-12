@@ -23,5 +23,23 @@ namespace FileExplorer
             };
         }
 
+        public static String[] ReadAllLinesFromFile(String path) => File.Exists(path) ? File.ReadAllLines(path) : throw new FileNotFoundException($"File {path} not found.");
+
+        public static List<String> GetFavoriteDirectories() {
+            List<String> directories = new List<String>();
+            var lines = ReadAllLinesFromFile("favs.txt");
+
+            foreach (var line in lines) {
+                if (!Directory.Exists(line)) { throw new DirectoryNotFoundException($"Directory {line} not found!"); }
+
+                directories.Add(line);
+            }
+
+            return directories;
+        } 
+
+
+
+
     }
 }
