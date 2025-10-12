@@ -104,27 +104,27 @@ namespace FileExplorer
             }
         }
 
-        void ChangeDirectory(String path)
+        private async void ChangeDirectory(string path)
         {
-            new Thread(() => {
-                ClearAll();
+            ClearAll();
 
-                try
-                {
-                    systemFiles = GetSystemFiles(path);
+            try
+            {
+                var systemFiles = await Task.Run(() => GetSystemFiles(path));
 
-                    foreach (ISystemFile dir in systemFiles)
-                    {
-                        directoryListBox.Items.Add(dir.Name);
-                        extensionListBox.Items.Add(dir.Type);
-                        sizeListBox.Items.Add(Utils.CastToCorrectSize(dir.Size));
-                    }
-                }
-                catch (Exception ex)
+                foreach (ISystemFile dir in systemFiles)
                 {
-                    Console.WriteLine("Error: " + ex.Message);
+                    if (dir is Dir && !Utils.CanAccessDirectory(dir.Path)) { continue; }
+
+                    directoryListBox.Items.Add(dir.Name);
+                    extensionListBox.Items.Add(dir.Type);
+                    sizeListBox.Items.Add(Utils.CastToCorrectSize(dir.Size));
                 }
-            }).Start();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+            }
         }
 
         private void pathTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -133,7 +133,7 @@ namespace FileExplorer
 
         }
 
-        void ClearAll()
+        private void ClearAll()
         {
             new Thread(() => {
                 systemFiles.Clear();
@@ -217,9 +217,6 @@ namespace FileExplorer
 
         }
 
-        private void driveSpaceBar_Click(object sender, EventArgs e)
-        {
 
-        }
     }
 }

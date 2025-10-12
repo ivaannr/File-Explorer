@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
+using System.Security.AccessControl;
+using System.Security.Permissions;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using FileExplorer.Model;
@@ -10,7 +14,6 @@ namespace FileExplorer
     internal static class Utils
     {
 
-        
         public static string CastToCorrectSize(long size) {
             const long KB = 1024;
             const long MB = KB * 1024;
@@ -24,6 +27,25 @@ namespace FileExplorer
                 _ => $"{size / GB} GB"
             };
         }
+
+        public static bool CanAccessDirectory(string path)
+        {
+            try
+            {
+                Directory.GetFiles(path);
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error accediendo al directorio: {ex.Message}");
+                return false;
+            }
+        }
+
 
         public static long CalculateDirectorySize(string folderPath)
         {
@@ -40,16 +62,16 @@ namespace FileExplorer
                     catch(Exception ex) { Console.WriteLine(ex.Message); }
                 }
 
-                foreach (string dir in Directory.GetDirectories(folderPath))
-                {
+                foreach (string dir in Directory.GetDirectories(folderPath)) {
                     size += CalculateDirectorySize(dir);
                 }
             }
-            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            catch (Exception ex) { Console.WriteLine("ERROR: " + ex.Message); }
             return size;
         }
 
-        public static String[] ReadAllLinesFromFile(String path) => File.Exists(path) ? File.ReadAllLines(path) : throw new FileNotFoundException($"File {path} not found.");
+        public static String[] ReadAllLinesFromFile(String path) 
+            => File.Exists(path) ? File.ReadAllLines(path) : throw new FileNotFoundException($"File {path} not found.");
 
         public async static Task<List<string>> GetFavoriteDirectories() {
             try
