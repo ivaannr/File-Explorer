@@ -1,9 +1,5 @@
 # File-Explorer
 
-A lightweight C# file explorer.
-
-## Description
-
 **File-Explorer** is a lightweight app built in C#, inspired by the classic Windows File Explorer.
 
 ## Main Features
