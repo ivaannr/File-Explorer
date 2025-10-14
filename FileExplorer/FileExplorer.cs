@@ -8,6 +8,7 @@ namespace FileExplorer
     public partial class FileExplorer : Form
     {
 
+        private CancellationTokenSource cts;
         private String path = "C:\\";
         private List<ISystemFile> systemFiles = new List<ISystemFile>();
         private DriveInfo[] drivesInfo;
@@ -91,12 +92,16 @@ namespace FileExplorer
         {
             try
             {
+                cts?.Cancel();
+                cts = new CancellationTokenSource();
+
                 String currentPath = pathTextBox.Text;
                 if (!Directory.Exists(currentPath))
                 {
                     AddNotFound();
+                    return;
                 }
-                ChangeDirectory(currentPath);
+                ChangeDirectory(currentPath, cts.Token);
             }
             catch (Exception ex)
             {
@@ -104,16 +109,18 @@ namespace FileExplorer
             }
         }
 
-        private async void ChangeDirectory(string path)
+        private async void ChangeDirectory(string path, CancellationToken token)
         {
             ClearAll();
 
             try
             {
-                var systemFiles = await Task.Run(() => GetSystemFiles(path));
+                var systemFiles = await Task.Run(() => GetSystemFiles(path), token);
 
                 foreach (ISystemFile dir in systemFiles)
                 {
+                    token.ThrowIfCancellationRequested();
+
                     if (dir is Dir && !Utils.CanAccessDirectory(dir.Path)) { continue; }
 
                     directoryListBox.Items.Add(dir.Name);
@@ -127,29 +134,29 @@ namespace FileExplorer
             }
         }
 
+
+
+        private void ClearAll()
+        {
+            systemFiles.Clear();
+            directoryListBox.Items.Clear();
+            extensionListBox.Items.Clear();
+            sizeListBox.Items.Clear();
+        }
+
+        private async void AddNotFound()
+        {
+            ClearAll();
+            await Task.Delay(1);
+            directoryListBox.Items.Add("Directory not found");
+            extensionListBox.Items.Add("-");
+            sizeListBox.Items.Add("-");
+        }
+
         private void pathTextBox_KeyDown(object sender, KeyEventArgs e)
         {
 
 
-        }
-
-        private void ClearAll()
-        {
-            new Thread(() => {
-                systemFiles.Clear();
-                directoryListBox.Items.Clear();
-                extensionListBox.Items.Clear();
-                sizeListBox.Items.Clear();
-            }).Start();
-        }
-
-
-
-        private void AddNotFound()
-        {
-            directoryListBox.Items.Add("Directory not found");
-            extensionListBox.Items.Add("-");
-            sizeListBox.Items.Add("-");
         }
 
         private void desktopButton_Click(object sender, EventArgs e)
