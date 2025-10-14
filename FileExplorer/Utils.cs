@@ -70,8 +70,33 @@ namespace FileExplorer
             return size;
         }
 
-        public static String[] ReadAllLinesFromFile(String path) 
-            => File.Exists(path) ? File.ReadAllLines(path) : throw new FileNotFoundException($"File {path} not found.");
+        public static string[] ReadAllLinesFromFile(string path)
+        {
+            try
+            {
+                if (!File.Exists(path)) { throw new FileNotFoundException($"File '{path}' not found.");  }
+
+                string[] lines = File.ReadAllLines(path);
+
+                if (lines.Length == 0) { throw new InvalidDataException($"File '{path}' is empty."); }
+
+                return lines;
+            }
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine("ERROR: " + ex.Message);
+            }
+            catch (InvalidDataException ex)
+            {
+                Console.WriteLine("ERROR: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ERROR: " + ex.Message);
+            }
+
+            return Array.Empty<string>();
+        }
 
         public async static Task<List<string>> GetFavoriteDirectories() {
             try
@@ -108,7 +133,7 @@ namespace FileExplorer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
+                Console.WriteLine($"ERROR: {ex.Message}");
             }
 
             return null;
@@ -136,7 +161,7 @@ namespace FileExplorer
                 Console.WriteLine($"Directory not found: {ex.Message}");
             }
             catch (Exception ex) {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
+                Console.WriteLine($"ERROR error: {ex.Message}");
             }
 
             return null;

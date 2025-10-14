@@ -32,7 +32,9 @@ namespace FileExplorer
         }
 
         private async void SetUpFavoriteDirectories() { 
-            List<FavoriteDirectory> dirs = await Utils.ParseCSVData(await Utils.GetFavoriteDirectories()); 
+            List<FavoriteDirectory> dirs = await Utils.ParseCSVData(await Utils.GetFavoriteDirectories());
+
+            if (dirs == null || dirs.Count == 0) { return; }
 
             var favDirectoryViewer = new FavoriteDirectoriesViewer(pathTextBox); 
 
