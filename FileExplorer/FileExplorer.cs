@@ -21,8 +21,6 @@ namespace FileExplorer
                                   .Where(d => d.IsReady)
                                   .ToArray();
 
-            File.WriteAllText("favs.csv", "1;C:\\Users\\Usuario\\Apps\n2;C:\\Users\\Usuario\\Proyectos");
-
             PreparePathBox();
             SetUpFavoriteDirectories();
             SetUpDrives();
@@ -220,3 +218,4 @@ namespace FileExplorer
 
     }
 }
+
