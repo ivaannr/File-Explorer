@@ -59,9 +59,7 @@ namespace FileExplorer
             returnButton = new Button();
             backButton = new Button();
             directoryPanel = new Panel();
-            sizeListBox = new ListBox();
-            extensionListBox = new ListBox();
-            directoryListBox = new ListBox();
+            directoriesViewPanel = new TableLayoutPanel();
             sideBar.SuspendLayout();
             mainFoldersWrapper.SuspendLayout();
             pathBar.SuspendLayout();
@@ -424,52 +422,26 @@ namespace FileExplorer
             // 
             // directoryPanel
             // 
-            directoryPanel.Controls.Add(sizeListBox);
-            directoryPanel.Controls.Add(extensionListBox);
-            directoryPanel.Controls.Add(directoryListBox);
+            directoryPanel.AutoScroll = true;
+            directoryPanel.Controls.Add(directoriesViewPanel);
             directoryPanel.Location = new Point(215, 118);
             directoryPanel.Name = "directoryPanel";
             directoryPanel.Size = new Size(771, 366);
             directoryPanel.TabIndex = 3;
             // 
-            // sizeListBox
+            // tableLayoutPanel1
             // 
-            sizeListBox.BackColor = Color.FromArgb(27, 27, 27);
-            sizeListBox.BorderStyle = BorderStyle.None;
-            sizeListBox.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            sizeListBox.ForeColor = SystemColors.Menu;
-            sizeListBox.FormattingEnabled = true;
-            sizeListBox.Location = new Point(472, 8);
-            sizeListBox.Name = "sizeListBox";
-            sizeListBox.SelectionMode = SelectionMode.None;
-            sizeListBox.Size = new Size(120, 345);
-            sizeListBox.TabIndex = 2;
-            // 
-            // extensionListBox
-            // 
-            extensionListBox.BackColor = Color.FromArgb(27, 27, 27);
-            extensionListBox.BorderStyle = BorderStyle.None;
-            extensionListBox.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            extensionListBox.ForeColor = SystemColors.Menu;
-            extensionListBox.FormattingEnabled = true;
-            extensionListBox.Location = new Point(330, 10);
-            extensionListBox.Name = "extensionListBox";
-            extensionListBox.SelectionMode = SelectionMode.None;
-            extensionListBox.Size = new Size(136, 345);
-            extensionListBox.TabIndex = 1;
-            // 
-            // directoryListBox
-            // 
-            directoryListBox.BackColor = Color.FromArgb(27, 27, 27);
-            directoryListBox.BorderStyle = BorderStyle.None;
-            directoryListBox.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            directoryListBox.ForeColor = SystemColors.Menu;
-            directoryListBox.FormattingEnabled = true;
-            directoryListBox.Location = new Point(6, 8);
-            directoryListBox.Name = "directoryListBox";
-            directoryListBox.SelectionMode = SelectionMode.None;
-            directoryListBox.Size = new Size(314, 345);
-            directoryListBox.TabIndex = 0;
+            directoriesViewPanel.AutoSize = true;
+            directoriesViewPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            directoriesViewPanel.ColumnCount = 3;
+            directoriesViewPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            directoriesViewPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            directoriesViewPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            directoriesViewPanel.Location = new Point(0, 0);
+            directoriesViewPanel.Dock = DockStyle.Top;
+            directoriesViewPanel.Name = "directoriesViewPanel";
+            directoriesViewPanel.Size = new Size(771, 363);
+            directoriesViewPanel.TabIndex = 0;
             // 
             // FileExplorer
             // 
@@ -506,9 +478,6 @@ namespace FileExplorer
         private Panel pathTextBoxWrapper;
         private TextBox pathTextBox;
         private Panel directoryPanel;
-        private ListBox directoryListBox;
-        private ListBox extensionListBox;
-        private ListBox sizeListBox;
         private Panel mainFoldersWrapper;
         private Button downloadsButton;
         private Button documentsButton;
@@ -532,5 +501,6 @@ namespace FileExplorer
         private FlowLayoutPanel drivesWrapperPanel;
         private Panel folderSeparator2;
         private FlowLayoutPanel favoriteDirectoriesPanel;
+        private TableLayoutPanel directoriesViewPanel;
     }
 }

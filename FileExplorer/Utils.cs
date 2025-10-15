@@ -216,6 +216,13 @@ namespace FileExplorer
 
         public static Label CreateSizeLabel(ISystemFile sf)
         {
+            Label label = CreateLabel(null);
+            label.Text = CastToCorrectSize(CalculateDirectorySize(sf.Path));
+            label.Name = $"{sf.Name}SizeLabel";
+            return label;
+        }
+
+        public static Label CreateLabel(String? text) {
             Label label = new Label();
             label.Size = new Size(112, 30);
             label.BackColor = Color.FromArgb(27, 27, 27);
@@ -223,10 +230,9 @@ namespace FileExplorer
             label.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             label.TextAlign = ContentAlignment.MiddleLeft;
             label.Dock = DockStyle.Fill;
-            label.Text = CastToCorrectSize(CalculateDirectorySize(sf.Path));
-            label.Name = $"{sf.Name}SizeLabel";
+            label.Text = text;
+            label.Name = $"{text}SizeLabel";
             label.ForeColor = SystemColors.ButtonFace;
-
             return label;
         }
 

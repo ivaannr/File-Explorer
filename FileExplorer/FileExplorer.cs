@@ -115,6 +115,9 @@ namespace FileExplorer
 
             try
             {
+
+                int rowIndex = 0;
+
                 var systemFiles = await Task.Run(() => GetSystemFiles(path), token);
 
                 foreach (ISystemFile dir in systemFiles)
@@ -123,9 +126,14 @@ namespace FileExplorer
 
                     if (dir is Dir && !Utils.CanAccessDirectory(dir.Path)) { continue; }
 
-                    directoryListBox.Items.Add(dir.Name);
-                    extensionListBox.Items.Add(dir.Type);
-                    sizeListBox.Items.Add(Utils.CastToCorrectSize(dir.Size));
+                    directoriesViewPanel.RowCount++;
+                    directoriesViewPanel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
+                    Utils.AddToView(directoriesViewPanel, Utils.CreateDirectoryButton(dir), 0, rowIndex);
+                    Utils.AddToView(directoriesViewPanel, Utils.CreateExtensionButton(dir.Type), 1, rowIndex);
+                    Utils.AddToView(directoriesViewPanel, Utils.CreateSizeLabel(dir), 2, rowIndex);
+
+                    rowIndex++;
                 }
             }
             catch (Exception ex)
@@ -138,19 +146,25 @@ namespace FileExplorer
 
         private void ClearAll()
         {
-            systemFiles.Clear();
-            directoryListBox.Items.Clear();
-            extensionListBox.Items.Clear();
-            sizeListBox.Items.Clear();
+            directoriesViewPanel.Controls.Clear();
+            directoriesViewPanel.RowStyles.Clear();
+            directoriesViewPanel.ColumnStyles.Clear();
+            directoriesViewPanel.RowCount = 0;
+
+            directoriesViewPanel.ColumnCount = 3;
+            directoriesViewPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
+            directoriesViewPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
+            directoriesViewPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
         }
 
         private async void AddNotFound()
         {
+            await Task.Delay(100);
             ClearAll();
-            await Task.Delay(1);
-            directoryListBox.Items.Add("Directory not found");
-            extensionListBox.Items.Add("-");
-            sizeListBox.Items.Add("-");
+            directoriesViewPanel.RowCount = 1;
+            Utils.AddToView(directoriesViewPanel, Utils.CreateLabel("Directory not found"), 0, 0) ;
+            Utils.AddToView(directoriesViewPanel, Utils.CreateLabel("-"), 1, 0);
+            Utils.AddToView(directoriesViewPanel, Utils.CreateLabel("-"), 2, 0);
         }
 
         private void pathTextBox_KeyDown(object sender, KeyEventArgs e)
