@@ -8,12 +8,20 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using FileExplorer.Model;
+using FileExplorer.Properties;
 
 namespace FileExplorer
 {
     internal static class Utils
     {
-
+        private static readonly string[] audioExtensions = { "mp3", "wav", "ogg", "flac", "aac", "m4a" };
+        private static readonly string[] videoExtensions = { "mp4", "avi", "mkv", "mov", "wmv", "webm" };
+        private static readonly string[] documentExtensions = { "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "rtf" };
+        private static readonly string[] compressedExtensions = { "zip", "rar", "7z", "tar", "gz", "bz2" };
+        private static readonly string[] executableExtensions = { "exe", "msi", "bat", "sh", "cmd", "ps1" };
+        private static readonly string[] configExtensions = { "json", "xml", "yml", "yaml", "md", "csv" };
+        private static readonly string[] sourceCodeExtensions = { "cs", "java", "py", "js", "html", "css", "cpp", "h", "php", "rb", "kt" };
+        private static readonly string[] databaseExtensions = { "sql", "db", "sqlite", "mdb" };
         public static string CastToCorrectSize(long size) {
             const long KB = 1024;
             const long MB = KB * 1024;
@@ -167,7 +175,87 @@ namespace FileExplorer
             return null;
         }
 
+        public static Button CreateDirectoryButton(ISystemFile sf)
+        {
+            Button button = new Button();
+            button.AutoSize = true;
+            button.BackColor = Color.FromArgb(27, 27, 27);
+            button.FlatAppearance.BorderSize = 0;
+            button.FlatStyle = FlatStyle.Flat;
+            button.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            button.ForeColor = SystemColors.ButtonFace;
+            button.Image = GetImageExtension(sf.Type);
+            button.ImageAlign = ContentAlignment.MiddleLeft;
+            button.Name = $"{sf.Name}Button";
+            button.Size = new Size(112, 30);
+            button.TabIndex = 1;
+            button.Text = $" {sf.Name}";
+            button.TextAlign = ContentAlignment.MiddleLeft;
+            button.TextImageRelation = TextImageRelation.ImageBeforeText;
+            button.UseVisualStyleBackColor = false;
+            return button;
+        }
 
+        public static Button CreateExtensionButton(String text)
+        {
+            Button button = new Button();
+            button.AutoSize = true;
+            button.BackColor = Color.FromArgb(27, 27, 27);
+            button.FlatAppearance.BorderSize = 0;
+            button.FlatStyle = FlatStyle.Flat;
+            button.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            button.ForeColor = SystemColors.ButtonFace;
+            button.Name = $"{text}Button";
+            button.Size = new Size(112, 30);
+            button.TabIndex = 1;
+            button.Text = text;
+            button.TextAlign = ContentAlignment.MiddleLeft;
+            button.UseVisualStyleBackColor = false;
+            return button;
+        }
+
+        public static Label CreateSizeLabel(ISystemFile sf)
+        {
+            Label label = new Label();
+            label.Size = new Size(112, 30);
+            label.BackColor = Color.FromArgb(27, 27, 27);
+            label.AutoSize = true;
+            label.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            label.TextAlign = ContentAlignment.MiddleLeft;
+            label.Dock = DockStyle.Fill;
+            label.Text = CastToCorrectSize(CalculateDirectorySize(sf.Path));
+            label.Name = $"{sf.Name}SizeLabel";
+            label.ForeColor = SystemColors.ButtonFace;
+
+            return label;
+        }
+
+        public static Bitmap GetImageExtension(string fileType)
+        {
+            if (string.IsNullOrWhiteSpace(fileType))
+                return Resources.FILE;
+
+            string extension = fileType.StartsWith(".") ? fileType.Substring(1).ToLower() : fileType.ToLower();
+
+            return extension switch
+            {
+                "folder" => Resources.FOLDER,
+                var ext when audioExtensions.Contains(ext) => Resources.AUDIO_FILE,
+                var ext when videoExtensions.Contains(ext) => Resources.VIDEO_FILE,
+                var ext when documentExtensions.Contains(ext) => Resources.DOCUMENT_FILE,
+                var ext when compressedExtensions.Contains(ext) => Resources.COMPRESSED,
+                var ext when executableExtensions.Contains(ext) => Resources.COMMIT,
+                var ext when configExtensions.Contains(ext) => Resources.DATA,
+                var ext when sourceCodeExtensions.Contains(ext) => Resources.CODE,
+                var ext when databaseExtensions.Contains(ext) => Resources.DATABASE,
+                _ => Resources.FILE
+            };
+        }
+
+        public static void AddToView(TableLayoutPanel panel, Control item, int column, int rowIndex)
+        {
+            panel.Controls.Add(item, column, rowIndex);
+        }
 
     }
 }
