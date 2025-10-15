@@ -60,7 +60,7 @@ namespace FileExplorer
             long size = 0;
             try
             {
-                foreach (string file in Directory.GetFiles(folderPath))
+                foreach (string file in Directory.EnumerateFiles(folderPath))
                 {
                     try
                     {
@@ -70,7 +70,7 @@ namespace FileExplorer
                     catch(Exception ex) { Console.WriteLine(ex.Message); }
                 }
 
-                foreach (string dir in Directory.GetDirectories(folderPath)) {
+                foreach (string dir in Directory.EnumerateDirectories(folderPath)) {
                     size += CalculateDirectorySize(dir);
                 }
             }

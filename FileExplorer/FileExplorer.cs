@@ -116,6 +116,8 @@ namespace FileExplorer
             try
             {
 
+                directoriesViewPanel.SuspendLayout();
+
                 int rowIndex = 0;
 
                 var systemFiles = await Task.Run(() => GetSystemFiles(path), token);
@@ -140,12 +142,18 @@ namespace FileExplorer
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
+            finally
+            {
+                directoriesViewPanel.ResumeLayout();
+            }
         }
 
 
 
         private void ClearAll()
         {
+            directoriesViewPanel.SuspendLayout();
+
             directoriesViewPanel.Controls.Clear();
             directoriesViewPanel.RowStyles.Clear();
             directoriesViewPanel.ColumnStyles.Clear();
@@ -155,16 +163,20 @@ namespace FileExplorer
             directoriesViewPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
             directoriesViewPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
             directoriesViewPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33F));
+
+            directoriesViewPanel.ResumeLayout();
         }
 
         private async void AddNotFound()
         {
+            directoriesViewPanel.SuspendLayout();
             await Task.Delay(100);
             ClearAll();
             directoriesViewPanel.RowCount = 1;
             Utils.AddToView(directoriesViewPanel, Utils.CreateLabel("Directory not found"), 0, 0) ;
             Utils.AddToView(directoriesViewPanel, Utils.CreateLabel("-"), 1, 0);
             Utils.AddToView(directoriesViewPanel, Utils.CreateLabel("-"), 2, 0);
+            directoriesViewPanel.ResumeLayout();
         }
 
         private void pathTextBox_KeyDown(object sender, KeyEventArgs e)
