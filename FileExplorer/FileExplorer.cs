@@ -59,7 +59,7 @@ namespace FileExplorer
             pathTextBox.SelectionStart = pathTextBox.Text.Length;
         }
 
-        private static List<ISystemFile> GetSystemFiles(string path)
+        private static List<ISystemFile> GetSystemFiles(string path, CancellationToken token)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace FileExplorer
                     systemFiles.Add(new Dir(
                         dir,
                         new DirectoryInfo(dir).Name,
-                        Utils.CalculateDirectorySize(dir)
+                        Utils.CalculateDirectorySize(dir, token)
                     ));
                 }
                 foreach (var dirPath in Directory.GetFiles(path))
@@ -120,7 +120,7 @@ namespace FileExplorer
 
                 int rowIndex = 0;
 
-                var systemFiles = await Task.Run(() => GetSystemFiles(path), token);
+                var systemFiles = await Task.Run(() => GetSystemFiles(path, token), token);
 
                 foreach (ISystemFile dir in systemFiles)
                 {

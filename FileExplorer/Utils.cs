@@ -55,13 +55,15 @@ namespace FileExplorer
         }
 
 
-        public static long CalculateDirectorySize(string folderPath)
+        public static long CalculateDirectorySize(string folderPath, CancellationToken token)
         {
             long size = 0;
             try
             {
                 foreach (string file in Directory.EnumerateFiles(folderPath))
                 {
+                    token.ThrowIfCancellationRequested();
+
                     try
                     {
                         FileInfo info = new FileInfo(file);
@@ -71,7 +73,9 @@ namespace FileExplorer
                 }
 
                 foreach (string dir in Directory.EnumerateDirectories(folderPath)) {
-                    size += CalculateDirectorySize(dir);
+
+                    token.ThrowIfCancellationRequested();
+                    size += CalculateDirectorySize(dir, token);
                 }
             }
             catch (Exception ex) { Console.WriteLine("ERROR: " + ex.Message); }
@@ -144,7 +148,7 @@ namespace FileExplorer
                 Console.WriteLine($"ERROR: {ex.Message}");
             }
 
-            return null;
+            return new List<String> { };
         }
 
         public static async Task<List<FavoriteDirectory>> ParseCSVData(List<String> directories) {
@@ -172,7 +176,7 @@ namespace FileExplorer
                 Console.WriteLine($"ERROR error: {ex.Message}");
             }
 
-            return null;
+            return new List<FavoriteDirectory> { };
         }
 
         public static Button CreateDirectoryButton(ISystemFile sf)
@@ -217,7 +221,7 @@ namespace FileExplorer
         public static Label CreateSizeLabel(ISystemFile sf)
         {
             Label label = CreateLabel(null);
-            label.Text = CastToCorrectSize(CalculateDirectorySize(sf.Path));
+            label.Text = CastToCorrectSize(sf.Size);
             label.Name = $"{sf.Name}SizeLabel";
             return label;
         }
