@@ -179,9 +179,12 @@ namespace FileExplorer
             return new List<FavoriteDirectory> { };
         }
 
-        public static Button CreateDirectoryButton(ISystemFile sf)
+        public static Button CreateDirectoryButton(ISystemFile sf, TextBox pathTextBox)
         {
-            Button button = new Button();
+
+            String type = sf.Type.ToLower();
+
+            Button button = (type == "folder" ? new DoubleClickButton() : new Button());
             button.AutoSize = true;
             button.BackColor = Color.FromArgb(27, 27, 27);
             button.FlatAppearance.BorderSize = 0;
@@ -197,6 +200,11 @@ namespace FileExplorer
             button.TextAlign = ContentAlignment.MiddleLeft;
             button.TextImageRelation = TextImageRelation.ImageBeforeText;
             button.UseVisualStyleBackColor = false;
+            button.MouseDoubleClick += (s, e) =>
+            {
+                Console.WriteLine("Doble clicked on " + button.Name);
+                pathTextBox.Text = $"{sf.Path}";
+            };
             return button;
         }
 
@@ -213,8 +221,10 @@ namespace FileExplorer
             button.Size = new Size(112, 30);
             button.TabIndex = 1;
             button.Text = text;
-            button.TextAlign = ContentAlignment.MiddleLeft;
+            button.FlatStyle = FlatStyle.Flat;
             button.UseVisualStyleBackColor = false;
+
+
             return button;
         }
 
@@ -262,7 +272,7 @@ namespace FileExplorer
             };
         }
 
-        public static void AddToView(TableLayoutPanel panel, Control item, int column, int rowIndex)
+        public static void AddToTableView(TableLayoutPanel panel, Control item, int column, int rowIndex)
         {
             panel.Controls.Add(item, column, rowIndex);
         }

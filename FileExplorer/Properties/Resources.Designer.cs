@@ -201,6 +201,16 @@ namespace FileExplorer.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Byte[].
+        /// </summary>
+        internal static byte[] FOLDER_ICON {
+            get {
+                object obj = ResourceManager.GetObject("FOLDER_ICON", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap HARD_DRIVE {

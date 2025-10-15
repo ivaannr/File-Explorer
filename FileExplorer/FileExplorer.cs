@@ -84,7 +84,7 @@ namespace FileExplorer
                 return systemFiles;
             }
             catch {
-                return new List<ISystemFile>();
+                return new List<ISystemFile>() { };
             }
         }
 
@@ -131,9 +131,9 @@ namespace FileExplorer
                     directoriesViewPanel.RowCount++;
                     directoriesViewPanel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
-                    Utils.AddToView(directoriesViewPanel, Utils.CreateDirectoryButton(dir), 0, rowIndex);
-                    Utils.AddToView(directoriesViewPanel, Utils.CreateExtensionButton(dir.Type), 1, rowIndex);
-                    Utils.AddToView(directoriesViewPanel, Utils.CreateSizeLabel(dir), 2, rowIndex);
+                    Utils.AddToTableView(directoriesViewPanel, Utils.CreateDirectoryButton(dir, pathTextBox), 0, rowIndex);
+                    Utils.AddToTableView(directoriesViewPanel, Utils.CreateExtensionButton(dir.Type), 1, rowIndex);
+                    Utils.AddToTableView(directoriesViewPanel, Utils.CreateSizeLabel(dir), 2, rowIndex);
 
                     rowIndex++;
                 }
@@ -173,9 +173,9 @@ namespace FileExplorer
             await Task.Delay(100);
             ClearAll();
             directoriesViewPanel.RowCount = 1;
-            Utils.AddToView(directoriesViewPanel, Utils.CreateLabel("Directory not found"), 0, 0) ;
-            Utils.AddToView(directoriesViewPanel, Utils.CreateLabel("-"), 1, 0);
-            Utils.AddToView(directoriesViewPanel, Utils.CreateLabel("-"), 2, 0);
+            Utils.AddToTableView(directoriesViewPanel, Utils.CreateLabel("Directory not found"), 0, 0) ;
+            Utils.AddToTableView(directoriesViewPanel, Utils.CreateLabel("-"), 1, 0);
+            Utils.AddToTableView(directoriesViewPanel, Utils.CreateLabel("-"), 2, 0);
             directoriesViewPanel.ResumeLayout();
         }
 

@@ -30,6 +30,7 @@ namespace FileExplorer
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileExplorer));
             sideBar = new Panel();
             favoriteDirectoriesPanel = new FlowLayoutPanel();
             folderSeparator2 = new Panel();
@@ -429,7 +430,7 @@ namespace FileExplorer
             directoryPanel.Size = new Size(771, 366);
             directoryPanel.TabIndex = 3;
             // 
-            // tableLayoutPanel1
+            // directoriesViewPanel
             // 
             directoriesViewPanel.AutoSize = true;
             directoriesViewPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
@@ -437,10 +438,10 @@ namespace FileExplorer
             directoriesViewPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
             directoriesViewPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
             directoriesViewPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            directoriesViewPanel.Location = new Point(0, 0);
             directoriesViewPanel.Dock = DockStyle.Top;
+            directoriesViewPanel.Location = new Point(0, 0);
             directoriesViewPanel.Name = "directoriesViewPanel";
-            directoriesViewPanel.Size = new Size(771, 363);
+            directoriesViewPanel.Size = new Size(771, 0);
             directoriesViewPanel.TabIndex = 0;
             // 
             // FileExplorer
@@ -455,9 +456,10 @@ namespace FileExplorer
             Controls.Add(sideBar);
             Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon) resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "FileExplorer";
-            Text = "FireExplorer";
+            Text = "FileExplorer";
             sideBar.ResumeLayout(false);
             mainFoldersWrapper.ResumeLayout(false);
             mainFoldersWrapper.PerformLayout();
@@ -467,6 +469,7 @@ namespace FileExplorer
             toolsPanel.ResumeLayout(false);
             utilsWrapperPanel.ResumeLayout(false);
             directoryPanel.ResumeLayout(false);
+            directoryPanel.PerformLayout();
             ResumeLayout(false);
         }
 
