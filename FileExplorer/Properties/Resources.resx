@@ -157,4 +157,31 @@
   <data name="HARD_DRIVE_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\HARD_DRIVE_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="DATA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\DATA.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="COMPRESSED" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\COMPRESSED.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CODE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\CODE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AUDIO_FILE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\AUDIO_FILE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="COMMIT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\COMMIT.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DATABASE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\DATABASE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DOCUMENT_FILE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\DOCUMENT_FILE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="FILE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\FILE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="VIDEO_FILE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\VIDEO_FILE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
