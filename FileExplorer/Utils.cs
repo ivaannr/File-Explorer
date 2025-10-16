@@ -20,7 +20,7 @@ namespace FileExplorer
         private static readonly string[] compressedExtensions = { "zip", "rar", "7z", "tar", "gz", "bz2" };
         private static readonly string[] executableExtensions = { "exe", "msi", "bat", "sh", "cmd", "ps1" };
         private static readonly string[] configExtensions = { "json", "xml", "yml", "yaml", "md", "csv" };
-        private static readonly string[] sourceCodeExtensions = { "cs", "java", "py", "js", "html", "css", "cpp", "h", "php", "rb", "kt" };
+        private static readonly string[] sourceCodeExtensions = { "cs", "java", "py", "js", "html", "css", "cpp", "h", "php", "rb", "kt", "kts", "csx" };
         private static readonly string[] databaseExtensions = { "sql", "db", "sqlite", "mdb" };
         public static string CastToCorrectSize(long size) {
             const long KB = 1024;
