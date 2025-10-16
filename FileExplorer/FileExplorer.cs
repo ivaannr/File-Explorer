@@ -9,13 +9,14 @@ namespace FileExplorer
     public partial class FileExplorer : Form
     {
 
+        private bool suppressTextChanged = false;
         private CancellationTokenSource cts;
         private String path = "C:\\";
         private List<ISystemFile> systemFiles = new List<ISystemFile>();
         private DriveInfo[] drivesInfo;
         private List<FavoriteDirectory> favDirs;
-        public static Button? CurrentSelectedButton { get; set; }
-        public static String? CurrentSelectedPath { get; set; }
+        public static Button? CurrentSelectedButton { get; set; } = null;
+        public static String CurrentSelectedPath { get; set; } = string.Empty;
 
         public FileExplorer()
         {
@@ -115,7 +116,7 @@ namespace FileExplorer
             }
         }
 
-        private async void ChangeDirectory(string path, CancellationToken token)
+        private async Task ChangeDirectory(string path, CancellationToken token)
         {
             ClearAll();
 
@@ -185,6 +186,21 @@ namespace FileExplorer
             directoriesViewPanel.ResumeLayout();
         }
 
+        public async Task ReloadUI()
+        {
+            string currentPath = pathTextBox.Text;
+
+            suppressTextChanged = true;
+
+            pathTextBox.Text = currentPath + "-";
+
+            await Task.Delay(50);
+
+            pathTextBox.Text = currentPath;
+
+            suppressTextChanged = false;
+        }
+
         private void pathTextBox_KeyDown(object sender, KeyEventArgs e)
         {
 
@@ -226,9 +242,23 @@ namespace FileExplorer
 
         }
 
-        private void deleteButton_Click(object sender, EventArgs e)
+        private async void deleteButton_Click(object sender, EventArgs e)
         {
+            Button clickedButton = CurrentSelectedButton!;
+            ButtonMetadata? data = clickedButton.Tag as ButtonMetadata;
 
+            try
+            {
+                await Utils.DeleteDirectory(data!);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error deleting directory: " + ex.Message);
+            }
+
+            Utils.ClearCurrentSelectedButton();
+
+            await ChangeDirectory(pathTextBox.Text, CancellationToken.None);
         }
 
         private void cutButton_Click(object sender, EventArgs e)
@@ -238,7 +268,7 @@ namespace FileExplorer
 
         private void favoriteButton_Click(object sender, EventArgs e)
         {
-
+            
 
 
 

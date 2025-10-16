@@ -186,7 +186,6 @@ namespace FileExplorer
         {
 
             String type = sf.Type.ToLower();
-            String name = $"{sf.Name}&{sf.Type}&Button";
 
             Button button = type == "folder" ? new DoubleClickButton() : new Button();
             button.AutoSize = true;
@@ -197,13 +196,19 @@ namespace FileExplorer
             button.ForeColor = SystemColors.ButtonFace;
             button.Image = GetImageExtension(sf.Type);
             button.ImageAlign = ContentAlignment.MiddleLeft;
-            button.Name = name;
+            button.Name = $"{sf.Name}Button";
             button.Size = new Size(400, 30);
             button.TabIndex = 1;
             button.Text = $" {sf.Name}";
             button.TextAlign = ContentAlignment.MiddleLeft;
             button.TextImageRelation = TextImageRelation.ImageBeforeText;
             button.UseVisualStyleBackColor = false;
+
+            button.Tag = new ButtonMetadata {
+                Path = sf.Path,
+                Type = sf.Type
+            };
+
             button.MouseDoubleClick += (s, e) =>
             {
                 Console.WriteLine("Doble clicked on " + button.Name);
@@ -215,12 +220,47 @@ namespace FileExplorer
 
         private static void directoryButton_Click(object sender, EventArgs e) {
 
-            if (FileExplorer.CurrentSelectedButton is null) {
-                FileExplorer.CurrentSelectedButton = sender as Button;
+            try
+            {
 
-                FileExplorer.CurrentSelectedPath = FileExplorer.CurrentSelectedButton!.Name.Substring(0, FileExplorer.CurrentSelectedButton.Name.Length - 6);
+                if (FileExplorer.CurrentSelectedButton == null)
+                {
+                    FileExplorer.CurrentSelectedButton = sender as Button;
 
-                FileExplorer.CurrentSelectedButton!.BackColor = Color.FromArgb(40, 40, 40);
+                    FileExplorer.CurrentSelectedPath = FileExplorer.CurrentSelectedButton!.Name.Substring(0, FileExplorer.CurrentSelectedButton.Name.Length - 6);
+
+                    FileExplorer.CurrentSelectedButton!.BackColor = Color.FromArgb(50, 50, 50);
+                    Console.WriteLine(FileExplorer.CurrentSelectedButton.Name);
+                    return;
+                }
+
+                Button? clickedButton = sender as Button;
+
+                if (FileExplorer.CurrentSelectedButton.Name == clickedButton!.Name)
+                {
+                    Console.WriteLine(FileExplorer.CurrentSelectedButton.Name);
+                    ClearCurrentSelectedButton();
+
+                    clickedButton!.BackColor = Color.FromArgb(27, 27, 27);
+
+                    return;
+                }
+
+                if (FileExplorer.CurrentSelectedButton.Name != clickedButton!.Name)
+                {
+                    FileExplorer.CurrentSelectedButton.BackColor = Color.FromArgb(27, 27, 27);
+                    clickedButton.BackColor = Color.FromArgb(50, 50, 50);
+
+                    ClearCurrentSelectedButton();
+
+                    FileExplorer.CurrentSelectedButton = clickedButton;
+                    FileExplorer.CurrentSelectedPath = FileExplorer.CurrentSelectedButton!.Name.Substring(0, FileExplorer.CurrentSelectedButton.Name.Length - 6);
+                    Console.WriteLine(FileExplorer.CurrentSelectedButton.Name);
+                    return;
+                }
+            }
+            catch (Exception ex) {
+                Console.WriteLine("Selecting a new directory threw an error: "+ ex.Message);
             }
 
         }
@@ -323,6 +363,42 @@ namespace FileExplorer
             var newContent = favs.Select(fav => $"{fav.ID};{fav.Path}");
 
             File.WriteAllLines(favsPath, newContent);
+        }
+
+        public static Task DeleteDirectory(ButtonMetadata data)
+        {
+            return Task.Run(() => {
+                if (data == null || string.IsNullOrWhiteSpace(data.Path)) { return; }
+
+                try
+                {
+                    if (File.Exists(data.Path))
+                    {
+                        File.Delete(data.Path);
+                        Console.WriteLine($"File deleted: {data.Path}");
+                        return;
+                    }
+
+                    if (Directory.Exists(data.Path))
+                    {
+                        Directory.Delete(data.Path, true);
+                        Console.WriteLine($"Directory deleted: {data.Path}");
+                        return;
+                    }
+
+                    Console.WriteLine($"No such path found: {data.Path}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"ERROR: {ex.Message}");
+                }
+            });
+
+        }
+
+        public static void ClearCurrentSelectedButton() {
+            FileExplorer.CurrentSelectedButton = null;
+            FileExplorer.CurrentSelectedPath = string.Empty;
         }
 
     }
