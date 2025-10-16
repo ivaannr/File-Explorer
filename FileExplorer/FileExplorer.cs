@@ -13,8 +13,9 @@ namespace FileExplorer
         private String path = "C:\\";
         private List<ISystemFile> systemFiles = new List<ISystemFile>();
         private DriveInfo[] drivesInfo;
-        private String currentSelectedButton = "";
         private List<FavoriteDirectory> favDirs;
+        public static Button? CurrentSelectedButton { get; set; }
+        public static String? CurrentSelectedPath { get; set; }
 
         public FileExplorer()
         {

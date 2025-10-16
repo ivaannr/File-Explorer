@@ -26,6 +26,7 @@ namespace FileExplorer
         private const long KB = 1024;
         private const long MB = KB * 1024;
         private const long GB = MB * 1024;
+
         public static string CastToCorrectSize(long size) {
 
 
@@ -185,8 +186,9 @@ namespace FileExplorer
         {
 
             String type = sf.Type.ToLower();
+            String name = $"{sf.Name}&{sf.Type}&Button";
 
-            Button button = (type == "folder" ? new DoubleClickButton() : new Button());
+            Button button = type == "folder" ? new DoubleClickButton() : new Button();
             button.AutoSize = true;
             button.BackColor = Color.FromArgb(27, 27, 27);
             button.FlatAppearance.BorderSize = 0;
@@ -195,8 +197,8 @@ namespace FileExplorer
             button.ForeColor = SystemColors.ButtonFace;
             button.Image = GetImageExtension(sf.Type);
             button.ImageAlign = ContentAlignment.MiddleLeft;
-            button.Name = $"{sf.Path}Button";
-            button.Size = new Size(112, 30);
+            button.Name = name;
+            button.Size = new Size(400, 30);
             button.TabIndex = 1;
             button.Text = $" {sf.Name}";
             button.TextAlign = ContentAlignment.MiddleLeft;
@@ -207,11 +209,20 @@ namespace FileExplorer
                 Console.WriteLine("Doble clicked on " + button.Name);
                 pathTextBox.Text = $"{sf.Path}";
             };
-            button.Click += (s, e) =>
-            {
-
-            };
+            button.Click += directoryButton_Click!;
             return button;
+        }
+
+        private static void directoryButton_Click(object sender, EventArgs e) {
+
+            if (FileExplorer.CurrentSelectedButton is null) {
+                FileExplorer.CurrentSelectedButton = sender as Button;
+
+                FileExplorer.CurrentSelectedPath = FileExplorer.CurrentSelectedButton!.Name.Substring(0, FileExplorer.CurrentSelectedButton.Name.Length - 6);
+
+                FileExplorer.CurrentSelectedButton!.BackColor = Color.FromArgb(40, 40, 40);
+            }
+
         }
 
         public static Button CreateExtensionButton(String text)
@@ -224,6 +235,7 @@ namespace FileExplorer
             button.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             button.ForeColor = SystemColors.ButtonFace;
             button.Name = $"{text}Button";
+            button.TextAlign = ContentAlignment.MiddleLeft;
             button.Size = new Size(112, 30);
             button.TabIndex = 1;
             button.Text = text;
