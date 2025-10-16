@@ -22,10 +22,12 @@ namespace FileExplorer
         private static readonly string[] configExtensions = { "json", "xml", "yml", "yaml", "md", "csv" };
         private static readonly string[] sourceCodeExtensions = { "cs", "java", "py", "js", "html", "css", "cpp", "h", "php", "rb", "kt", "kts", "csx" };
         private static readonly string[] databaseExtensions = { "sql", "db", "sqlite", "mdb" };
+        private const String favsPath = "favs.csv";
+        private const long KB = 1024;
+        private const long MB = KB * 1024;
+        private const long GB = MB * 1024;
         public static string CastToCorrectSize(long size) {
-            const long KB = 1024;
-            const long MB = KB * 1024;
-            const long GB = MB * 1024;
+
 
             return size switch
             {
@@ -69,7 +71,7 @@ namespace FileExplorer
                         FileInfo info = new FileInfo(file);
                         size += info.Length;
                     }
-                    catch(Exception ex) { Console.WriteLine(ex.Message); }
+                    catch(Exception ex) { Console.WriteLine(ex.Message); return 0; }
                 }
 
                 foreach (string dir in Directory.EnumerateDirectories(folderPath)) {
@@ -78,7 +80,7 @@ namespace FileExplorer
                     size += CalculateDirectorySize(dir, token);
                 }
             }
-            catch (Exception ex) { Console.WriteLine("ERROR: " + ex.Message); }
+            catch (Exception ex) { Console.WriteLine("ERROR: " + ex.Message); return 0; }
             return size;
         }
 
@@ -116,7 +118,7 @@ namespace FileExplorer
                 return await Task.Run(() =>
                 {
                     List<string> directories = new List<string>();
-                    var lines = ReadAllLinesFromFile("favs.csv");
+                    var lines = ReadAllLinesFromFile(favsPath);
 
                     foreach (var line in lines)
                     {
@@ -193,7 +195,7 @@ namespace FileExplorer
             button.ForeColor = SystemColors.ButtonFace;
             button.Image = GetImageExtension(sf.Type);
             button.ImageAlign = ContentAlignment.MiddleLeft;
-            button.Name = $"{sf.Name}Button";
+            button.Name = $"{sf.Path}Button";
             button.Size = new Size(112, 30);
             button.TabIndex = 1;
             button.Text = $" {sf.Name}";
@@ -204,6 +206,10 @@ namespace FileExplorer
             {
                 Console.WriteLine("Doble clicked on " + button.Name);
                 pathTextBox.Text = $"{sf.Path}";
+            };
+            button.Click += (s, e) =>
+            {
+
             };
             return button;
         }
@@ -275,6 +281,36 @@ namespace FileExplorer
         public static void AddToTableView(TableLayoutPanel panel, Control item, int column, int rowIndex)
         {
             panel.Controls.Add(item, column, rowIndex);
+        }
+
+        public static async Task<string> GetLastID()
+        {
+            List<FavoriteDirectory> favs = await ParseCSVData(await GetFavoriteDirectories());
+
+            var ids = favs.Select(fav => fav.ID).ToList();
+
+            return ids.Count > 0 ? ids.Last() : "0";
+        }
+
+        public static async Task RegisterFavoriteDirectory(String path) {
+            int newID = Convert.ToInt32(await GetLastID()) + 1;
+            String[] line = { $"{newID};{path}" };
+            File.AppendAllLines(favsPath, line);
+        }
+
+        public static async Task DeleteDirectoryRecord(string ID)
+        {
+            List<FavoriteDirectory> favs = await ParseCSVData(await GetFavoriteDirectories());
+
+            FavoriteDirectory? dirToRemove = favs.FirstOrDefault(fav => fav.ID == ID);
+
+            if (!dirToRemove.HasValue) { return; }
+
+            favs.Remove(dirToRemove.Value);
+
+            var newContent = favs.Select(fav => $"{fav.ID};{fav.Path}");
+
+            File.WriteAllLines(favsPath, newContent);
         }
 
     }

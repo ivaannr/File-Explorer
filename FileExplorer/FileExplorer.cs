@@ -1,3 +1,4 @@
+using System.Drawing.Drawing2D;
 using System.Security.Principal;
 using System.Windows.Forms;
 using FileExplorer.Model;
@@ -12,6 +13,8 @@ namespace FileExplorer
         private String path = "C:\\";
         private List<ISystemFile> systemFiles = new List<ISystemFile>();
         private DriveInfo[] drivesInfo;
+        private String currentSelectedButton = "";
+        private List<FavoriteDirectory> favDirs;
 
         public FileExplorer()
         {
@@ -32,14 +35,16 @@ namespace FileExplorer
             Console.WriteLine("Admin: " + (isAdmin ? "Yes" : "No"));
         }
 
-        private async void SetUpFavoriteDirectories() { 
-            List<FavoriteDirectory> dirs = await Utils.ParseCSVData(await Utils.GetFavoriteDirectories());
 
-            if (dirs == null || dirs.Count == 0) { return; }
+
+        private async void SetUpFavoriteDirectories() { 
+            favDirs = await Utils.ParseCSVData(await Utils.GetFavoriteDirectories());
+
+            if (favDirs == null || favDirs.Count == 0) { return; }
 
             var favDirectoryViewer = new FavoriteDirectoriesViewer(pathTextBox); 
 
-            foreach (FavoriteDirectory dir in dirs) { 
+            foreach (FavoriteDirectory dir in favDirs) { 
                 favoriteDirectoriesPanel.Controls.Add(favDirectoryViewer.Render(dir.Path)); 
             } 
         }
@@ -232,6 +237,10 @@ namespace FileExplorer
 
         private void favoriteButton_Click(object sender, EventArgs e)
         {
+
+
+
+
 
         }
 
