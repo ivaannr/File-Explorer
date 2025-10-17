@@ -220,14 +220,14 @@ namespace FileExplorer
 
         private static void directoryButton_Click(object sender, EventArgs e) {
 
+            //TODO => make that when clicking on a directory the fav buttons state change
+
             try
             {
 
                 if (FileExplorer.CurrentSelectedButton == null)
                 {
                     FileExplorer.CurrentSelectedButton = sender as Button;
-
-                    FileExplorer.CurrentSelectedPath = FileExplorer.CurrentSelectedButton!.Name.Substring(0, FileExplorer.CurrentSelectedButton.Name.Length - 6);
 
                     FileExplorer.CurrentSelectedButton!.BackColor = Color.FromArgb(50, 50, 50);
                     Console.WriteLine(FileExplorer.CurrentSelectedButton.Name);
@@ -254,7 +254,6 @@ namespace FileExplorer
                     ClearCurrentSelectedButton();
 
                     FileExplorer.CurrentSelectedButton = clickedButton;
-                    FileExplorer.CurrentSelectedPath = FileExplorer.CurrentSelectedButton!.Name.Substring(0, FileExplorer.CurrentSelectedButton.Name.Length - 6);
                     Console.WriteLine(FileExplorer.CurrentSelectedButton.Name);
                     return;
                 }
@@ -263,6 +262,16 @@ namespace FileExplorer
                 Console.WriteLine("Selecting a new directory threw an error: "+ ex.Message);
             }
 
+        }
+
+        public static void ChangeButtonsState(List<Button> buttons)
+        {
+            buttons.ForEach(b => {
+                b.Enabled = !b.Enabled;
+
+                //TODO => Make button icons turn slightly darker when disabled
+   
+            });
         }
 
         public static Button CreateExtensionButton(String text)
@@ -398,7 +407,6 @@ namespace FileExplorer
 
         public static void ClearCurrentSelectedButton() {
             FileExplorer.CurrentSelectedButton = null;
-            FileExplorer.CurrentSelectedPath = string.Empty;
         }
 
     }

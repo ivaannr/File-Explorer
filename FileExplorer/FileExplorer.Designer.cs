@@ -1,4 +1,5 @@
-﻿using FileExplorer.Properties;
+﻿using FileExplorer.Model;
+using FileExplorer.Properties;
 
 namespace FileExplorer
 {
@@ -289,6 +290,7 @@ namespace FileExplorer
             renameButton.TabIndex = 12;
             renameButton.UseVisualStyleBackColor = true;
             renameButton.Click += renameButton_Click;
+            renameButton.Tag = new ButtonMetadata { CanDisable = true};
             // 
             // favoriteButton
             // 
@@ -301,6 +303,8 @@ namespace FileExplorer
             favoriteButton.TabIndex = 11;
             favoriteButton.UseVisualStyleBackColor = true;
             favoriteButton.Click += favoriteButton_Click;
+            favoriteButton.Tag = new ButtonMetadata { CanDisable = true};
+
             // 
             // separatorPanel3
             // 
@@ -321,6 +325,7 @@ namespace FileExplorer
             cutButton.TabIndex = 9;
             cutButton.UseVisualStyleBackColor = true;
             cutButton.Click += cutButton_Click;
+            cutButton.Tag = new ButtonMetadata { CanDisable = true };
             // 
             // deleteButton
             // 
@@ -333,6 +338,7 @@ namespace FileExplorer
             deleteButton.TabIndex = 8;
             deleteButton.UseVisualStyleBackColor = true;
             deleteButton.Click += deleteButton_Click;
+            deleteButton.Tag = new ButtonMetadata { CanDisable = true };
             // 
             // pasteButton
             // 
@@ -344,6 +350,7 @@ namespace FileExplorer
             pasteButton.Size = new Size(20, 20);
             pasteButton.TabIndex = 7;
             pasteButton.UseVisualStyleBackColor = true;
+            pasteButton.Tag = new ButtonMetadata { CanDisable = true };
             // 
             // copyButton
             // 
@@ -355,6 +362,7 @@ namespace FileExplorer
             copyButton.Size = new Size(20, 20);
             copyButton.TabIndex = 6;
             copyButton.UseVisualStyleBackColor = true;
+            copyButton.Tag = new ButtonMetadata { CanDisable = true };
             // 
             // separatorPanel2
             // 

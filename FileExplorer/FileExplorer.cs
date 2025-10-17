@@ -9,6 +9,7 @@ namespace FileExplorer
     public partial class FileExplorer : Form
     {
 
+         
         private bool suppressTextChanged = false;
         private CancellationTokenSource cts;
         private String path = "C:\\";
@@ -16,17 +17,23 @@ namespace FileExplorer
         private DriveInfo[] drivesInfo;
         private List<FavoriteDirectory> favDirs;
         public static Button? CurrentSelectedButton { get; set; } = null;
-        public static String CurrentSelectedPath { get; set; } = string.Empty;
+        public static List<Button>? utilsButtons;
 
         public FileExplorer()
         {
             InitializeComponent();
 
+            List<Button> utilsButtons = utilsWrapperPanel.Controls
+                                                         .OfType<Button>()
+                                                         .Where(c => (c.Tag as ButtonMetadata)?.CanDisable == true)
+                                                         .ToList();
             drivesInfo = DriveInfo.GetDrives()
                                   .Where(d => d.DriveType == DriveType.Fixed)
                                   .Where(d => d.IsReady)
                                   .ToArray();
 
+
+            Utils.ChangeButtonsState(utilsButtons);
             PreparePathBox();
             SetUpFavoriteDirectories();
             SetUpDrives();
@@ -36,8 +43,6 @@ namespace FileExplorer
 
             Console.WriteLine("Admin: " + (isAdmin ? "Yes" : "No"));
         }
-
-
 
         private async void SetUpFavoriteDirectories() { 
             favDirs = await Utils.ParseCSVData(await Utils.GetFavoriteDirectories());
@@ -95,7 +100,7 @@ namespace FileExplorer
             }
         }
 
-        private void pathTextBox_TextChanged(object sender, EventArgs e)
+        private async void pathTextBox_TextChanged(object sender, EventArgs e)
         {
             try
             {
@@ -108,7 +113,7 @@ namespace FileExplorer
                     AddNotFound();
                     return;
                 }
-                ChangeDirectory(currentPath, cts.Token);
+                await ChangeDirectory(currentPath, cts.Token);
             }
             catch (Exception ex)
             {
@@ -229,6 +234,7 @@ namespace FileExplorer
 
         private void utilsWrapperPanel_Paint(object sender, PaintEventArgs e)
         {
+            
 
         }
 
