@@ -250,14 +250,14 @@ namespace FileExplorer
 
             if (parentFullPath == null)
             {
-                //TODO => Add a pop to inform the user that he's in the root directory
-
-                Console.WriteLine("You can't go back any further");
+                Utils.ShowPopUp("You can't go back any further", "Warning", Resources.WARNING);
                 return;
             }
 
             pathTextBox.Text = parentFullPath;
         }
+
+
 
         private void returnButton_Click(object sender, EventArgs e)
         {

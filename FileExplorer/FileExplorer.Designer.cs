@@ -469,6 +469,7 @@ namespace FileExplorer
             MaximizeBox = false;
             Name = "FileExplorer";
             Text = "FileExplorer";
+            this.StartPosition = FormStartPosition.CenterScreen;
             sideBar.ResumeLayout(false);
             mainFoldersWrapper.ResumeLayout(false);
             mainFoldersWrapper.PerformLayout();

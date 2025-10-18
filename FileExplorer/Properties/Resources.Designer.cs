@@ -231,6 +231,16 @@ namespace FileExplorer.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Icon similar a (Icono).
+        /// </summary>
+        internal static System.Drawing.Icon INFO_CIRCLE_ICON {
+            get {
+                object obj = ResourceManager.GetObject("INFO_CIRCLE_ICON", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap KEYBOARD {
@@ -287,6 +297,16 @@ namespace FileExplorer.Properties {
             get {
                 object obj = ResourceManager.GetObject("VIDEO_FILE", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Icon similar a (Icono).
+        /// </summary>
+        internal static System.Drawing.Icon WARNING {
+            get {
+                object obj = ResourceManager.GetObject("WARNING", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }
