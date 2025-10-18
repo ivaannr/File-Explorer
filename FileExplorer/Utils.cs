@@ -12,7 +12,7 @@ using FileExplorer.Properties;
 
 namespace FileExplorer
 {
-    internal static class Utils
+    internal static partial class Utils
     {
         private static readonly string[] audioExtensions = { "mp3", "wav", "ogg", "flac", "aac", "m4a" };
         private static readonly string[] videoExtensions = { "mp4", "avi", "mkv", "mov", "wmv", "webm" };
@@ -124,12 +124,19 @@ namespace FileExplorer
                     foreach (var line in lines)
                     {
                         var parts = line.Split(";");
+
+                        if (parts.Length < 2) {
+                            Console.WriteLine($"Invalid line: {line}");
+                            continue;
+                        }
+
                         String ID = parts[0];
                         String path = parts[1];
 
                         if (!Directory.Exists(path))
                         {
-                            throw new DirectoryNotFoundException($"Directory {path} not found.");
+                            Console.WriteLine($"Directory {path} not found.");
+                            continue;
                         }
 
                         directories.Add(line);
@@ -148,7 +155,7 @@ namespace FileExplorer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"ERROR: {ex.Message}");
+                Console.WriteLine($"An error ocurred while parsing favorite directory: {ex.Message}");
             }
 
             return new List<String> { };
@@ -187,7 +194,7 @@ namespace FileExplorer
 
             String type = sf.Type.ToLower();
 
-            Button button = type == "folder" ? new DoubleClickButton() : new Button();
+            Button button = new DoubleClickButton();
             button.AutoSize = true;
             button.BackColor = Color.FromArgb(27, 27, 27);
             button.FlatAppearance.BorderSize = 0;
@@ -203,7 +210,6 @@ namespace FileExplorer
             button.TextAlign = ContentAlignment.MiddleLeft;
             button.TextImageRelation = TextImageRelation.ImageBeforeText;
             button.UseVisualStyleBackColor = false;
-
             button.Tag = new ButtonMetadata {
                 Path = sf.Path,
                 Type = sf.Type
@@ -211,17 +217,23 @@ namespace FileExplorer
 
             button.MouseDoubleClick += (s, e) =>
             {
+                if (e.Button == MouseButtons.Right) { return; }
+
                 Console.WriteLine("Doble clicked on " + button.Name);
                 pathTextBox.Text = $"{sf.Path}";
             };
-            button.Click += directoryButton_Click!;
+            button.MouseClick += directoryButton_MouseClick!;
             return button;
         }
 
-        private static void directoryButton_Click(object sender, EventArgs e) {
+        private static void directoryButton_MouseClick(object sender, MouseEventArgs e) {
 
-            //TODO => make that when clicking on a directory the fav buttons state change
-
+            /*
+             * TODO List
+             * make that when clicking on a directory the fav buttons state change
+             * change util buttons state when a button is clicked
+            */
+           
             try
             {
 
@@ -231,6 +243,9 @@ namespace FileExplorer
 
                     FileExplorer.CurrentSelectedButton!.BackColor = Color.FromArgb(50, 50, 50);
                     Console.WriteLine(FileExplorer.CurrentSelectedButton.Name);
+
+                    
+
                     return;
                 }
 
@@ -270,7 +285,7 @@ namespace FileExplorer
                 b.Enabled = !b.Enabled;
 
                 //TODO => Make button icons turn slightly darker when disabled
-   
+            
             });
         }
 
@@ -399,7 +414,7 @@ namespace FileExplorer
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"ERROR: {ex.Message}");
+                    Console.WriteLine($"Directoy deletion failed: {ex.Message}");
                 }
             });
 
@@ -407,6 +422,38 @@ namespace FileExplorer
 
         public static void ClearCurrentSelectedButton() {
             FileExplorer.CurrentSelectedButton = null;
+        }
+
+        public static string TruncateFilename(string name)
+        {
+            int max = 30;
+
+            if (name.Length <= max)
+            {
+                return name;
+            }
+
+            return name.Substring(0, max - 3) + "...";
+        }
+
+        public static async void ReloadFavoriteDirectories(Panel panel, TextBox pathTextBox) {
+
+            panel.SuspendLayout();
+
+            panel.Controls.Clear();
+
+            List<FavoriteDirectory> favDirs = await ParseCSVData(await GetFavoriteDirectories());
+
+            if (favDirs == null || favDirs.Count == 0) { return; }
+
+            var favDirectoryViewer = new FavoriteDirectoriesViewer(pathTextBox);
+
+            foreach (FavoriteDirectory dir in favDirs)
+            {
+                panel.Controls.Add(favDirectoryViewer.Render(dir.Path));
+            }
+
+            panel.ResumeLayout();
         }
 
     }

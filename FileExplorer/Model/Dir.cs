@@ -17,7 +17,7 @@ namespace FileExplorer.Model
 
         public Dir(string path, string name, long size) { 
             Path = path;
-            Name = name;
+            Name = Utils.TruncateFilename(name);
 
         }
 

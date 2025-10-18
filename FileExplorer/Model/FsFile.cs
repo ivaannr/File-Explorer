@@ -18,7 +18,7 @@ namespace FileExplorer.Model
         public FsFile(string path)
         {
             Path = path;
-            Name = System.IO.Path.GetFileNameWithoutExtension(path);
+            Name = Utils.TruncateFilename(System.IO.Path.GetFileNameWithoutExtension(path));
             Type = System.IO.Path.GetExtension(path);
             Size = new FileInfo(path).Length;
         }

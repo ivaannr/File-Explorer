@@ -23,17 +23,20 @@ namespace FileExplorer
         {
             InitializeComponent();
 
-            List<Button> utilsButtons = utilsWrapperPanel.Controls
-                                                         .OfType<Button>()
-                                                         .Where(c => (c.Tag as ButtonMetadata)?.CanDisable == true)
-                                                         .ToList();
+            utilsButtons = new List<Button> {
+                                    favoriteButton,
+                                    deleteButton,
+                                    copyButton,
+                                    pasteButton,
+                                    cutButton};
+
             drivesInfo = DriveInfo.GetDrives()
                                   .Where(d => d.DriveType == DriveType.Fixed)
                                   .Where(d => d.IsReady)
                                   .ToArray();
 
 
-            Utils.ChangeButtonsState(utilsButtons);
+            //Utils.ChangeButtonsState(utilsButtons);
             PreparePathBox();
             SetUpFavoriteDirectories();
             SetUpDrives();
@@ -232,10 +235,28 @@ namespace FileExplorer
             pathTextBox.Text = @"C:\Users\Usuario\Pictures";
         }
 
+
+
         private void utilsWrapperPanel_Paint(object sender, PaintEventArgs e)
         {
             
+            
 
+        }
+
+        private void backButton_Click(object sender, EventArgs e)
+        {
+            String parentFullPath = Directory.GetParent(pathTextBox.Text)?.FullName!;
+
+            if (parentFullPath == null)
+            {
+                //TODO => Add a pop to inform the user that he's in the root directory
+
+                Console.WriteLine("You can't go back any further");
+                return;
+            }
+
+            pathTextBox.Text = parentFullPath;
         }
 
         private void returnButton_Click(object sender, EventArgs e)
@@ -272,17 +293,18 @@ namespace FileExplorer
 
         }
 
-        private void favoriteButton_Click(object sender, EventArgs e)
+        private async void favoriteButton_Click(object sender, EventArgs e)
         {
-            
+            String path = (CurrentSelectedButton!.Tag as ButtonMetadata)!.Path!;
 
+            await Utils.RegisterFavoriteDirectory(path);
 
-
-
+            Utils.ReloadFavoriteDirectories(favoriteDirectoriesPanel, pathTextBox);
         }
 
         private void renameButton_Click(object sender, EventArgs e)
         {
+
 
         }
 

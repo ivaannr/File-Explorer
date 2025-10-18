@@ -428,6 +428,7 @@ namespace FileExplorer
             backButton.Size = new Size(20, 20);
             backButton.TabIndex = 0;
             backButton.UseVisualStyleBackColor = false;
+            backButton.Click += backButton_Click;
             // 
             // directoryPanel
             // 
