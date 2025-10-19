@@ -1,11 +1,16 @@
 using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Windows.Forms;
 using FileExplorer.Model;
 using FileExplorer.Properties;
+using System;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace FileExplorer
 {
+
     public partial class FileExplorer : Form
     {
 
@@ -37,6 +42,7 @@ namespace FileExplorer
                                   .ToArray();
 
             //Utils.ChangeButtonsState(utilsButtons);
+            ThemeAllControls();
             PreparePathBox();
             SetUpFavoriteDirectories();
             SetUpDrives();
@@ -186,8 +192,23 @@ namespace FileExplorer
         }
 
 
-
-
+        private void ThemeAllControls(Control parent = null)
+        {
+            parent = parent ?? this;
+            Action<Control> Theme = control => {
+                int trueValue = 0x01;
+                NativeMethods.SetWindowTheme(control.Handle, "DarkMode_Explorer", null);
+                NativeMethods.DwmSetWindowAttribute(control.Handle, DwmWindowAttribute.DWMWA_USE_IMMERSIVE_DARK_MODE, ref trueValue, Marshal.SizeOf(typeof(int)));
+                NativeMethods.DwmSetWindowAttribute(control.Handle, DwmWindowAttribute.DWMWA_MICA_EFFECT, ref trueValue, Marshal.SizeOf(typeof(int)));
+            };
+            if (parent == this) Theme(this);
+            foreach (Control control in parent.Controls)
+            {
+                Theme(control);
+                if (control.Controls.Count != 0)
+                    ThemeAllControls(control);
+            }
+        }
 
         private void ClearAll()
         {
@@ -368,6 +389,20 @@ namespace FileExplorer
         {
 
         }
+    }
+
+    public enum DwmWindowAttribute
+    {
+        DWMWA_USE_IMMERSIVE_DARK_MODE = 20,
+        DWMWA_MICA_EFFECT = 1029
+    }
+    public static class NativeMethods
+    {
+        [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
+        public static extern int SetWindowTheme(IntPtr hWnd, string pszSubAppName, string pszSubIdList);
+
+        [DllImport("dwmapi.dll", PreserveSig = true)]
+        public static extern int DwmSetWindowAttribute(IntPtr hwnd, DwmWindowAttribute attr, ref int attrValue, int attrSize);
     }
 }
 
