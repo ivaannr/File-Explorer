@@ -156,25 +156,29 @@ namespace FileExplorer
 
         }
 
-        public static async void ReloadFavoriteDirectories(Panel panel, TextBox pathTextBox)
+        public static async Task ReloadFavoriteDirectories(Panel panel, TextBox pathTextBox)
         {
-
             panel.SuspendLayout();
 
-            panel.Controls.Clear();
-
-            List<FavoriteDirectory> favDirs = await ParseCSVData(await GetFavoriteDirectories());
-
-            if (favDirs == null || favDirs.Count == 0) { return; }
-
-            var favDirectoryViewer = new FavoriteDirectoriesViewer(pathTextBox);
-
-            foreach (FavoriteDirectory dir in favDirs)
+            try
             {
-                panel.Controls.Add(favDirectoryViewer.Render(dir.Path));
-            }
+                panel.Controls.Clear();
 
-            panel.ResumeLayout();
+                List<FavoriteDirectory> favDirs = await ParseCSVData(await GetFavoriteDirectories());
+
+                if (favDirs == null || favDirs.Count == 0) { return; }
+
+                var favDirectoryViewer = new FavoriteDirectoriesViewer(pathTextBox);
+
+                foreach (FavoriteDirectory dir in favDirs)
+                {
+                    panel.Controls.Add(favDirectoryViewer.Render(dir.Path));
+                }
+            }
+            finally
+            {
+                panel.ResumeLayout();
+            }
         }
         public static void ShowPopUp(string message, string title, Icon? icon)
         {

@@ -307,7 +307,9 @@ namespace FileExplorer
 
                 if (containsDir)
                 {
-                    Utils.ShowPopUp("You have already marked that directory as favorite.", "Warning", Resources.NOTIFICATION_IMPORTANT);
+                    String? id = await Utils.GetDirectoryIDFromPath(path);
+                    await Utils.DeleteDirectoryRecord(id!);
+                    Utils.ReloadFavoriteDirectories(favoriteDirectoriesPanel, pathTextBox);
                     return;
                 }
 

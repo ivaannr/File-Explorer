@@ -290,6 +290,13 @@ namespace FileExplorer
             return name.Substring(0, max - 3) + "...";
         }
 
+        public static async Task<string?> GetDirectoryIDFromPath(string path)
+        {
+            List<FavoriteDirectory> favs = await ParseCSVData(await GetFavoriteDirectories());
+            var match = favs.FirstOrDefault(fav => fav.Path == path);
+
+            return match.IsValid ? match.ID : null;
+        }
 
 
     }
