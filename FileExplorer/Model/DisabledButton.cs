@@ -12,15 +12,15 @@ namespace FileExplorer.Model
         {
             base.OnPaint(pevent);
             this.Enabled = false;
+
             TextRenderer.DrawText(
-                pevent.Graphics, 
-                this.Text, 
-                this.Font, 
-                this.ClientRectangle, 
-                Color.White, 
-                TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter
+                pevent.Graphics,
+                this.Text,
+                this.Font,
+                this.ClientRectangle,
+                Color.White,
+                TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.WordBreak
             );
         }
-
     }
 }

@@ -191,11 +191,12 @@ namespace FileExplorer
             Button messageButton = new DisabledButton();
             messageButton.Text = message;
             messageButton.Dock = DockStyle.Fill;
+            messageButton.Height = 80;
             messageButton.FlatAppearance.BorderSize = 0;
             messageButton.FlatStyle = FlatStyle.Flat;
-            messageButton.TextAlign = ContentAlignment.MiddleCenter;
-            messageButton.ForeColor = Color.White;
+            messageButton.BackColor = Color.FromArgb(30, 30, 30);
             messageButton.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            messageButton.TextAlign = ContentAlignment.MiddleCenter;
 
 
             Button okButton = new Button();
@@ -218,6 +219,23 @@ namespace FileExplorer
         public static void AddToTableView(TableLayoutPanel panel, Control item, int column, int rowIndex)
         {
             panel.Controls.Add(item, column, rowIndex);
+        }
+
+        public static async Task<bool> DirectoryAlreadyFavorite(string path)
+        {
+            try
+            {
+                var favDirs = await ParseCSVData(await GetFavoriteDirectories());
+
+                List<string> dirs = favDirs.Select(dir => dir.Path).ToList();
+
+                return dirs.Contains(path);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ERROR: " + ex.Message);
+                return false;
+            }
         }
 
     }

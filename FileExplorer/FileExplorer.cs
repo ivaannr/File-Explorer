@@ -254,7 +254,7 @@ namespace FileExplorer
 
             if (parentFullPath == null)
             {
-                Utils.ShowPopUp("You can't go back any further", "Warning", Resources.WARNING);
+                Utils.ShowPopUp("You can't go back any further", "Warning", Resources.NOTIFICATION_IMPORTANT);
                 return;
             }
 
@@ -299,11 +299,26 @@ namespace FileExplorer
 
         private async void favoriteButton_Click(object sender, EventArgs e)
         {
-            String path = (CurrentSelectedButton!.Tag as ButtonMetadata)!.Path!;
+            try
+            {
+                String path = (CurrentSelectedButton!.Tag as ButtonMetadata)!.Path!;
 
-            await Utils.RegisterFavoriteDirectory(path);
+                bool containsDir = await Utils.DirectoryAlreadyFavorite(path);
 
-            Utils.ReloadFavoriteDirectories(favoriteDirectoriesPanel, pathTextBox);
+                if (containsDir)
+                {
+                    Utils.ShowPopUp("You have already marked that directory as favorite.", "Warning", Resources.NOTIFICATION_IMPORTANT);
+                    return;
+                }
+
+                await Utils.RegisterFavoriteDirectory(path);
+
+                Utils.ReloadFavoriteDirectories(favoriteDirectoriesPanel, pathTextBox);
+            }
+            catch (NullReferenceException nullReference) {
+                Console.WriteLine("Button was null: " + nullReference.Message);
+                Utils.ShowPopUp("Please select a directory to set as a favorite.", "Warning", Resources.WARNING);
+            }
         }
 
         private void renameButton_Click(object sender, EventArgs e)

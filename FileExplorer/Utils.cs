@@ -213,9 +213,6 @@ namespace FileExplorer
                 _ => Resources.FILE
             };
         }
-
-
-
         public static async Task<string> GetLastID()
         {
             List<FavoriteDirectory> favs = await ParseCSVData(await GetFavoriteDirectories());

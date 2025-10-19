@@ -181,6 +181,16 @@ namespace FileExplorer.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Icon similar a (Icono).
+        /// </summary>
+        internal static System.Drawing.Icon EXCLAMATION {
+            get {
+                object obj = ResourceManager.GetObject("EXCLAMATION", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap FILE {
@@ -247,6 +257,16 @@ namespace FileExplorer.Properties {
             get {
                 object obj = ResourceManager.GetObject("KEYBOARD", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Icon similar a (Icono).
+        /// </summary>
+        internal static System.Drawing.Icon NOTIFICATION_IMPORTANT {
+            get {
+                object obj = ResourceManager.GetObject("NOTIFICATION_IMPORTANT", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
