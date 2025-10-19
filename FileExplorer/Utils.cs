@@ -281,9 +281,9 @@ namespace FileExplorer
             FileExplorer.CurrentSelectedButton = null;
         }
 
-        public static string TruncateFilename(string name)
+        public static string TruncateFilename(string name, int len = 30)
         {
-            int max = 30;
+            int max = len;
 
             if (name.Length <= max)
             {

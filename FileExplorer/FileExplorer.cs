@@ -9,7 +9,7 @@ namespace FileExplorer
     public partial class FileExplorer : Form
     {
 
-         
+
         private bool suppressTextChanged = false;
         private CancellationTokenSource cts;
         private String path = "C:\\";
@@ -47,19 +47,22 @@ namespace FileExplorer
             Console.WriteLine("Admin: " + (isAdmin ? "Yes" : "No"));
         }
 
-        private async void SetUpFavoriteDirectories() { 
+        private async void SetUpFavoriteDirectories()
+        {
             favDirs = await Utils.ParseCSVData(await Utils.GetFavoriteDirectories());
 
             if (favDirs == null || favDirs.Count == 0) { return; }
 
-            var favDirectoryViewer = new FavoriteDirectoriesViewer(pathTextBox); 
+            var favDirectoryViewer = new FavoriteDirectoriesViewer(pathTextBox);
 
-            foreach (FavoriteDirectory dir in favDirs) { 
-                favoriteDirectoriesPanel.Controls.Add(favDirectoryViewer.Render(dir.Path)); 
-            } 
+            foreach (FavoriteDirectory dir in favDirs)
+            {
+                favoriteDirectoriesPanel.Controls.Add(favDirectoryViewer.Render(dir.Path));
+            }
         }
 
-        private void SetUpDrives() {
+        private void SetUpDrives()
+        {
             foreach (DriveInfo drive in drivesInfo)
             {
                 var driveViewer = new DriveViewer(drive, pathTextBox);
@@ -98,7 +101,8 @@ namespace FileExplorer
 
                 return systemFiles;
             }
-            catch {
+            catch
+            {
                 return new List<ISystemFile>() { };
             }
         }
@@ -188,7 +192,7 @@ namespace FileExplorer
             await Task.Delay(100);
             ClearAll();
             directoriesViewPanel.RowCount = 1;
-            Utils.AddToTableView(directoriesViewPanel, Utils.CreateLabel("Directory not found"), 0, 0) ;
+            Utils.AddToTableView(directoriesViewPanel, Utils.CreateLabel("Directory not found"), 0, 0);
             Utils.AddToTableView(directoriesViewPanel, Utils.CreateLabel("-"), 1, 0);
             Utils.AddToTableView(directoriesViewPanel, Utils.CreateLabel("-"), 2, 0);
             directoriesViewPanel.ResumeLayout();
@@ -239,8 +243,8 @@ namespace FileExplorer
 
         private void utilsWrapperPanel_Paint(object sender, PaintEventArgs e)
         {
-            
-            
+
+
 
         }
 
@@ -318,7 +322,15 @@ namespace FileExplorer
 
         }
 
+        private void FileExplorer_Load(object sender, EventArgs e)
+        {
 
+        }
+
+        private void directoryPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
 
