@@ -304,6 +304,7 @@ namespace FileExplorer
 
         public static void ClearCurrentSelectedButton() {
             FileExplorer.CurrentSelectedButton = null;
+            ChangeButtonsState(FileExplorer.utilsButtons!);
         }
 
         public static string TruncateFilename(string name, int len = 30)
@@ -325,6 +326,8 @@ namespace FileExplorer
 
             return match.IsValid ? match.ID : null;
         }
+
+
 
 
     }

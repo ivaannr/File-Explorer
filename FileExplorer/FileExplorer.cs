@@ -1,12 +1,7 @@
-using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
-using System.Windows.Forms;
 using FileExplorer.Model;
 using FileExplorer.Properties;
-using System;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
 
 namespace FileExplorer
 {
@@ -357,7 +352,8 @@ namespace FileExplorer
 
                 await Utils.ReloadFavoriteDirectories(favoriteDirectoriesPanel, pathTextBox);
             }
-            catch (NullReferenceException nullReference) {
+            catch (NullReferenceException nullReference)
+            {
                 Console.WriteLine("Button was null: " + nullReference.Message);
                 Utils.ShowPopUp("Please select a directory to set as a favorite.", "Warning", Resources.WARNING);
             }

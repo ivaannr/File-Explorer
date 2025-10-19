@@ -139,7 +139,9 @@ namespace FileExplorer
 
                     clickedButton!.BackColor = Color.FromArgb(27, 27, 27);
 
-                    ChangeButtonsState(FileExplorer.utilsButtons!);
+                    if (FileExplorer.CurrentSelectedButton is not null) {
+                        ChangeButtonsState(FileExplorer.utilsButtons!);
+                    }
 
                     return;
                 }
@@ -210,7 +212,6 @@ namespace FileExplorer
             messageButton.BackColor = Color.FromArgb(30, 30, 30);
             messageButton.Font = new Font("Segoe UI", 12, FontStyle.Bold);
             messageButton.TextAlign = ContentAlignment.MiddleCenter;
-
 
             Button okButton = new Button();
             okButton.FlatAppearance.BorderSize = 0;
