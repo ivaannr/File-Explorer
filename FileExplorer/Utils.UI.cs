@@ -114,6 +114,8 @@ namespace FileExplorer
             try
             {
 
+                // first time selecting a directory
+
                 if (FileExplorer.CurrentSelectedButton == null)
                 {
                     FileExplorer.CurrentSelectedButton = sender as Button;
@@ -121,12 +123,14 @@ namespace FileExplorer
                     FileExplorer.CurrentSelectedButton!.BackColor = Color.FromArgb(50, 50, 50);
                     Console.WriteLine(FileExplorer.CurrentSelectedButton.Name);
 
-
+                    ChangeButtonsState(FileExplorer.utilsButtons!);
 
                     return;
                 }
 
                 Button? clickedButton = sender as Button;
+
+                // deselecting a directory
 
                 if (FileExplorer.CurrentSelectedButton.Name == clickedButton!.Name)
                 {
@@ -135,8 +139,12 @@ namespace FileExplorer
 
                     clickedButton!.BackColor = Color.FromArgb(27, 27, 27);
 
+                    ChangeButtonsState(FileExplorer.utilsButtons!);
+
                     return;
                 }
+
+                // selecting a different directory
 
                 if (FileExplorer.CurrentSelectedButton.Name != clickedButton!.Name)
                 {

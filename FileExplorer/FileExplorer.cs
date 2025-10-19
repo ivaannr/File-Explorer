@@ -41,7 +41,7 @@ namespace FileExplorer
                                   .Where(d => d.IsReady)
                                   .ToArray();
 
-            //Utils.ChangeButtonsState(utilsButtons);
+            Utils.ChangeButtonsState(utilsButtons);
             ThemeAllControls();
             PreparePathBox();
             SetUpFavoriteDirectories();
@@ -140,25 +140,24 @@ namespace FileExplorer
                     Utils.AddToTableView(directoriesViewPanel, typeButton, 1, rowIndex);
                     Utils.AddToTableView(directoriesViewPanel, sizeLabel, 2, rowIndex);
 
-                    if (item is not Dir dir) { return; }
+                    if (item is Dir dir)
+                    {
+                        _ = Task.Run(() => {
+                            try
+                            {
+                                long size = Utils.CalculateDirectorySize(new DirectoryInfo(dir.Path), token);
+                                dir.Size = size;
 
-                    _ = Task.Run(() => {
-
-                        try {
-
-                            long size = Utils.CalculateDirectorySize(new DirectoryInfo(dir.Path), token);
-                            dir.Size = size;
-
-                            if (sizeLabel.InvokeRequired) {
-                                sizeLabel.Invoke(() => sizeLabel.Text = Utils.CastToCorrectSize(dir.Size, true));
-                            } else {
-                                sizeLabel.Text = Utils.CastToCorrectSize(dir.Size, true);
+                                if (sizeLabel.InvokeRequired)
+                                    sizeLabel.Invoke(() => sizeLabel.Text = Utils.CastToCorrectSize(dir.Size, true));
+                                else
+                                    sizeLabel.Text = Utils.CastToCorrectSize(dir.Size, true);
                             }
-                        }
-                        catch (OperationCanceledException) { Console.WriteLine("The loading was cancelled"); }
-                        catch(Exception ex)  { Console.WriteLine("ERROR " + ex.Message); }
+                            catch (OperationCanceledException) { Console.WriteLine("The loading was cancelled"); }
+                            catch (Exception ex) { Console.WriteLine("ERROR " + ex.Message); }
+                        });
+                    }
 
-                    });
                     rowIndex++;
                 }
             }
