@@ -30,10 +30,10 @@ namespace FileExplorer
             return button;
         }
 
-        public static Label CreateSizeLabel(ISystemFile sf)
+        public static Label CreateSizeLabel(ISystemFile sf, string? customText = null)
         {
             Label label = CreateLabel(null);
-            label.Text = CastToCorrectSize(sf.Size);
+            label.Text = customText ?? CastToCorrectSize(sf.Size, false);
             label.Name = $"{sf.Name}SizeLabel";
             return label;
         }
@@ -92,7 +92,8 @@ namespace FileExplorer
 
             button.MouseDoubleClick += (s, e) =>
             {
-                if (e.Button == MouseButtons.Right) { return; }
+                if (e.Button == MouseButtons.Right) { return; };
+                if (type != "folder") { return; }
 
                 Console.WriteLine("Doble clicked on " + button.Name);
                 pathTextBox.Text = $"{sf.Path}";

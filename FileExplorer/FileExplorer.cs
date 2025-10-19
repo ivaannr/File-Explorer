@@ -28,7 +28,8 @@ namespace FileExplorer
                                     deleteButton,
                                     copyButton,
                                     pasteButton,
-                                    cutButton};
+                                    cutButton
+            };
 
             drivesInfo = DriveInfo.GetDrives()
                                   .Where(d => d.DriveType == DriveType.Fixed)
@@ -78,31 +79,88 @@ namespace FileExplorer
 
         private static List<ISystemFile> GetSystemFiles(string path, CancellationToken token)
         {
+            var systemFiles = new List<ISystemFile>();
+
             try
             {
-                List<ISystemFile> systemFiles = new List<ISystemFile>();
+                foreach (var dir in Directory.EnumerateDirectories(path))
+                {
+                    token.ThrowIfCancellationRequested();
+                    var dirInfo = new DirectoryInfo(dir);
 
-                foreach (var dir in Directory.GetDirectories(path))
-                {
-                    systemFiles.Add(new Dir(
-                        dir,
-                        new DirectoryInfo(dir).Name,
-                        Utils.CalculateDirectorySize(dir, token)
-                    ));
-                }
-                foreach (var dirPath in Directory.GetFiles(path))
-                {
-                    var fileInfo = new FileInfo(dirPath);
-                    systemFiles.Add(new FsFile(
-                        dirPath
-                    ));
+                    systemFiles.Add(new Dir(dir, dirInfo.Name, size: 0));
                 }
 
-                return systemFiles;
+                foreach (var file in Directory.EnumerateFiles(path))
+                {
+                    token.ThrowIfCancellationRequested();
+                    systemFiles.Add(new FsFile(file));
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return new List<ISystemFile>() { };
+                Console.WriteLine($"ERROR : {ex.Message}");
+            }
+
+            return systemFiles;
+        }
+
+        private async Task ChangeDirectory(string path, CancellationToken token)
+        {
+            ClearAll();
+
+            try
+            {
+                directoriesViewPanel.SuspendLayout();
+
+                int rowIndex = 0;
+
+                var systemFiles = await Task.Run(() => GetSystemFiles(path, token), token);
+
+                foreach (ISystemFile item in systemFiles)
+                {
+                    token.ThrowIfCancellationRequested();
+
+                    if (item is Dir && !Utils.CanAccessDirectory(item.Path)) { continue; }
+
+                    directoriesViewPanel.RowCount++;
+                    directoriesViewPanel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
+                    var nameButton = Utils.CreateDirectoryButton(item, pathTextBox);
+                    var typeButton = Utils.CreateExtensionButton(item.Type);
+                    var sizeLabel = Utils.CreateSizeLabel(item);
+
+                    Utils.AddToTableView(directoriesViewPanel, nameButton, 0, rowIndex);
+                    Utils.AddToTableView(directoriesViewPanel, typeButton, 1, rowIndex);
+                    Utils.AddToTableView(directoriesViewPanel, sizeLabel, 2, rowIndex);
+
+                    if (item is not Dir dir) { return; }
+
+                    _ = Task.Run(() => {
+
+                        try {
+
+                            long size = Utils.CalculateDirectorySize(new DirectoryInfo(dir.Path), token);
+                            dir.Size = size;
+
+                            if (sizeLabel.InvokeRequired) {
+                                sizeLabel.Invoke(() => sizeLabel.Text = Utils.CastToCorrectSize(dir.Size, true));
+                            } else {
+                                sizeLabel.Text = Utils.CastToCorrectSize(dir.Size, true);
+                            }
+                        }
+                        catch (OperationCanceledException) { Console.WriteLine("The loading was cancelled"); }
+                        catch(Exception ex)  { Console.WriteLine("ERROR " + ex.Message); }
+
+                    });
+                    rowIndex++;
+                }
+            }
+            catch (OperationCanceledException) { Console.WriteLine("The loading was cancelled"); }
+            catch (Exception ex) { Console.WriteLine("ERROR " + ex.Message); }
+            finally
+            {
+                directoriesViewPanel.ResumeLayout();
             }
         }
 
@@ -127,44 +185,7 @@ namespace FileExplorer
             }
         }
 
-        private async Task ChangeDirectory(string path, CancellationToken token)
-        {
-            ClearAll();
 
-            try
-            {
-
-                directoriesViewPanel.SuspendLayout();
-
-                int rowIndex = 0;
-
-                var systemFiles = await Task.Run(() => GetSystemFiles(path, token), token);
-
-                foreach (ISystemFile dir in systemFiles)
-                {
-                    token.ThrowIfCancellationRequested();
-
-                    if (dir is Dir && !Utils.CanAccessDirectory(dir.Path)) { continue; }
-
-                    directoriesViewPanel.RowCount++;
-                    directoriesViewPanel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-
-                    Utils.AddToTableView(directoriesViewPanel, Utils.CreateDirectoryButton(dir, pathTextBox), 0, rowIndex);
-                    Utils.AddToTableView(directoriesViewPanel, Utils.CreateExtensionButton(dir.Type), 1, rowIndex);
-                    Utils.AddToTableView(directoriesViewPanel, Utils.CreateSizeLabel(dir), 2, rowIndex);
-
-                    rowIndex++;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error: " + ex.Message);
-            }
-            finally
-            {
-                directoriesViewPanel.ResumeLayout();
-            }
-        }
 
 
 

@@ -11,7 +11,7 @@ namespace FileExplorer.Model
 
         public string Path { get; private set; }
         public string Name { get; private set; }
-        public long Size { get; private set; }
+        public long Size { get; set; }
         public bool IsDirectory => false;
         public string Type => "Folder";
 

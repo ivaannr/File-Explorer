@@ -89,6 +89,7 @@ namespace FileExplorer
             // favoriteDirectoriesPanel
             // 
             favoriteDirectoriesPanel.AutoScroll = true;
+            favoriteDirectoriesPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             favoriteDirectoriesPanel.FlowDirection = FlowDirection.TopDown;
             favoriteDirectoriesPanel.Location = new Point(13, 314);
             favoriteDirectoriesPanel.Margin = new Padding(0);
@@ -96,7 +97,6 @@ namespace FileExplorer
             favoriteDirectoriesPanel.Size = new Size(213, 206);
             favoriteDirectoriesPanel.TabIndex = 0;
             favoriteDirectoriesPanel.WrapContents = false;
-            favoriteDirectoriesPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             // 
             // folderSeparator2
             // 
@@ -441,7 +441,7 @@ namespace FileExplorer
             directoryPanel.Controls.Add(directoriesViewPanel);
             directoryPanel.Location = new Point(241, 118);
             directoryPanel.Name = "directoryPanel";
-            directoryPanel.Size = new Size(788, 402);
+            directoryPanel.Size = new Size(770, 402);
             directoryPanel.TabIndex = 3;
             directoryPanel.Paint += directoryPanel_Paint;
             // 
@@ -456,7 +456,7 @@ namespace FileExplorer
             directoriesViewPanel.Dock = DockStyle.Top;
             directoriesViewPanel.Location = new Point(0, 0);
             directoriesViewPanel.Name = "directoriesViewPanel";
-            directoriesViewPanel.Size = new Size(788, 0);
+            directoriesViewPanel.Size = new Size(770, 0);
             directoriesViewPanel.TabIndex = 0;
             // 
             // FileExplorer

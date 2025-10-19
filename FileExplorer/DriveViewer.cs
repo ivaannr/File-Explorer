@@ -68,7 +68,7 @@ namespace FileExplorer
                 Name = $"{driveLetter.ToLower()}DriveButton",
                 Size = new Size(160, 30),
                 TabIndex = 3,
-                Text = $"{driveLetter}: Drive   {Utils.CastToCorrectSize(availableSpace)} / {Utils.CastToCorrectSize(totalSpace)}",
+                Text = $"{driveLetter}: Drive   {Utils.CastToCorrectSize(availableSpace, true)} / {Utils.CastToCorrectSize(totalSpace, true)}",
                 TextAlign = ContentAlignment.MiddleLeft,
                 TextImageRelation = TextImageRelation.ImageBeforeText,
                 UseVisualStyleBackColor = false

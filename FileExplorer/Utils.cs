@@ -28,16 +28,30 @@ namespace FileExplorer
         private const long MB = KB * 1024;
         private const long GB = MB * 1024;
 
-        public static string CastToCorrectSize(long size) {
 
 
-            return size switch
+        public static string CastToCorrectSize(double bytes, bool rounded)
+        {
+            string[] sizes = { "B", "KB", "MB", "GB", "TB" };
+
+            double len = bytes;
+            int order = 0;
+
+            while (len >= 1024 && order < sizes.Length - 1)
             {
-                < KB => $"{size} bytes",
-                < MB => $"{size / KB} KB",
-                < GB => $"{size / MB} MB",
-                _ => $"{size / GB} GB"
-            };
+                order++;
+                len = len / 1024;
+            }
+
+            if (rounded)
+            {
+                return $"{len:0} {sizes[order]}";
+            }
+
+            else
+            {
+                return $"{len:0.#} {sizes[order]}";
+            }
         }
 
         public static bool CanAccessDirectory(string path)
@@ -58,33 +72,47 @@ namespace FileExplorer
             }
         }
 
-
-        public static long CalculateDirectorySize(string folderPath, CancellationToken token)
+        public static long CalculateDirectorySize(DirectoryInfo directory, CancellationToken token)
         {
-            long size = 0;
+            long totalSize = 0;
+
             try
             {
-                foreach (string file in Directory.EnumerateFiles(folderPath))
+                foreach (var file in directory.EnumerateFiles())
                 {
                     token.ThrowIfCancellationRequested();
 
                     try
                     {
-                        FileInfo info = new FileInfo(file);
-                        size += info.Length;
+                        totalSize += file.Length;
                     }
-                    catch(Exception ex) { Console.WriteLine(ex.Message); return 0; }
+                    catch (UnauthorizedAccessException) { }
+                    catch (IOException) { }
+                    catch (OperationCanceledException) { Console.WriteLine("Operation cancelled"); }
                 }
 
-                foreach (string dir in Directory.EnumerateDirectories(folderPath)) {
+                var subDirs = directory.EnumerateDirectories();
 
-                    token.ThrowIfCancellationRequested();
-                    size += CalculateDirectorySize(dir, token);
-                }
+                Parallel.ForEach(subDirs, new ParallelOptions { CancellationToken = token }, subDir =>
+                {
+                    try
+                    {
+                        long subSize = CalculateDirectorySize(subDir, token);
+                        Interlocked.Add(ref totalSize, subSize);
+                    }
+                    catch (UnauthorizedAccessException) { }
+                    catch (DirectoryNotFoundException) { }
+                    catch (OperationCanceledException) { Console.WriteLine("Operation cancelled"); }
+                });
             }
-            catch (Exception ex) { Console.WriteLine("ERROR: " + ex.Message); return 0; }
-            return size;
+            catch (UnauthorizedAccessException) { }
+            catch (DirectoryNotFoundException) { }
+            catch (OperationCanceledException) { Console.WriteLine("Operation cancelled"); }
+
+            return totalSize;
         }
+
+
 
         public static string[] ReadAllLinesFromFile(string path)
         {
