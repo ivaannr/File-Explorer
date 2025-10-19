@@ -96,6 +96,7 @@ namespace FileExplorer
             favoriteDirectoriesPanel.Size = new Size(213, 206);
             favoriteDirectoriesPanel.TabIndex = 0;
             favoriteDirectoriesPanel.WrapContents = false;
+            favoriteDirectoriesPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             // 
             // folderSeparator2
             // 

@@ -35,7 +35,6 @@ namespace FileExplorer
                                   .Where(d => d.IsReady)
                                   .ToArray();
 
-
             //Utils.ChangeButtonsState(utilsButtons);
             PreparePathBox();
             SetUpFavoriteDirectories();
@@ -309,13 +308,13 @@ namespace FileExplorer
                 {
                     String? id = await Utils.GetDirectoryIDFromPath(path);
                     await Utils.DeleteDirectoryRecord(id!);
-                    Utils.ReloadFavoriteDirectories(favoriteDirectoriesPanel, pathTextBox);
+                    await Utils.ReloadFavoriteDirectories(favoriteDirectoriesPanel, pathTextBox);
                     return;
                 }
 
                 await Utils.RegisterFavoriteDirectory(path);
 
-                Utils.ReloadFavoriteDirectories(favoriteDirectoriesPanel, pathTextBox);
+                await Utils.ReloadFavoriteDirectories(favoriteDirectoriesPanel, pathTextBox);
             }
             catch (NullReferenceException nullReference) {
                 Console.WriteLine("Button was null: " + nullReference.Message);
