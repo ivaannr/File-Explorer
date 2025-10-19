@@ -31,12 +31,8 @@ namespace FileExplorer
         /// </summary>
         private void InitializeComponent()
         {
-            ButtonMetadata buttonMetadata1 = new ButtonMetadata();
-            ButtonMetadata buttonMetadata2 = new ButtonMetadata();
-            ButtonMetadata buttonMetadata3 = new ButtonMetadata();
-            ButtonMetadata buttonMetadata4 = new ButtonMetadata();
-            ButtonMetadata buttonMetadata5 = new ButtonMetadata();
-            ButtonMetadata buttonMetadata6 = new ButtonMetadata();
+            ButtonMetadata canDisabledMetadata = new ButtonMetadata();
+            canDisabledMetadata.CanDisable = true;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileExplorer));
             sideBar = new Panel();
             favoriteDirectoriesPanel = new FlowLayoutPanel();
@@ -294,10 +290,7 @@ namespace FileExplorer
             renameButton.Name = "renameButton";
             renameButton.Size = new Size(22, 20);
             renameButton.TabIndex = 12;
-            buttonMetadata1.CanDisable = null;
-            buttonMetadata1.Path = null;
-            buttonMetadata1.Type = null;
-            renameButton.Tag = buttonMetadata1;
+            renameButton.Tag = canDisabledMetadata;
             renameButton.UseVisualStyleBackColor = true;
             renameButton.Click += renameButton_Click;
             // 
@@ -310,10 +303,7 @@ namespace FileExplorer
             favoriteButton.Name = "favoriteButton";
             favoriteButton.Size = new Size(20, 20);
             favoriteButton.TabIndex = 11;
-            buttonMetadata2.CanDisable = null;
-            buttonMetadata2.Path = null;
-            buttonMetadata2.Type = null;
-            favoriteButton.Tag = buttonMetadata2;
+            favoriteButton.Tag = canDisabledMetadata;
             favoriteButton.UseVisualStyleBackColor = true;
             favoriteButton.Click += favoriteButton_Click;
             // 
@@ -334,10 +324,7 @@ namespace FileExplorer
             cutButton.Name = "cutButton";
             cutButton.Size = new Size(20, 20);
             cutButton.TabIndex = 9;
-            buttonMetadata3.CanDisable = null;
-            buttonMetadata3.Path = null;
-            buttonMetadata3.Type = null;
-            cutButton.Tag = buttonMetadata3;
+            cutButton.Tag = canDisabledMetadata;
             cutButton.UseVisualStyleBackColor = true;
             cutButton.Click += cutButton_Click;
             // 
@@ -350,10 +337,7 @@ namespace FileExplorer
             deleteButton.Name = "deleteButton";
             deleteButton.Size = new Size(20, 20);
             deleteButton.TabIndex = 8;
-            buttonMetadata4.CanDisable = null;
-            buttonMetadata4.Path = null;
-            buttonMetadata4.Type = null;
-            deleteButton.Tag = buttonMetadata4;
+            deleteButton.Tag = canDisabledMetadata;
             deleteButton.UseVisualStyleBackColor = true;
             deleteButton.Click += deleteButton_Click;
             // 
@@ -366,10 +350,7 @@ namespace FileExplorer
             pasteButton.Name = "pasteButton";
             pasteButton.Size = new Size(20, 20);
             pasteButton.TabIndex = 7;
-            buttonMetadata5.CanDisable = null;
-            buttonMetadata5.Path = null;
-            buttonMetadata5.Type = null;
-            pasteButton.Tag = buttonMetadata5;
+            pasteButton.Tag = canDisabledMetadata;
             pasteButton.UseVisualStyleBackColor = true;
             // 
             // copyButton
@@ -381,10 +362,7 @@ namespace FileExplorer
             copyButton.Name = "copyButton";
             copyButton.Size = new Size(20, 20);
             copyButton.TabIndex = 6;
-            buttonMetadata6.CanDisable = null;
-            buttonMetadata6.Path = null;
-            buttonMetadata6.Type = null;
-            copyButton.Tag = buttonMetadata6;
+            copyButton.Tag = canDisabledMetadata;
             copyButton.UseVisualStyleBackColor = true;
             // 
             // separatorPanel2
