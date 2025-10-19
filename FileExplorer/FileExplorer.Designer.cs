@@ -31,6 +31,12 @@ namespace FileExplorer
         /// </summary>
         private void InitializeComponent()
         {
+            ButtonMetadata buttonMetadata1 = new ButtonMetadata();
+            ButtonMetadata buttonMetadata2 = new ButtonMetadata();
+            ButtonMetadata buttonMetadata3 = new ButtonMetadata();
+            ButtonMetadata buttonMetadata4 = new ButtonMetadata();
+            ButtonMetadata buttonMetadata5 = new ButtonMetadata();
+            ButtonMetadata buttonMetadata6 = new ButtonMetadata();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileExplorer));
             sideBar = new Panel();
             favoriteDirectoriesPanel = new FlowLayoutPanel();
@@ -81,7 +87,7 @@ namespace FileExplorer
             sideBar.Controls.Add(mainFoldersWrapper);
             sideBar.Location = new Point(0, 0);
             sideBar.Name = "sideBar";
-            sideBar.Size = new Size(203, 500);
+            sideBar.Size = new Size(227, 500);
             sideBar.TabIndex = 0;
             sideBar.Paint += sideBar_Paint;
             // 
@@ -92,7 +98,7 @@ namespace FileExplorer
             favoriteDirectoriesPanel.Location = new Point(12, 293);
             favoriteDirectoriesPanel.Margin = new Padding(0);
             favoriteDirectoriesPanel.Name = "favoriteDirectoriesPanel";
-            favoriteDirectoriesPanel.Size = new Size(181, 191);
+            favoriteDirectoriesPanel.Size = new Size(203, 191);
             favoriteDirectoriesPanel.TabIndex = 0;
             favoriteDirectoriesPanel.WrapContents = false;
             // 
@@ -101,7 +107,7 @@ namespace FileExplorer
             folderSeparator2.BackColor = Color.FromArgb(227, 226, 227);
             folderSeparator2.Location = new Point(12, 284);
             folderSeparator2.Name = "folderSeparator2";
-            folderSeparator2.Size = new Size(181, 2);
+            folderSeparator2.Size = new Size(203, 2);
             folderSeparator2.TabIndex = 2;
             // 
             // drivesWrapperPanel
@@ -111,7 +117,7 @@ namespace FileExplorer
             drivesWrapperPanel.Location = new Point(12, 148);
             drivesWrapperPanel.Margin = new Padding(0);
             drivesWrapperPanel.Name = "drivesWrapperPanel";
-            drivesWrapperPanel.Size = new Size(181, 135);
+            drivesWrapperPanel.Size = new Size(203, 135);
             drivesWrapperPanel.TabIndex = 0;
             drivesWrapperPanel.WrapContents = false;
             // 
@@ -120,7 +126,7 @@ namespace FileExplorer
             folderSeparator.BackColor = Color.FromArgb(227, 226, 227);
             folderSeparator.Location = new Point(12, 146);
             folderSeparator.Name = "folderSeparator";
-            folderSeparator.Size = new Size(181, 2);
+            folderSeparator.Size = new Size(203, 2);
             folderSeparator.TabIndex = 1;
             // 
             // mainFoldersWrapper
@@ -132,7 +138,7 @@ namespace FileExplorer
             mainFoldersWrapper.Controls.Add(downloadsButton);
             mainFoldersWrapper.Location = new Point(12, 12);
             mainFoldersWrapper.Name = "mainFoldersWrapper";
-            mainFoldersWrapper.Size = new Size(181, 129);
+            mainFoldersWrapper.Size = new Size(203, 129);
             mainFoldersWrapper.TabIndex = 0;
             // 
             // desktopButton
@@ -219,7 +225,7 @@ namespace FileExplorer
             // 
             pathBar.BackColor = Color.FromArgb(35, 35, 35);
             pathBar.Controls.Add(pathTextBoxWrapper);
-            pathBar.Location = new Point(202, 0);
+            pathBar.Location = new Point(226, 0);
             pathBar.Name = "pathBar";
             pathBar.Size = new Size(796, 52);
             pathBar.TabIndex = 1;
@@ -253,7 +259,7 @@ namespace FileExplorer
             // 
             toolsPanel.BackColor = Color.FromArgb(30, 30, 30);
             toolsPanel.Controls.Add(utilsWrapperPanel);
-            toolsPanel.Location = new Point(202, 52);
+            toolsPanel.Location = new Point(226, 52);
             toolsPanel.Name = "toolsPanel";
             toolsPanel.Size = new Size(796, 52);
             toolsPanel.TabIndex = 2;
@@ -288,9 +294,12 @@ namespace FileExplorer
             renameButton.Name = "renameButton";
             renameButton.Size = new Size(22, 20);
             renameButton.TabIndex = 12;
+            buttonMetadata1.CanDisable = null;
+            buttonMetadata1.Path = null;
+            buttonMetadata1.Type = null;
+            renameButton.Tag = buttonMetadata1;
             renameButton.UseVisualStyleBackColor = true;
             renameButton.Click += renameButton_Click;
-            renameButton.Tag = new ButtonMetadata { CanDisable = true};
             // 
             // favoriteButton
             // 
@@ -301,10 +310,12 @@ namespace FileExplorer
             favoriteButton.Name = "favoriteButton";
             favoriteButton.Size = new Size(20, 20);
             favoriteButton.TabIndex = 11;
+            buttonMetadata2.CanDisable = null;
+            buttonMetadata2.Path = null;
+            buttonMetadata2.Type = null;
+            favoriteButton.Tag = buttonMetadata2;
             favoriteButton.UseVisualStyleBackColor = true;
             favoriteButton.Click += favoriteButton_Click;
-            favoriteButton.Tag = new ButtonMetadata { CanDisable = true};
-
             // 
             // separatorPanel3
             // 
@@ -323,9 +334,12 @@ namespace FileExplorer
             cutButton.Name = "cutButton";
             cutButton.Size = new Size(20, 20);
             cutButton.TabIndex = 9;
+            buttonMetadata3.CanDisable = null;
+            buttonMetadata3.Path = null;
+            buttonMetadata3.Type = null;
+            cutButton.Tag = buttonMetadata3;
             cutButton.UseVisualStyleBackColor = true;
             cutButton.Click += cutButton_Click;
-            cutButton.Tag = new ButtonMetadata { CanDisable = true };
             // 
             // deleteButton
             // 
@@ -336,9 +350,12 @@ namespace FileExplorer
             deleteButton.Name = "deleteButton";
             deleteButton.Size = new Size(20, 20);
             deleteButton.TabIndex = 8;
+            buttonMetadata4.CanDisable = null;
+            buttonMetadata4.Path = null;
+            buttonMetadata4.Type = null;
+            deleteButton.Tag = buttonMetadata4;
             deleteButton.UseVisualStyleBackColor = true;
             deleteButton.Click += deleteButton_Click;
-            deleteButton.Tag = new ButtonMetadata { CanDisable = true };
             // 
             // pasteButton
             // 
@@ -349,8 +366,11 @@ namespace FileExplorer
             pasteButton.Name = "pasteButton";
             pasteButton.Size = new Size(20, 20);
             pasteButton.TabIndex = 7;
+            buttonMetadata5.CanDisable = null;
+            buttonMetadata5.Path = null;
+            buttonMetadata5.Type = null;
+            pasteButton.Tag = buttonMetadata5;
             pasteButton.UseVisualStyleBackColor = true;
-            pasteButton.Tag = new ButtonMetadata { CanDisable = true };
             // 
             // copyButton
             // 
@@ -361,8 +381,11 @@ namespace FileExplorer
             copyButton.Name = "copyButton";
             copyButton.Size = new Size(20, 20);
             copyButton.TabIndex = 6;
+            buttonMetadata6.CanDisable = null;
+            buttonMetadata6.Path = null;
+            buttonMetadata6.Type = null;
+            copyButton.Tag = buttonMetadata6;
             copyButton.UseVisualStyleBackColor = true;
-            copyButton.Tag = new ButtonMetadata { CanDisable = true };
             // 
             // separatorPanel2
             // 
@@ -434,7 +457,7 @@ namespace FileExplorer
             // 
             directoryPanel.AutoScroll = true;
             directoryPanel.Controls.Add(directoriesViewPanel);
-            directoryPanel.Location = new Point(215, 118);
+            directoryPanel.Location = new Point(238, 118);
             directoryPanel.Name = "directoryPanel";
             directoryPanel.Size = new Size(771, 366);
             directoryPanel.TabIndex = 3;
@@ -458,18 +481,18 @@ namespace FileExplorer
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(27, 27, 27);
-            ClientSize = new Size(998, 496);
+            ClientSize = new Size(1020, 496);
             Controls.Add(directoryPanel);
             Controls.Add(toolsPanel);
             Controls.Add(pathBar);
             Controls.Add(sideBar);
             Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Icon = (Icon) resources.GetObject("$this.Icon");
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "FileExplorer";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "FileExplorer";
-            this.StartPosition = FormStartPosition.CenterScreen;
             sideBar.ResumeLayout(false);
             mainFoldersWrapper.ResumeLayout(false);
             mainFoldersWrapper.PerformLayout();
