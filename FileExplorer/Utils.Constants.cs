@@ -19,10 +19,10 @@ namespace FileExplorer
         private static readonly string[] sourceCodeExtensions = { "cs", "java", "py", "js", "html", "css", "cpp", "h", "php", "rb", "kt", "kts", "csx" };
         private static readonly string[] databaseExtensions = { "sql", "db", "sqlite", "mdb" };
 
-        public static readonly List<Button> _selectedButtons = new List<Button>();
+        public static List<Button> _selectedButtons = new List<Button>();
+        public static List<Button> _copiedButtons = new List<Button>();
         public static readonly List<FavoriteDirectory> _savedFavoriteDirectories = new List<FavoriteDirectory>();
-
-
+        
         private const String favsPath = "favs.csv";
 
         private const long KB = 1024;
@@ -31,6 +31,8 @@ namespace FileExplorer
         private const long TB = GB * 1024;
 
         public static bool controlHeld = false;
+
+        
 
     }
 }

@@ -327,5 +327,6 @@ namespace FileExplorer
             await Utils.ReloadFavoriteDirectories(favoriteDirectoriesPanel, pathTextBox);
         }
 
+
     }
 }

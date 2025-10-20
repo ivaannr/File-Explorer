@@ -50,6 +50,7 @@ namespace FileExplorer
                                   .ToArray();
 
             Utils.ChangeButtonsState(utilsButtons);
+            ChangeDirectory(pathTextBox.Text, CancellationToken.None);
             ThemeAllControls();
             PreparePathBox();
             SetUpFavoriteDirectories();
@@ -323,12 +324,12 @@ namespace FileExplorer
 
         private async void deleteButton_Click(object sender, EventArgs e)
         {
-            Button clickedButton = CurrentSelectedButton!;
-            ButtonMetadata? data = clickedButton.Tag as ButtonMetadata;
 
             try
             {
-                await Utils.DeleteDirectory(data!);
+                foreach (Button button in Utils._selectedButtons) {
+                    await Utils.DeleteDirectory((button.Tag as ButtonMetadata)!);
+                }
             }
             catch (Exception ex)
             {
@@ -340,9 +341,39 @@ namespace FileExplorer
             await ChangeDirectory(pathTextBox.Text, CancellationToken.None);
         }
 
-        private void cutButton_Click(object sender, EventArgs e)
+        private async void cutButton_Click(object sender, EventArgs e)
         {
+            try {
 
+                if (Utils._selectedButtons.Count > 0)
+                {
+
+                    Console.WriteLine("Selected Buttons Count Before: " + Utils._selectedButtons.Count);
+                    Console.WriteLine("Coppied Buttons Count Before: " + Utils._copiedButtons.Count);
+
+                    
+                    foreach (var but in Utils._selectedButtons.ToList())
+                    {
+                        var metadata = (but.Tag as ButtonMetadata)!;
+
+                        Utils._copiedButtons.Add(but);
+                        Utils._selectedButtons.Remove(but);
+
+                        await Utils.DeleteDirectory(metadata);
+
+                        Utils.ClearCurrentSelectedButton();
+
+                        await ChangeDirectory(pathTextBox.Text, CancellationToken.None);
+                    }
+
+                    Console.WriteLine("Selected Buttons Count After: " + Utils._selectedButtons.Count);
+                    Console.WriteLine("Coppied Buttons Count After: " + Utils._copiedButtons.Count);
+
+                }
+
+            } catch (NullReferenceException nullReference) {
+                Console.WriteLine($"ERROR {nullReference.Message}");
+            }
         }
 
         private async void favoriteButton_Click(object sender, EventArgs e)
