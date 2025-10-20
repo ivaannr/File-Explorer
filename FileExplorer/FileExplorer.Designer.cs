@@ -356,6 +356,7 @@ namespace FileExplorer
             pasteButton.TabIndex = 7;
             pasteButton.Tag = buttonMetadata1;
             pasteButton.UseVisualStyleBackColor = true;
+            pasteButton.Click += pasteButton_Click;
             // 
             // copyButton
             // 

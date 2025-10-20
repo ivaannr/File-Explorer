@@ -305,6 +305,7 @@ namespace FileExplorer
             if (parentFullPath == null)
             {
                 Utils.ShowPopUp("You can't go back any further", "Warning", Resources.NOTIFICATION_IMPORTANT);
+
                 return;
             }
 
@@ -360,7 +361,7 @@ namespace FileExplorer
                         Utils._copiedButtons.Add(but);
                         Utils._selectedButtons.Remove(but);
 
-                        await Utils.DeleteDirectory(metadata);
+                        await Utils.DeleteDirectory(metadata); // TODO => add some way to delete the directory but to still be able to move it 
 
                         Utils.ClearCurrentSelectedButton();
 
@@ -369,6 +370,8 @@ namespace FileExplorer
 
                     Console.WriteLine("Selected Buttons Count After: " + Utils._selectedButtons.Count);
                     Console.WriteLine("Coppied Buttons Count After: " + Utils._copiedButtons.Count);
+
+                    Utils.EnableButton(pasteButton);
 
                 }
 
@@ -406,31 +409,113 @@ namespace FileExplorer
             }
         }
 
-        private Task pasteButton_Click(object sender, EventArgs e) {
-            return Task.Run(() => {
-                try {
-                    List<String> directories = directoriesViewPanel.Controls
-                                                                   .OfType<Button>()
-                                                                   .Where(p => (p.Tag as ButtonMetadata)!.Path is not null)
-                                                                   .Select(b => (b.Tag as ButtonMetadata)!.Path)
-                                                                   .ToList()!;
+        private async void pasteButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                List<Button> directories = directoriesViewPanel.Controls
+                    .OfType<Button>()
+                    .Where(b => b.Tag is ButtonMetadata)
+                    .ToList();
 
-                    List<String> directoriesToPaste = Utils._copiedButtons
-                                                                   .Where(p => (p.Tag as ButtonMetadata)!.Path is not null)
-                                                                   .Select(b => (b.Tag as ButtonMetadata)!.Path)
-                                                                   .ToList()!;
+                List<Button> directoriesToPaste = Utils._copiedButtons
+                    .OfType<Button>()
+                    .Where(b => b.Tag is ButtonMetadata)
+                    .ToList();
 
-                    List<string> commonDirectories = directoriesToPaste
-                                                                   .Where(d => directories.Any(dir => dir.Equals(d)))
-                                                                   .ToList();
+                if (!directoriesToPaste.Any()) return;
 
+                HashSet<Button> existingPaths = new HashSet<Button>(directories, new ButtonMetadataComparer());
 
+                List<Button> commonDirectories = directoriesToPaste
+                    .Where(b => existingPaths.Contains(b))
+                    .ToList();
 
+                if (commonDirectories.Any())
+                {
+                    var overwrite = Utils.CreateDecisionPopUp(
+                        "Some files with the same name are already in this folder. Do you want to replace them?",
+                        "Overwrite files",
+                        Resources.NOTIFICATION_IMPORTANT
+                    );
 
-                } catch (Exception ex) { 
-                    Console.WriteLine("ERROR: " + ex.Message); 
+                    var result = overwrite.ShowDialog();
+
+                    if (result == DialogResult.No) return;
+
+                    var currentPath = pathTextBox.Text;
+
+                    directoriesViewPanel.SuspendLayout();
+                    await Task.Run(() =>
+                    {
+                        foreach (var d in commonDirectories)
+                        {
+                            var metadata = d.Tag as ButtonMetadata;
+                            if (metadata == null) continue;
+
+                            string destination = Path.Combine(currentPath, Path.GetFileName(metadata.Path)!);
+
+                            Console.WriteLine($"Attempting to move from '{metadata.Path}' to '{destination}'");
+
+                            Console.WriteLine($"Before move: exists? File: {File.Exists(metadata.Path)}, Dir: {Directory.Exists(metadata.Path)}");
+                            Console.WriteLine($"Destination exists? File: {File.Exists(destination)}, Dir: {Directory.Exists(destination)}");
+
+                            try
+                            {
+                                if (File.Exists(metadata.Path))
+                                {
+                                    if (File.Exists(destination))
+                                    {
+                                        Console.WriteLine($"Deleting existing file at destination: {destination}");
+                                        File.Delete(destination);
+                                    }
+
+                                    File.Move(metadata.Path, destination);
+                                }
+                                else if (Directory.Exists(metadata.Path))
+                                {
+                                    if (Directory.Exists(destination))
+                                    {
+                                        Console.WriteLine($"Deleting existing directory at destination: {destination}");
+                                        Directory.Delete(destination, recursive: true);
+                                    }
+
+                                    Directory.Move(metadata.Path, destination);
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"Source path does not exist: {metadata.Path}");
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Error moving {metadata.Path} to {destination}: {ex.Message}");
+                            }
+
+                            Console.WriteLine($"After move: exists? File: {File.Exists(metadata.Path)}, Dir: {Directory.Exists(metadata.Path)}");
+                            Console.WriteLine($"Destination exists? File: {File.Exists(destination)}, Dir: {Directory.Exists(destination)}");
+                        }
+                    });
+
+                    await ReloadUI();
+
+                    Utils.DisableButton(pasteButton);
+
+                    directoriesViewPanel.ResumeLayout();
+
+                    Console.WriteLine(currentPath);
+
+                    return;
                 }
-            });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ERROR: " + ex.Message);
+            }
+            finally
+            {
+                directoriesViewPanel.ResumeLayout();
+            }
         }
 
 

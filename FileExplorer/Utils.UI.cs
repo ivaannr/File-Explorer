@@ -235,8 +235,77 @@ namespace FileExplorer
             customBox.ShowDialog();
         }
 
+        public static Form CreateDecisionPopUp(string message, string title, Icon? icon)
+        {
+
+            int fontSize = 12;
+
+            if (message.Length > 80) { fontSize--; }
+
+            Form customBox = new Form();
+            customBox.Text = title;
+            customBox.BackColor = Color.FromArgb(30, 30, 30);
+            customBox.Size = new Size(300, 150);
+            customBox.StartPosition = FormStartPosition.CenterScreen;
+            customBox.ShowIcon = true;
+            customBox.ShowInTaskbar = false;
+            customBox.TopMost = true;
+            customBox.Icon = icon;
+
+            Button messageButton = new DisabledButton();
+            messageButton.Text = message;
+            messageButton.Dock = DockStyle.Top;
+            messageButton.Height = 80;
+            messageButton.FlatAppearance.BorderSize = 0;
+            messageButton.FlatStyle = FlatStyle.Flat;
+            messageButton.BackColor = Color.FromArgb(30, 30, 30);
+            messageButton.Font = new Font("Segoe UI", fontSize, FontStyle.Bold);
+            messageButton.TextAlign = ContentAlignment.MiddleCenter;
+
+            Panel buttonPanel = new Panel();
+            buttonPanel.Dock = DockStyle.Bottom;
+            buttonPanel.Height = 40;
+            buttonPanel.Padding = new Padding(10);
+            buttonPanel.BackColor = Color.FromArgb(30, 30, 30);
+
+            Button yesButton = new Button();
+            yesButton.FlatAppearance.BorderSize = 0;
+            yesButton.FlatStyle = FlatStyle.Flat;
+            yesButton.Text = "Yes";
+            yesButton.ForeColor = Color.White;
+            yesButton.BackColor = Color.FromArgb(30, 30, 30);
+            yesButton.Size = new Size(100, 30);
+            yesButton.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            yesButton.Click += (sender, e) => { customBox.DialogResult = DialogResult.Yes; customBox.Close(); };
+
+            Button noButton = new Button();
+            noButton.FlatAppearance.BorderSize = 0;
+            noButton.FlatStyle = FlatStyle.Flat;
+            noButton.Text = "No";
+            noButton.ForeColor = Color.White;
+            noButton.BackColor = Color.FromArgb(30, 30, 30);
+            noButton.Size = new Size(100, 30);
+            noButton.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            noButton.Click += (sender, e) => { customBox.DialogResult = DialogResult.No; customBox.Close(); };
+
+            yesButton.Location = new Point(30, 5);
+            noButton.Location = new Point(160, 5);
+            buttonPanel.Controls.Add(yesButton);
+            buttonPanel.Controls.Add(noButton);
+
+            customBox.Controls.Add(messageButton);
+            customBox.Controls.Add(buttonPanel);
+
+            return customBox;
+        }
+
         public static void AddToTableView(TableLayoutPanel panel, Control item, int column, int rowIndex)
         {
+            if (panel.InvokeRequired)
+            {
+                panel.Invoke(() => { panel.Controls.Add(item, column, rowIndex); });
+                return;
+            }
             panel.Controls.Add(item, column, rowIndex);
         }
 
@@ -256,6 +325,8 @@ namespace FileExplorer
                 return false;
             }
         }
+
+        
 
 
     }

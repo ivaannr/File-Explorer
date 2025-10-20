@@ -327,6 +327,8 @@ namespace FileExplorer
             await Utils.ReloadFavoriteDirectories(favoriteDirectoriesPanel, pathTextBox);
         }
 
+        public static void EnableButton(Button button) => button.Enabled = true;
+        public static void DisableButton(Button button) => button.Enabled = false;
 
     }
 }
