@@ -63,6 +63,25 @@ namespace FileExplorer
             });
         }
 
+        public static void DisableUtilsButtons(List<Button> buttons) {
+            buttons.ForEach(b => {
+                b.Enabled = false;
+
+                //TODO => Make button icons turn slightly darker when disabled
+
+            });
+        }
+
+        public static void EnableUtilsButtons(List<Button> buttons)
+        {
+            buttons.ForEach(b => {
+                b.Enabled = true;
+
+                //TODO => Make button icons turn slightly darker when disabled
+
+            });
+        }
+
         public static Button CreateDirectoryButton(ISystemFile sf, TextBox pathTextBox)
         {
 
@@ -102,7 +121,7 @@ namespace FileExplorer
             return button;
         }
 
-        private static void directoryButton_MouseClick(object sender, MouseEventArgs e)
+        private static async void directoryButton_MouseClick(object sender, MouseEventArgs me)
         {
 
             /*
@@ -111,59 +130,45 @@ namespace FileExplorer
              * change util buttons state when a button is clicked
             */
 
-            try
-            {
-
-                // first time selecting a directory
-
-                if (FileExplorer.CurrentSelectedButton == null)
+            await Task.Run(() => {
+                try
                 {
-                    FileExplorer.CurrentSelectedButton = sender as Button;
 
-                    FileExplorer.CurrentSelectedButton!.BackColor = Color.FromArgb(50, 50, 50);
-                    Console.WriteLine(FileExplorer.CurrentSelectedButton.Name);
+                    if (controlHeld && me.Button == MouseButtons.Right) {
 
-                    ChangeButtonsState(FileExplorer.utilsButtons!);
+                        Button? selectedButton = sender as Button;
 
-                    return;
-                }
+                        if (_selectedButtons.Contains(selectedButton!)) {
+                            _selectedButtons.Remove(selectedButton!);
+                            Console.WriteLine("Count after deselecting: " + _selectedButtons.Count);
+                            selectedButton!.BackColor = Color.FromArgb(27, 27, 27);
 
-                Button? clickedButton = sender as Button;
+                            if (_selectedButtons.Count == 0) {
+                                DisableUtilsButtons(FileExplorer.utilsButtons!);
+                            }
 
-                // deselecting a directory
+                            return;
+                        }
 
-                if (FileExplorer.CurrentSelectedButton.Name == clickedButton!.Name)
-                {
-                    Console.WriteLine(FileExplorer.CurrentSelectedButton.Name);
-                    ClearCurrentSelectedButton();
+                        _selectedButtons.Add(selectedButton!);
 
-                    clickedButton!.BackColor = Color.FromArgb(27, 27, 27);
+                        EnableUtilsButtons(FileExplorer.utilsButtons!);
 
-                    if (FileExplorer.CurrentSelectedButton is not null) {
-                        ChangeButtonsState(FileExplorer.utilsButtons!);
+                        Console.WriteLine("Count after selecting: " + _selectedButtons!.Count);
+
+                        selectedButton!.BackColor = Color.FromArgb(50,50,50);
+
+                        Console.WriteLine("Clicked right button while holding ctrl");
+
+
+                        return;
                     }
-
-                    return;
                 }
-
-                // selecting a different directory
-
-                if (FileExplorer.CurrentSelectedButton.Name != clickedButton!.Name)
+                catch (Exception ex)
                 {
-                    FileExplorer.CurrentSelectedButton.BackColor = Color.FromArgb(27, 27, 27);
-                    clickedButton.BackColor = Color.FromArgb(50, 50, 50);
-
-                    ClearCurrentSelectedButton();
-
-                    FileExplorer.CurrentSelectedButton = clickedButton;
-                    Console.WriteLine(FileExplorer.CurrentSelectedButton.Name);
-                    return;
+                    Console.WriteLine("Selecting a new directory threw an error: " + ex.Message);
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Selecting a new directory threw an error: " + ex.Message);
-            }
+            });
 
         }
 

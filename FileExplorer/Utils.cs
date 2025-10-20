@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Resources;
@@ -15,21 +16,6 @@ namespace FileExplorer
 {
     internal static partial class Utils
     {
-        private static readonly string[] audioExtensions = { "mp3", "wav", "ogg", "flac", "aac", "m4a" };
-        private static readonly string[] videoExtensions = { "mp4", "avi", "mkv", "mov", "wmv", "webm" };
-        private static readonly string[] documentExtensions = { "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "rtf" };
-        private static readonly string[] compressedExtensions = { "zip", "rar", "7z", "tar", "gz", "bz2" };
-        private static readonly string[] executableExtensions = { "exe", "msi", "bat", "sh", "cmd", "ps1" };
-        private static readonly string[] configExtensions = { "json", "xml", "yml", "yaml", "md", "csv" };
-        private static readonly string[] sourceCodeExtensions = { "cs", "java", "py", "js", "html", "css", "cpp", "h", "php", "rb", "kt", "kts", "csx" };
-        private static readonly string[] databaseExtensions = { "sql", "db", "sqlite", "mdb" };
-        private const String favsPath = "favs.csv";
-        private const long KB = 1024;
-        private const long MB = KB * 1024;
-        private const long GB = MB * 1024;
-
-
-
         public static string CastToCorrectSize(double bytes, bool rounded)
         {
             string[] sizes = { "B", "KB", "MB", "GB", "TB" };
@@ -217,9 +203,6 @@ namespace FileExplorer
 
             return new List<FavoriteDirectory> { };
         }
-
-        
-
         public static Bitmap GetImageExtension(string fileType)
         {
             if (string.IsNullOrWhiteSpace(fileType))
@@ -269,6 +252,7 @@ namespace FileExplorer
             var newContent = favs.Select(fav => $"{fav.ID};{fav.Path}");
 
             File.WriteAllLines(favsPath, newContent);
+
         }
 
         public static Task DeleteDirectory(ButtonMetadata data)
@@ -328,7 +312,20 @@ namespace FileExplorer
         }
 
 
+        public static async void HandleFavoriteDirectory(bool containsDir, String buttonPath, Panel favoriteDirectoriesPanel, TextBox pathTextBox)
+        {
+            if (containsDir)
+            {
+                String? id = await Utils.GetDirectoryIDFromPath(buttonPath);
+                await Utils.DeleteDirectoryRecord(id!);
+                await Utils.ReloadFavoriteDirectories(favoriteDirectoriesPanel, pathTextBox);
+                return;
+            }
 
+            await Utils.RegisterFavoriteDirectory(buttonPath);
+
+            await Utils.ReloadFavoriteDirectories(favoriteDirectoriesPanel, pathTextBox);
+        }
 
     }
 }

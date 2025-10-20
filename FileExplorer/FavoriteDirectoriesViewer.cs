@@ -34,7 +34,7 @@ namespace FileExplorer
                 Size = new Size(112, 30),
                 TabIndex = 1,
                 Margin = new Padding(0, 0, 0, 0),
-                Text = Utils.TruncateFilename(pathName, 27),
+                Text = Utils.TruncateFilename(pathName, 25),
                 TextAlign = ContentAlignment.MiddleLeft,
                 TextImageRelation = TextImageRelation.ImageBeforeText,
                 UseVisualStyleBackColor = false,

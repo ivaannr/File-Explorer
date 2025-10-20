@@ -464,7 +464,10 @@ namespace FileExplorer
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(27, 27, 27);
+            FormClosed += FileExplorer_OnClose;
             ClientSize = new Size(1029, 530);
+            this.KeyDown += FileExplorer_KeyDown;
+            this.KeyPreview = true;
             Controls.Add(directoryPanel);
             Controls.Add(toolsPanel);
             Controls.Add(pathBar);

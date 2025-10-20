@@ -1,7 +1,7 @@
-using System.Runtime.InteropServices;
-using System.Security.Principal;
 using FileExplorer.Model;
 using FileExplorer.Properties;
+using System.Runtime.InteropServices;
+using System.Security.Principal;
 
 namespace FileExplorer
 {
@@ -13,15 +13,28 @@ namespace FileExplorer
         private bool suppressTextChanged = false;
         private CancellationTokenSource cts;
         private String path = "C:\\";
-        private List<ISystemFile> systemFiles = new List<ISystemFile>();
+        private readonly List<ISystemFile> systemFiles = new List<ISystemFile>();
         private DriveInfo[] drivesInfo;
         private List<FavoriteDirectory> favDirs;
+        private volatile bool isRunning = true;
         public static Button? CurrentSelectedButton { get; set; } = null;
+
+        internal List<ISystemFile> SystemFiles => systemFiles;
+
         public static List<Button>? utilsButtons;
+
+        [DllImport("user32.dll")]
+        private static extern short GetAsyncKeyState(int key);
+
+        Thread checkControlKeyThread = null;
 
         public FileExplorer()
         {
             InitializeComponent();
+
+            checkControlKeyThread = new Thread(CheckKey);
+            checkControlKeyThread.IsBackground = true;
+            checkControlKeyThread.Start();
 
             utilsButtons = new List<Button> {
                                     favoriteButton,
@@ -336,21 +349,23 @@ namespace FileExplorer
         {
             try
             {
-                String path = (CurrentSelectedButton!.Tag as ButtonMetadata)!.Path!;
 
-                bool containsDir = await Utils.DirectoryAlreadyFavorite(path);
+                Console.WriteLine(Utils._selectedButtons.Count);
 
-                if (containsDir)
-                {
-                    String? id = await Utils.GetDirectoryIDFromPath(path);
-                    await Utils.DeleteDirectoryRecord(id!);
-                    await Utils.ReloadFavoriteDirectories(favoriteDirectoriesPanel, pathTextBox);
-                    return;
+                if (Utils._selectedButtons.Count > 0) {
+
+                    foreach (var but in Utils._selectedButtons) {
+
+                        String buttonPath = (but.Tag as ButtonMetadata)!.Path!;
+
+                        bool containsDirectory = await Utils.DirectoryAlreadyFavorite(buttonPath);
+
+                        Utils.HandleFavoriteDirectory(containsDirectory, buttonPath, favoriteDirectoriesPanel, pathTextBox);
+
+                        await Task.Delay(50);
+
+                    }
                 }
-
-                await Utils.RegisterFavoriteDirectory(path);
-
-                await Utils.ReloadFavoriteDirectories(favoriteDirectoriesPanel, pathTextBox);
             }
             catch (NullReferenceException nullReference)
             {
@@ -358,6 +373,7 @@ namespace FileExplorer
                 Utils.ShowPopUp("Please select a directory to set as a favorite.", "Warning", Resources.WARNING);
             }
         }
+
 
         private void renameButton_Click(object sender, EventArgs e)
         {
@@ -383,6 +399,41 @@ namespace FileExplorer
         private void directoryPanel_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void CheckKey()
+        {
+            while (isRunning)
+            {
+                Utils.controlHeld = (GetAsyncKeyState(0x11) & 0x8000) > 0;
+
+                Thread.Sleep(100);
+            }
+        }
+        private void FileExplorer_OnClose(object sender, FormClosedEventArgs e)
+        {
+            isRunning = false;
+
+            if (checkControlKeyThread != null && checkControlKeyThread.IsAlive)
+            {
+                checkControlKeyThread.Join();
+                checkControlKeyThread = null;
+            }
+
+        }
+
+        private void FileExplorer_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Console.WriteLine("Escape pressed");
+                foreach (var button in Utils._selectedButtons)
+                {
+                    button.BackColor = Color.FromArgb(27, 27, 27);
+                }
+                Utils._selectedButtons.Clear();
+                Utils.DisableUtilsButtons(utilsButtons!);
+            }
         }
     }
 
