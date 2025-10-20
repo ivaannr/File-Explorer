@@ -2,6 +2,7 @@ using FileExplorer.Model;
 using FileExplorer.Properties;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
+using System.Windows.Forms;
 
 namespace FileExplorer
 {
@@ -403,6 +404,33 @@ namespace FileExplorer
                 Console.WriteLine("Button was null: " + nullReference.Message);
                 Utils.ShowPopUp("Please select a directory to set as a favorite.", "Warning", Resources.WARNING);
             }
+        }
+
+        private Task pasteButton_Click(object sender, EventArgs e) {
+            return Task.Run(() => {
+                try {
+                    List<String> directories = directoriesViewPanel.Controls
+                                                                   .OfType<Button>()
+                                                                   .Where(p => (p.Tag as ButtonMetadata)!.Path is not null)
+                                                                   .Select(b => (b.Tag as ButtonMetadata)!.Path)
+                                                                   .ToList()!;
+
+                    List<String> directoriesToPaste = Utils._copiedButtons
+                                                                   .Where(p => (p.Tag as ButtonMetadata)!.Path is not null)
+                                                                   .Select(b => (b.Tag as ButtonMetadata)!.Path)
+                                                                   .ToList()!;
+
+                    List<string> commonDirectories = directoriesToPaste
+                                                                   .Where(d => directories.Any(dir => dir.Equals(d)))
+                                                                   .ToList();
+
+
+
+
+                } catch (Exception ex) { 
+                    Console.WriteLine("ERROR: " + ex.Message); 
+                }
+            });
         }
 
 

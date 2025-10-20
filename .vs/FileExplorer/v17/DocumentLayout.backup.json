@@ -76,7 +76,7 @@
               "RelativeDocumentMoniker": "FileExplorer\\FileExplorer.cs",
               "ToolTip": "E:\\Proyectos\\File-Explorer\\FileExplorer\\FileExplorer.cs",
               "RelativeToolTip": "FileExplorer\\FileExplorer.cs",
-              "ViewState": "AgIAAE4BAAAAAAAAAAAwwGEBAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAJ8BAAAAAAAAAAAuwGsBAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-09T07:05:11.358Z",
               "EditorCaption": ""
@@ -91,8 +91,7 @@
               "RelativeToolTip": "FileExplorer\\Utils.UI.cs",
               "ViewState": "AgIAAOQAAAAAAAAAAAAkwAEBAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T14:22:59.483Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T14:22:59.483Z"
             },
             {
               "$type": "Document",
@@ -104,8 +103,7 @@
               "RelativeToolTip": "FileExplorer\\Utils.cs",
               "ViewState": "AgIAAAgBAAAAAAAAAAAYwCABAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-11T23:33:13.453Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-11T23:33:13.453Z"
             },
             {
               "$type": "Document",
@@ -117,8 +115,7 @@
               "RelativeToolTip": "FileExplorer\\Utils.Constants.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABYAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-20T07:56:12.672Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-20T07:56:12.672Z"
             },
             {
               "$type": "Document",
@@ -142,8 +139,7 @@
               "RelativeToolTip": "FileExplorer\\DriveViewer.cs",
               "ViewState": "AgIAABIAAAAAAAAAAAD4v0YAAACLAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-19T17:42:44.67Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-19T17:42:44.67Z"
             },
             {
               "$type": "Document",
@@ -154,8 +150,7 @@
               "ToolTip": "E:\\Proyectos\\File-Explorer\\FileExplorer\\Properties\\Resources.resx",
               "RelativeToolTip": "FileExplorer\\Properties\\Resources.resx",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2025-10-19T12:53:24.822Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-19T12:53:24.822Z"
             },
             {
               "$type": "Document",
@@ -167,8 +162,7 @@
               "RelativeToolTip": "FileExplorer\\FileExplorer.Designer.cs",
               "ViewState": "AgIAAMMBAAAAAAAAAAAAAM4BAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T21:11:08.639Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-15T21:11:08.639Z"
             },
             {
               "$type": "Document",

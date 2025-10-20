@@ -7,16 +7,16 @@
       "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|e:\\proyectos\\file-explorer\\fileexplorer\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|e:\\proyectos\\file-explorer\\fileexplorer\\utils.ui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\utils.ui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|e:\\proyectos\\file-explorer\\fileexplorer\\utils.constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\utils.constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|e:\\proyectos\\file-explorer\\fileexplorer\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|e:\\proyectos\\file-explorer\\fileexplorer\\properties\\resources.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
@@ -76,14 +76,14 @@
               "RelativeDocumentMoniker": "FileExplorer\\FileExplorer.cs",
               "ToolTip": "E:\\Proyectos\\File-Explorer\\FileExplorer\\FileExplorer.cs",
               "RelativeToolTip": "FileExplorer\\FileExplorer.cs",
-              "ViewState": "AgIAAK8BAAAAAAAAAAAkwGsBAAA7AAAAAAAAAA==",
+              "ViewState": "AgIAAIEBAAAAAAAAAAAcwKkBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-09T07:05:11.358Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Utils.UI.cs",
               "DocumentMoniker": "E:\\Proyectos\\File-Explorer\\FileExplorer\\Utils.UI.cs",
               "RelativeDocumentMoniker": "FileExplorer\\Utils.UI.cs",
@@ -91,12 +91,11 @@
               "RelativeToolTip": "FileExplorer\\Utils.UI.cs",
               "ViewState": "AgIAAOQAAAAAAAAAAAAkwAEBAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-18T14:22:59.483Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-18T14:22:59.483Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Utils.cs",
               "DocumentMoniker": "E:\\Proyectos\\File-Explorer\\FileExplorer\\Utils.cs",
               "RelativeDocumentMoniker": "FileExplorer\\Utils.cs",
@@ -109,7 +108,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Utils.Constants.cs",
               "DocumentMoniker": "E:\\Proyectos\\File-Explorer\\FileExplorer\\Utils.Constants.cs",
               "RelativeDocumentMoniker": "FileExplorer\\Utils.Constants.cs",
@@ -117,8 +116,7 @@
               "RelativeToolTip": "FileExplorer\\Utils.Constants.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABYAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-20T07:56:12.672Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-20T07:56:12.672Z"
             },
             {
               "$type": "Document",
@@ -142,8 +140,7 @@
               "RelativeToolTip": "FileExplorer\\DriveViewer.cs",
               "ViewState": "AgIAABIAAAAAAAAAAAD4v0YAAACLAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-19T17:42:44.67Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-19T17:42:44.67Z"
             },
             {
               "$type": "Document",
@@ -154,8 +151,7 @@
               "ToolTip": "E:\\Proyectos\\File-Explorer\\FileExplorer\\Properties\\Resources.resx",
               "RelativeToolTip": "FileExplorer\\Properties\\Resources.resx",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2025-10-19T12:53:24.822Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-19T12:53:24.822Z"
             },
             {
               "$type": "Document",
@@ -167,8 +163,7 @@
               "RelativeToolTip": "FileExplorer\\FileExplorer.Designer.cs",
               "ViewState": "AgIAAMMBAAAAAAAAAAAAAM4BAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T21:11:08.639Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-15T21:11:08.639Z"
             },
             {
               "$type": "Document",
