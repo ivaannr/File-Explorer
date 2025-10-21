@@ -1,34 +1,34 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\",
+  "WorkspaceRootPath": "E:\\Proyectos\\File-Explorer\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|c:\\users\\usuario\\proyectos\\winforms\\file-explorer\\fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|e:\\proyectos\\file-explorer\\fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|c:\\users\\usuario\\proyectos\\winforms\\file-explorer\\fileexplorer\\utils.ui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|E:\\Proyectos\\File-Explorer\\fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|e:\\proyectos\\file-explorer\\fileexplorer\\utils.ui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\utils.ui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|c:\\users\\usuario\\proyectos\\winforms\\file-explorer\\fileexplorer\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|e:\\proyectos\\file-explorer\\fileexplorer\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|c:\\users\\usuario\\proyectos\\winforms\\file-explorer\\fileexplorer\\fileexplorer.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|e:\\proyectos\\file-explorer\\fileexplorer\\fileexplorer.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\fileexplorer.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|c:\\users\\usuario\\proyectos\\winforms\\file-explorer\\fileexplorer\\model\\dir.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|e:\\proyectos\\file-explorer\\fileexplorer\\model\\dir.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\model\\dir.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|c:\\users\\usuario\\proyectos\\winforms\\file-explorer\\fileexplorer\\utils.constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|e:\\proyectos\\file-explorer\\fileexplorer\\utils.constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\utils.constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{F7C67675-0F14-4782-B7D7-20F5A20ADF2C}|FileExplorer\\FileExplorer.csproj|solutionrelative:fileexplorer\\fileexplorer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -48,22 +48,22 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "FileExplorer.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\FileExplorer.cs",
+              "DocumentMoniker": "E:\\Proyectos\\File-Explorer\\FileExplorer\\FileExplorer.cs",
               "RelativeDocumentMoniker": "FileExplorer\\FileExplorer.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\FileExplorer.cs",
+              "ToolTip": "E:\\Proyectos\\File-Explorer\\FileExplorer\\FileExplorer.cs",
               "RelativeToolTip": "FileExplorer\\FileExplorer.cs",
-              "ViewState": "AgIAAFEBAAAAAAAAAAAAwGsBAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAFkBAAAAAAAAAAAYwHYBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-09T07:05:11.358Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Utils.UI.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\Utils.UI.cs",
+              "DocumentMoniker": "E:\\Proyectos\\File-Explorer\\FileExplorer\\Utils.UI.cs",
               "RelativeDocumentMoniker": "FileExplorer\\Utils.UI.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\Utils.UI.cs",
+              "ToolTip": "E:\\Proyectos\\File-Explorer\\FileExplorer\\Utils.UI.cs",
               "RelativeToolTip": "FileExplorer\\Utils.UI.cs",
               "ViewState": "AgIAABkBAAAAAAAAAAAowDIBAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -72,50 +72,47 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Utils.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\Utils.cs",
+              "DocumentMoniker": "E:\\Proyectos\\File-Explorer\\FileExplorer\\Utils.cs",
               "RelativeDocumentMoniker": "FileExplorer\\Utils.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\Utils.cs",
+              "ToolTip": "E:\\Proyectos\\File-Explorer\\FileExplorer\\Utils.cs",
               "RelativeToolTip": "FileExplorer\\Utils.cs",
               "ViewState": "AgIAADABAAAAAAAAAAAuwEoBAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-11T23:33:13.453Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-11T23:33:13.453Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Utils.Constants.cs",
+              "DocumentMoniker": "E:\\Proyectos\\File-Explorer\\FileExplorer\\Utils.Constants.cs",
+              "RelativeDocumentMoniker": "FileExplorer\\Utils.Constants.cs",
+              "ToolTip": "E:\\Proyectos\\File-Explorer\\FileExplorer\\Utils.Constants.cs",
+              "RelativeToolTip": "FileExplorer\\Utils.Constants.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABYAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-20T07:56:12.672Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "Utils.Constants.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\Utils.Constants.cs",
-              "RelativeDocumentMoniker": "FileExplorer\\Utils.Constants.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\Utils.Constants.cs",
-              "RelativeToolTip": "FileExplorer\\Utils.Constants.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABYAAAAWAAAAAAAAAA==",
+              "Title": "Dir.cs",
+              "DocumentMoniker": "E:\\Proyectos\\File-Explorer\\FileExplorer\\Model\\Dir.cs",
+              "RelativeDocumentMoniker": "FileExplorer\\Model\\Dir.cs",
+              "ToolTip": "E:\\Proyectos\\File-Explorer\\FileExplorer\\Model\\Dir.cs",
+              "RelativeToolTip": "FileExplorer\\Model\\Dir.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-20T07:56:12.672Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-19T19:27:38.796Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "Dir.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\Model\\Dir.cs",
-              "RelativeDocumentMoniker": "FileExplorer\\Model\\Dir.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\Model\\Dir.cs",
-              "RelativeToolTip": "FileExplorer\\Model\\Dir.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-19T19:27:38.796Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "FileExplorer.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\FileExplorer.Designer.cs",
+              "DocumentMoniker": "E:\\Proyectos\\File-Explorer\\FileExplorer\\FileExplorer.Designer.cs",
               "RelativeDocumentMoniker": "FileExplorer\\FileExplorer.Designer.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\FileExplorer.Designer.cs",
+              "ToolTip": "E:\\Proyectos\\File-Explorer\\FileExplorer\\FileExplorer.Designer.cs",
               "RelativeToolTip": "FileExplorer\\FileExplorer.Designer.cs",
               "ViewState": "AgIAACQBAAAAAAAAAAAMwDcBAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -124,11 +121,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 1,
               "Title": "FileExplorer.cs [Dise\u00F1o]",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\FileExplorer.cs",
+              "DocumentMoniker": "E:\\Proyectos\\File-Explorer\\FileExplorer\\FileExplorer.cs",
               "RelativeDocumentMoniker": "FileExplorer\\FileExplorer.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\FileExplorer.cs [Dise\u00F1o]",
+              "ToolTip": "E:\\Proyectos\\File-Explorer\\FileExplorer\\FileExplorer.cs [Dise\u00F1o]",
               "RelativeToolTip": "FileExplorer\\FileExplorer.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-09T07:02:47.055Z",

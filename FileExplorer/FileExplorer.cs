@@ -10,7 +10,7 @@ namespace FileExplorer
     public partial class FileExplorer : Form
     {
 
-
+        private String userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name.Split('\\').Last();
         private bool suppressTextChanged = false;
         private CancellationTokenSource cts;
         private String path = "C:\\";
@@ -250,6 +250,8 @@ namespace FileExplorer
 
         public async Task ReloadUI()
         {
+            directoriesViewPanel.SuspendLayout();
+
             string currentPath = pathTextBox.Text;
 
             suppressTextChanged = true;
@@ -261,6 +263,8 @@ namespace FileExplorer
             pathTextBox.Text = currentPath;
 
             suppressTextChanged = false;
+
+            directoriesViewPanel.ResumeLayout();
         }
 
         private void pathTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -271,22 +275,22 @@ namespace FileExplorer
 
         private void desktopButton_Click(object sender, EventArgs e)
         {
-            pathTextBox.Text = @"C:\Users\Usuario\Desktop";
+            pathTextBox.Text = $@"C:\Users\{userName}\Desktop";
         }
 
         private void downloadsButton_Click(object sender, EventArgs e)
         {
-            pathTextBox.Text = @"C:\Users\Usuario\Downloads";
+            pathTextBox.Text = $@"C:\Users\{userName}\Downloads";
         }
 
         private void documentsButton_Click(object sender, EventArgs e)
         {
-            pathTextBox.Text = @"C:\Users\Usuario\Documents";
+            pathTextBox.Text = $@"C:\Users\{userName}\Documents";
         }
 
         private void imagesButton_Click(object sender, EventArgs e)
         {
-            pathTextBox.Text = @"C:\Users\Usuario\Pictures";
+            pathTextBox.Text = $@"C:\Users\{userName}\Pictures";
         }
 
 
@@ -345,7 +349,8 @@ namespace FileExplorer
 
         private async void cutButton_Click(object sender, EventArgs e)
         {
-            try {
+            try
+            {
 
                 if (Utils._selectedButtons.Count > 0)
                 {
@@ -353,7 +358,8 @@ namespace FileExplorer
                     Console.WriteLine("Selected Buttons Count Before: " + Utils._selectedButtons.Count);
                     Console.WriteLine("Coppied Buttons Count Before: " + Utils._copiedButtons.Count);
 
-                    
+                    directoriesViewPanel.SuspendLayout();
+
                     foreach (var but in Utils._selectedButtons.ToList())
                     {
                         var metadata = (but.Tag as ButtonMetadata)!;
@@ -361,7 +367,7 @@ namespace FileExplorer
                         Utils._copiedButtons.Add(but);
                         Utils._selectedButtons.Remove(but);
 
-                        await Utils.DeleteDirectory(metadata); // TODO => add some way to delete the directory but to still be able to move it 
+                        directoriesViewPanel.Controls.Remove(but);
 
                         Utils.ClearCurrentSelectedButton();
 
@@ -371,13 +377,18 @@ namespace FileExplorer
                     Console.WriteLine("Selected Buttons Count After: " + Utils._selectedButtons.Count);
                     Console.WriteLine("Coppied Buttons Count After: " + Utils._copiedButtons.Count);
 
+                    await ReloadUI();
+
                     Utils.EnableButton(pasteButton);
 
                 }
 
-            } catch (NullReferenceException nullReference) {
+            }
+            catch (NullReferenceException nullReference)
+            {
                 Console.WriteLine($"ERROR {nullReference.Message}");
             }
+            finally { directoriesViewPanel.ResumeLayout(); }
         }
 
         private async void favoriteButton_Click(object sender, EventArgs e)
@@ -521,7 +532,6 @@ namespace FileExplorer
 
         private void renameButton_Click(object sender, EventArgs e)
         {
-
 
         }
 
