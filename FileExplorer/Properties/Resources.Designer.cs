@@ -163,6 +163,26 @@ namespace FileExplorer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DESKTOP_MAC {
+            get {
+                object obj = ResourceManager.GetObject("DESKTOP_MAC", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DOCUMEN_SEARCH {
+            get {
+                object obj = ResourceManager.GetObject("DOCUMEN_SEARCH", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DOCUMENT_FILE {
             get {
                 object obj = ResourceManager.GetObject("DOCUMENT_FILE", resourceCulture);
@@ -176,6 +196,16 @@ namespace FileExplorer.Properties {
         internal static System.Drawing.Bitmap DOUBLE_ARROW_BACK {
             get {
                 object obj = ResourceManager.GetObject("DOUBLE_ARROW_BACK", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DOWNLOADS {
+            get {
+                object obj = ResourceManager.GetObject("DOWNLOADS", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -241,6 +271,16 @@ namespace FileExplorer.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IMAGE {
+            get {
+                object obj = ResourceManager.GetObject("IMAGE", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Icon similar a (Icono).
         /// </summary>
         internal static System.Drawing.Icon INFO_CIRCLE_ICON {
@@ -267,6 +307,16 @@ namespace FileExplorer.Properties {
             get {
                 object obj = ResourceManager.GetObject("NOTIFICATION_IMPORTANT", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PANORAMA {
+            get {
+                object obj = ResourceManager.GetObject("PANORAMA", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

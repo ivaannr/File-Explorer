@@ -147,7 +147,7 @@ namespace FileExplorer
             desktopButton.FlatStyle = FlatStyle.Flat;
             desktopButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             desktopButton.ForeColor = SystemColors.ButtonFace;
-            desktopButton.Image = Resources.FOLDER;
+            desktopButton.Image = Resources.DESKTOP_MAC;
             desktopButton.ImageAlign = ContentAlignment.MiddleLeft;
             desktopButton.Location = new Point(3, 4);
             desktopButton.Name = "desktopButton";
@@ -167,7 +167,7 @@ namespace FileExplorer
             imagesButton.FlatStyle = FlatStyle.Flat;
             imagesButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             imagesButton.ForeColor = SystemColors.ButtonHighlight;
-            imagesButton.Image = Resources.FOLDER;
+            imagesButton.Image = Resources.PANORAMA;
             imagesButton.ImageAlign = ContentAlignment.MiddleLeft;
             imagesButton.Location = new Point(3, 91);
             imagesButton.Name = "imagesButton";
@@ -187,7 +187,7 @@ namespace FileExplorer
             documentsButton.FlatStyle = FlatStyle.Flat;
             documentsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             documentsButton.ForeColor = SystemColors.ButtonFace;
-            documentsButton.Image = Resources.FOLDER;
+            documentsButton.Image = Resources.DOCUMEN_SEARCH;
             documentsButton.ImageAlign = ContentAlignment.MiddleLeft;
             documentsButton.Location = new Point(3, 62);
             documentsButton.Name = "documentsButton";
@@ -207,7 +207,7 @@ namespace FileExplorer
             downloadsButton.FlatStyle = FlatStyle.Flat;
             downloadsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             downloadsButton.ForeColor = SystemColors.ButtonHighlight;
-            downloadsButton.Image = Resources.FOLDER;
+            downloadsButton.Image = Resources.DOWNLOADS;
             downloadsButton.ImageAlign = ContentAlignment.MiddleLeft;
             downloadsButton.Location = new Point(3, 33);
             downloadsButton.Name = "downloadsButton";
