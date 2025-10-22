@@ -172,6 +172,16 @@ namespace FileExplorer
 
         }
 
+        public static void ClearSelectedButtons() {
+
+            foreach (var button in Utils._selectedButtons)
+            {
+                button.BackColor = Color.FromArgb(27, 27, 27);
+            }
+            Utils._selectedButtons.Clear();
+            Utils.DisableUtilsButtons(FileExplorer.utilsButtons!);
+        }
+
         public static async Task ReloadFavoriteDirectories(Panel panel, TextBox pathTextBox)
         {
             panel.SuspendLayout();
@@ -247,6 +257,8 @@ namespace FileExplorer
             int fontSize = 12;
 
             if (message.Length > 80) { fontSize--; }
+
+            if (message.Length > 120) { fontSize--; }
 
             Form customBox = new Form();
             customBox.Text = title;

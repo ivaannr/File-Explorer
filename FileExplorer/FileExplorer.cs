@@ -127,6 +127,8 @@ namespace FileExplorer
 
             try
             {
+                Utils.ClearSelectedButtons();
+
                 directoriesViewPanel.SuspendLayout();
 
                 int rowIndex = 0;
@@ -586,12 +588,7 @@ namespace FileExplorer
             if (e.KeyCode == Keys.Escape)
             {
                 Console.WriteLine("Escape pressed");
-                foreach (var button in Utils._selectedButtons)
-                {
-                    button.BackColor = Color.FromArgb(27, 27, 27);
-                }
-                Utils._selectedButtons.Clear();
-                Utils.DisableUtilsButtons(utilsButtons!);
+                Utils.ClearSelectedButtons();
             }
         }
 
