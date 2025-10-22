@@ -21,8 +21,7 @@ namespace FileExplorer
 
         public static List<Button> _selectedButtons = new List<Button>();
         public static List<Button> _copiedButtons = new List<Button>();
-        public static readonly List<FavoriteDirectory> _savedFavoriteDirectories = new List<FavoriteDirectory>();
-        
+
         private const String favsPath = "favs.csv";
 
         private const long KB = 1024;
@@ -31,8 +30,10 @@ namespace FileExplorer
         private const long TB = GB * 1024;
 
         public static bool controlHeld = false;
+        private static bool isPopupOpen = false;
 
-        
+
+
 
     }
 }

@@ -1,6 +1,9 @@
-﻿using System;
+﻿using FileExplorer.Model;
+using FileExplorer.Properties;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Resources;
 using System.Security;
@@ -9,8 +12,6 @@ using System.Security.Permissions;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
-using FileExplorer.Model;
-using FileExplorer.Properties;
 
 namespace FileExplorer
 {
@@ -233,25 +234,41 @@ namespace FileExplorer
             return ids.Count > 0 ? ids.Last() : "0";
         }
 
-        public static async Task RegisterFavoriteDirectory(String path) {
-            int newID = Convert.ToInt32(await GetLastID()) + 1;
-            String[] line = { $"{newID};{path}" };
-            File.AppendAllLines(favsPath, line);
+        public static async Task RegisterFavoriteDirectory(String path, Panel favDirsPanel) {
+            try
+            {
+                int newID = Convert.ToInt32(await GetLastID()) + 1;
+                String[] line = { $"{newID};{path}" };
+                File.AppendAllLines(favsPath, line);
+            }
+            catch (Exception ex) {
+                Utils.ShowPopUp("You may not click the favorite button that fast", "Warning", Resources.WARNING);
+                await RemoveAllFavoriteDirectoriesAsync(favDirsPanel);
+            }
         }
 
-        public static async Task DeleteDirectoryRecord(string ID)
+        public static async Task DeleteDirectoryRecord(string ID, Panel favDirsPanel)
         {
-            List<FavoriteDirectory> favs = await ParseCSVData(await GetFavoriteDirectories());
+            try
+            {
+                List<FavoriteDirectory> favs = await ParseCSVData(await GetFavoriteDirectories());
 
-            FavoriteDirectory? dirToRemove = favs.FirstOrDefault(fav => fav.ID == ID);
+                FavoriteDirectory? dirToRemove = favs.FirstOrDefault(fav => fav.ID == ID);
 
-            if (!dirToRemove.HasValue) { return; }
+                if (!dirToRemove.HasValue) { return; }
 
-            favs.Remove(dirToRemove.Value);
+                favs.Remove(dirToRemove.Value);
 
-            var newContent = favs.Select(fav => $"{fav.ID};{fav.Path}");
+                var newContent = favs.Select(fav => $"{fav.ID};{fav.Path}");
 
-            File.WriteAllLines(favsPath, newContent);
+                File.WriteAllLines(favsPath, newContent);
+
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowPopUp("You may not click the favorite button that fast", "Warning", Resources.WARNING);
+                await RemoveAllFavoriteDirectoriesAsync(favDirsPanel);
+            }
 
         }
 
@@ -317,14 +334,39 @@ namespace FileExplorer
             if (containsDir)
             {
                 String? id = await Utils.GetDirectoryIDFromPath(buttonPath);
-                await Utils.DeleteDirectoryRecord(id!);
+                await Utils.DeleteDirectoryRecord(id!, favoriteDirectoriesPanel);
                 await Utils.ReloadFavoriteDirectories(favoriteDirectoriesPanel, pathTextBox);
                 return;
             }
 
-            await Utils.RegisterFavoriteDirectory(buttonPath);
+            await Utils.RegisterFavoriteDirectory(buttonPath, favoriteDirectoriesPanel);
 
             await Utils.ReloadFavoriteDirectories(favoriteDirectoriesPanel, pathTextBox);
+        }
+
+        private static async Task RemoveAllFavoriteDirectoriesAsync(Panel favoriteDirsPanel)
+        {
+            try
+            {
+                favoriteDirsPanel.SuspendLayout();
+
+                if (favoriteDirsPanel.InvokeRequired)
+                {
+                    favoriteDirsPanel.Invoke(new Action(() => favoriteDirsPanel.Controls.Clear()));
+                    return;
+                }
+
+                favoriteDirsPanel.Controls.Clear();
+                await File.WriteAllTextAsync(favsPath, string.Empty);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while removing favorite directories: {ex.Message}");
+            }
+            finally 
+            { 
+                favoriteDirsPanel.ResumeLayout();
+            }
         }
 
         public static void EnableButton(Button button) => button.Enabled = true;

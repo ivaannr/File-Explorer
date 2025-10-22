@@ -97,6 +97,7 @@ namespace FileExplorer
             favoriteDirectoriesPanel.Size = new Size(213, 206);
             favoriteDirectoriesPanel.TabIndex = 0;
             favoriteDirectoriesPanel.WrapContents = false;
+            favoriteDirectoriesPanel.Paint += favoriteDirectoriesPanel_Paint;
             // 
             // folderSeparator2
             // 
@@ -465,10 +466,7 @@ namespace FileExplorer
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(27, 27, 27);
-            FormClosed += FileExplorer_OnClose;
             ClientSize = new Size(1029, 530);
-            this.KeyDown += FileExplorer_KeyDown;
-            this.KeyPreview = true;
             Controls.Add(directoryPanel);
             Controls.Add(toolsPanel);
             Controls.Add(pathBar);
@@ -476,10 +474,13 @@ namespace FileExplorer
             Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
             MaximizeBox = false;
             Name = "FileExplorer";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FileExplorer";
+            FormClosed += FileExplorer_OnClose;
+            KeyDown += FileExplorer_KeyDown;
             sideBar.ResumeLayout(false);
             mainFoldersWrapper.ResumeLayout(false);
             mainFoldersWrapper.PerformLayout();

@@ -152,7 +152,8 @@ namespace FileExplorer
 
                     if (item is Dir dir)
                     {
-                        _ = Task.Run(() => {
+                        _ = Task.Run(() =>
+                        {
                             try
                             {
                                 long size = Utils.CalculateDirectorySize(new DirectoryInfo(dir.Path), token);
@@ -204,7 +205,8 @@ namespace FileExplorer
         private void ThemeAllControls(Control parent = null)
         {
             parent = parent ?? this;
-            Action<Control> Theme = control => {
+            Action<Control> Theme = control =>
+            {
                 int trueValue = 0x01;
                 NativeMethods.SetWindowTheme(control.Handle, "DarkMode_Explorer", null);
                 NativeMethods.DwmSetWindowAttribute(control.Handle, DwmWindowAttribute.DWMWA_USE_IMMERSIVE_DARK_MODE, ref trueValue, Marshal.SizeOf(typeof(int)));
@@ -333,7 +335,8 @@ namespace FileExplorer
 
             try
             {
-                foreach (Button button in Utils._selectedButtons) {
+                foreach (Button button in Utils._selectedButtons)
+                {
                     await Utils.DeleteDirectory((button.Tag as ButtonMetadata)!);
                 }
             }
@@ -398,9 +401,11 @@ namespace FileExplorer
 
                 Console.WriteLine(Utils._selectedButtons.Count);
 
-                if (Utils._selectedButtons.Count > 0) {
+                if (Utils._selectedButtons.Count > 0)
+                {
 
-                    foreach (var but in Utils._selectedButtons) {
+                    foreach (var but in Utils._selectedButtons)
+                    {
 
                         String buttonPath = (but.Tag as ButtonMetadata)!.Path!;
 
@@ -588,6 +593,11 @@ namespace FileExplorer
                 Utils._selectedButtons.Clear();
                 Utils.DisableUtilsButtons(utilsButtons!);
             }
+        }
+
+        private void favoriteDirectoriesPanel_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 

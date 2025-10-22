@@ -198,6 +198,10 @@ namespace FileExplorer
         }
         public static void ShowPopUp(string message, string title, Icon? icon)
         {
+            if (isPopupOpen) return;
+
+            isPopupOpen = true;
+
             Form customBox = new Form();
             customBox.Text = title;
             customBox.BackColor = Color.FromArgb(30, 30, 30);
@@ -231,6 +235,8 @@ namespace FileExplorer
 
             customBox.Controls.Add(messageButton);
             customBox.Controls.Add(okButton);
+
+            customBox.FormClosed += (sender, e) => { isPopupOpen = false; };
 
             customBox.ShowDialog();
         }
