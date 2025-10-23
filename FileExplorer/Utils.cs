@@ -222,6 +222,7 @@ namespace FileExplorer
                 var ext when configExtensions.Contains(ext) => Resources.DATA,
                 var ext when sourceCodeExtensions.Contains(ext) => Resources.CODE,
                 var ext when databaseExtensions.Contains(ext) => Resources.DATABASE,
+                var ext when noVectorialImageExtensions.Contains(ext) => Resources.VRPANO_IMAGE,
                 _ => Resources.FILE
             };
         }

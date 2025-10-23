@@ -373,9 +373,29 @@ namespace FileExplorer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap VERTICAL_PHOTO {
+            get {
+                object obj = ResourceManager.GetObject("VERTICAL_PHOTO", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap VIDEO_FILE {
             get {
                 object obj = ResourceManager.GetObject("VIDEO_FILE", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap VRPANO_IMAGE {
+            get {
+                object obj = ResourceManager.GetObject("VRPANO_IMAGE", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

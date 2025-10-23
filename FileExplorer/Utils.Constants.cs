@@ -18,7 +18,7 @@ namespace FileExplorer
         private static readonly string[] configExtensions = { "json", "xml", "yml", "yaml", "md", "csv" };
         private static readonly string[] sourceCodeExtensions = { "cs", "java", "py", "js", "html", "css", "cpp", "h", "php", "rb", "kt", "kts", "csx" };
         private static readonly string[] databaseExtensions = { "sql", "db", "sqlite", "mdb" };
-
+        private static readonly string[] noVectorialImageExtensions = new string[] { "jpg", "jpeg", "png", "bmp", "gif", "tiff", "ico", "webp" };
         public static List<Button> _selectedButtons = new List<Button>();
         public static List<Button> _copiedButtons = new List<Button>();
 
