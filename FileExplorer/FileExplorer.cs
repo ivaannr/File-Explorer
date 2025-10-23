@@ -406,10 +406,23 @@ namespace FileExplorer
                 if (Utils._selectedButtons.Count > 0)
                 {
 
+                    ButtonMetadata? data = null;
+
                     foreach (var but in Utils._selectedButtons)
                     {
 
-                        String buttonPath = (but.Tag as ButtonMetadata)!.Path!;
+                        data = but.Tag as ButtonMetadata;
+
+                        String buttonPath = data!.Path!;
+                        String buttonType = data!.Type!.ToLower();
+
+                        if (buttonType != "folder")
+                        {
+
+                            Utils.ShowPopUp("You only can pin folders", "Warning", Resources.NOTIFICATION_IMPORTANT);
+                            Utils.ClearSelectedButtons();
+                            return;
+                        }
 
                         bool containsDirectory = await Utils.DirectoryAlreadyFavorite(buttonPath);
 
