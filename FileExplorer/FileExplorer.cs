@@ -313,7 +313,6 @@ namespace FileExplorer
             if (parentFullPath == null)
             {
                 Utils.ShowPopUp("You can't go back any further", "Warning", Resources.NOTIFICATION_IMPORTANT);
-
                 return;
             }
 
@@ -552,7 +551,7 @@ namespace FileExplorer
 
         private void renameButton_Click(object sender, EventArgs e)
         {
-
+            String? newName = Utils.ShowTextBoxPopUp("Rename", Resources.LIGHTBULB_ICON);
         }
 
         private void sideBar_Paint(object sender, PaintEventArgs e)

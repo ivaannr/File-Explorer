@@ -221,6 +221,9 @@ namespace FileExplorer
             customBox.ShowInTaskbar = false;
             customBox.TopMost = true;
             customBox.Icon = icon;
+            customBox.FormBorderStyle = FormBorderStyle.FixedDialog;
+            customBox.MaximizeBox = false;
+            customBox.MinimizeBox = false;
 
             Button messageButton = new DisabledButton();
             messageButton.Text = message;
@@ -251,6 +254,94 @@ namespace FileExplorer
             customBox.ShowDialog();
         }
 
+        public static string? ShowTextBoxPopUp(string title, Icon? icon)
+        {
+            if (isPopupOpen) return null;
+
+            isPopupOpen = true;
+
+            string? textBoxText = null;
+
+            Form customBox = new Form();
+            customBox.Text = title;
+            customBox.BackColor = Color.FromArgb(30, 30, 30);
+            customBox.Size = new Size(300, 125);
+            customBox.StartPosition = FormStartPosition.CenterScreen;
+            customBox.ShowIcon = true;
+            customBox.ShowInTaskbar = false;
+            customBox.TopMost = true;
+            customBox.Icon = icon;
+            customBox.FormBorderStyle = FormBorderStyle.FixedDialog;
+            customBox.MaximizeBox = false;
+            customBox.MinimizeBox = false;
+
+            TextBox textBox = new TextBox();
+            textBox.Size = new Size(260, 30);
+            textBox.Dock = DockStyle.None;
+            textBox.Margin = new Padding(10);
+            textBox.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            textBox.ForeColor = Color.Gray;
+            textBox.BackColor = Color.FromArgb(30, 30, 30);
+            textBox.Text = "New name...";
+            textBox.BorderStyle = BorderStyle.None;
+            textBox.TextAlign = HorizontalAlignment.Center;
+
+            textBox.Location = new Point(
+                (customBox.ClientSize.Width - textBox.Width) / 2,
+                20
+            );
+
+            textBox.TextChanged += (s, e) =>
+            {
+                textBoxText = textBox.Text;
+            };
+
+            textBox.GotFocus += (sender, e) =>
+            {
+                if (textBox.Text == "New name...")
+                {
+                    textBox.Text = "";
+                    textBox.ForeColor = Color.White;
+                }
+            };
+
+            textBox.LostFocus += (sender, e) =>
+            {
+                if (string.IsNullOrWhiteSpace(textBox.Text))
+                {
+                    textBox.Text = "New name...";
+                    textBox.ForeColor = Color.Gray;
+                }
+            };
+
+            Button okButton = new Button();
+            okButton.FlatAppearance.BorderSize = 0;
+            okButton.FlatStyle = FlatStyle.Flat;
+            okButton.Text = "Rename";
+            okButton.ForeColor = Color.White;
+            okButton.BackColor = Color.FromArgb(27, 27, 27);
+            okButton.Dock = DockStyle.Bottom;
+            okButton.Height = 35;
+            okButton.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            okButton.Click += (sender, e) =>
+            {
+                customBox.Close();
+            };
+
+            customBox.Controls.Add(okButton);
+            customBox.Controls.Add(textBox);
+
+            customBox.FormClosed += (sender, e) =>
+            {
+                isPopupOpen = false;
+            };
+
+            customBox.ShowDialog();
+
+            return textBoxText;
+        }
+
+
         public static Form CreateDecisionPopUp(string message, string title, Icon? icon)
         {
 
@@ -269,6 +360,9 @@ namespace FileExplorer
             customBox.ShowInTaskbar = false;
             customBox.TopMost = true;
             customBox.Icon = icon;
+            customBox.FormBorderStyle = FormBorderStyle.FixedDialog;
+            customBox.MaximizeBox = false;
+            customBox.MinimizeBox = false;
 
             Button messageButton = new DisabledButton();
             messageButton.Text = message;

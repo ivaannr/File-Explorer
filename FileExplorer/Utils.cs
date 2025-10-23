@@ -369,6 +369,35 @@ namespace FileExplorer
             }
         }
 
+        public static Task ChangeFileName(String oldFilePath, String newFilePath, bool overrideExisting = false) {
+            return Task.Run(() => {
+                try {
+                    if (File.Exists(oldFilePath)) {
+                        File.Move(oldFilePath, newFilePath, overrideExisting);
+                    }
+                } catch (Exception ex) {
+                    Console.WriteLine($"An error ocurred when renaming file {oldFilePath}: {ex.Message}");
+                }
+            });
+        }
+
+        public static Task ChangeDirectoryName(String oldFilePath, String newFilePath)
+        {
+            return Task.Run(() => {
+                try
+                {
+                    if (Directory.Exists(oldFilePath))
+                    {
+                        Directory.Move(oldFilePath, newFilePath);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error ocurred when renaming directory {oldFilePath}: {ex.Message}");
+                }
+            });
+        }
+
         public static void EnableButton(Button button) => button.Enabled = true;
         public static void DisableButton(Button button) => button.Enabled = false;
 

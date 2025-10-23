@@ -303,6 +303,16 @@ namespace FileExplorer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Icon similar a (Icono).
         /// </summary>
+        internal static System.Drawing.Icon LIGHTBULB_ICON {
+            get {
+                object obj = ResourceManager.GetObject("LIGHTBULB_ICON", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Icon similar a (Icono).
+        /// </summary>
         internal static System.Drawing.Icon NOTIFICATION_IMPORTANT {
             get {
                 object obj = ResourceManager.GetObject("NOTIFICATION_IMPORTANT", resourceCulture);
