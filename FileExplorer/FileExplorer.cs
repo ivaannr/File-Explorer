@@ -373,6 +373,7 @@ namespace FileExplorer
                         Utils._selectedButtons.Remove(but);
 
                         directoriesViewPanel.Controls.Remove(but);
+                        
 
                         Utils.ClearCurrentSelectedButton();
 
@@ -563,9 +564,9 @@ namespace FileExplorer
 
             ButtonMetadata? data = buttonToRename.Tag as ButtonMetadata;
 
-            Console.WriteLine(data?.Path);
-
             String? newName = Utils.ShowTextBoxPopUp("Rename", Resources.LIGHTBULB_ICON, "New name...", "Rename");
+            var extension = data?.Type?.ToLower() == "folder" ? "" : data?.Type;
+            String newNameWithExtension = $"{newName}{extension}";
 
             if (string.IsNullOrWhiteSpace(newName))
                 return;
@@ -577,7 +578,7 @@ namespace FileExplorer
             }
 
             string originalDir = Directory.GetParent(data!.Path!)!.FullName;
-            string newPath = Path.Combine(originalDir, newName);
+            string newPath = Path.Combine(originalDir, newNameWithExtension);
 
             try
             {
