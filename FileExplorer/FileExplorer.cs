@@ -42,7 +42,8 @@ namespace FileExplorer
                                     deleteButton,
                                     copyButton,
                                     pasteButton,
-                                    cutButton
+                                    cutButton,
+                                    renameButton
             };
 
             drivesInfo = DriveInfo.GetDrives()
@@ -549,9 +550,46 @@ namespace FileExplorer
         }
 
 
-        private void renameButton_Click(object sender, EventArgs e)
+        private async void renameButton_Click(object sender, EventArgs e)
         {
-            String? newName = Utils.ShowTextBoxPopUp("Rename", Resources.LIGHTBULB_ICON);
+            if (Utils._selectedButtons.Count > 1)
+            {
+                Utils.ShowPopUp("You can only rename button at a time", "Warning", Resources.NOTIFICATION_IMPORTANT);
+                Utils.ClearSelectedButtons();
+                return;
+            }
+
+            Button buttonToRename = Utils._selectedButtons.First();
+
+            ButtonMetadata? data = buttonToRename.Tag as ButtonMetadata;
+
+            Console.WriteLine(data?.Path);
+
+            String? newName = Utils.ShowTextBoxPopUp("Rename", Resources.LIGHTBULB_ICON, "New name...", "Rename");
+
+            if (string.IsNullOrWhiteSpace(newName))
+                return;
+
+            if (newName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+            {
+                Utils.ShowPopUp("Invalid characters in file name.", "Error", Resources.NOTIFICATION_IMPORTANT);
+                return;
+            }
+
+            string originalDir = Directory.GetParent(data!.Path!)!.FullName;
+            string newPath = Path.Combine(originalDir, newName);
+
+            try
+            {
+                await Utils.RenameSystemFile(data.Path!, newPath);
+                data.Path = newPath;
+                buttonToRename.Text = newName;
+                Utils.ClearSelectedButtons();
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowPopUp($"Rename failed: {ex.Message}", "Error", Resources.NOTIFICATION_IMPORTANT);
+            }
         }
 
         private void sideBar_Paint(object sender, PaintEventArgs e)

@@ -254,7 +254,7 @@ namespace FileExplorer
             customBox.ShowDialog();
         }
 
-        public static string? ShowTextBoxPopUp(string title, Icon? icon)
+        public static string? ShowTextBoxPopUp(string title, Icon? icon, String text = "Write...", String closeButtonText = "OK")
         {
             if (isPopupOpen) return null;
 
@@ -282,7 +282,7 @@ namespace FileExplorer
             textBox.Font = new Font("Segoe UI", 12, FontStyle.Bold);
             textBox.ForeColor = Color.Gray;
             textBox.BackColor = Color.FromArgb(30, 30, 30);
-            textBox.Text = "New name...";
+            textBox.Text = text;
             textBox.BorderStyle = BorderStyle.None;
             textBox.TextAlign = HorizontalAlignment.Center;
 
@@ -298,7 +298,7 @@ namespace FileExplorer
 
             textBox.GotFocus += (sender, e) =>
             {
-                if (textBox.Text == "New name...")
+                if (textBox.Text == text)
                 {
                     textBox.Text = "";
                     textBox.ForeColor = Color.White;
@@ -309,7 +309,7 @@ namespace FileExplorer
             {
                 if (string.IsNullOrWhiteSpace(textBox.Text))
                 {
-                    textBox.Text = "New name...";
+                    textBox.Text = text;
                     textBox.ForeColor = Color.Gray;
                 }
             };
@@ -317,7 +317,7 @@ namespace FileExplorer
             Button okButton = new Button();
             okButton.FlatAppearance.BorderSize = 0;
             okButton.FlatStyle = FlatStyle.Flat;
-            okButton.Text = "Rename";
+            okButton.Text = closeButtonText;
             okButton.ForeColor = Color.White;
             okButton.BackColor = Color.FromArgb(27, 27, 27);
             okButton.Dock = DockStyle.Bottom;

@@ -370,34 +370,90 @@ namespace FileExplorer
             }
         }
 
-        public static Task ChangeFileName(String oldFilePath, String newFilePath, bool overrideExisting = false) {
-            return Task.Run(() => {
-                try {
-                    if (File.Exists(oldFilePath)) {
-                        File.Move(oldFilePath, newFilePath, overrideExisting);
+        private static Task RenameFile(string oldFilePath, string newFilePath, bool overwrite = false)
+        {
+            return Task.Run(() =>
+            {
+                try
+                {
+                    if (!File.Exists(oldFilePath))
+                    {
+                        Console.WriteLine($"Source file does not exist: {oldFilePath}");
+                        return;
                     }
-                } catch (Exception ex) {
-                    Console.WriteLine($"An error ocurred when renaming file {oldFilePath}: {ex.Message}");
+
+                    if (File.Exists(newFilePath))
+                    {
+                        if (!overwrite)
+                        {
+                            Console.WriteLine($"Destination file already exists: {newFilePath}");
+                            return;
+                        }
+
+                        File.Delete(newFilePath);
+                    }
+
+                    File.Move(oldFilePath, newFilePath);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error while trying to rename directory {oldFilePath} to {newFilePath}: {ex.Message}");
                 }
             });
         }
 
-        public static Task ChangeDirectoryName(String oldFilePath, String newFilePath)
+        private static Task RenameDirectory(string oldDirPath, string newDirPath)
         {
-            return Task.Run(() => {
+            return Task.Run(() =>
+            {
                 try
                 {
-                    if (Directory.Exists(oldFilePath))
+                    if (!Directory.Exists(oldDirPath))
                     {
-                        Directory.Move(oldFilePath, newFilePath);
+                        Console.WriteLine($"Source directory does not exist: {oldDirPath}");
+                        return;
                     }
+
+                    if (Directory.Exists(newDirPath))
+                    {
+                        Console.WriteLine($"Destination directory already exists: {newDirPath}");
+                        return;
+                    }
+
+                    Directory.Move(oldDirPath, newDirPath);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"An error ocurred when renaming directory {oldFilePath}: {ex.Message}");
+                    Console.WriteLine($"Error while trying to rename directory {oldDirPath} to {newDirPath}: {ex.Message}");
                 }
             });
         }
+
+        public static async Task RenameSystemFile(string oldPath, string newPath, bool overwrite = false)
+        {
+            try
+            {
+                if (File.Exists(oldPath))
+                {
+                    await RenameFile(oldPath, newPath, overwrite);
+                    return;
+                }
+
+                if (Directory.Exists(oldPath))
+                {
+                    await RenameDirectory(oldPath, newPath);
+                    return;
+                }
+
+                Console.WriteLine($"No file or directory found at: {oldPath}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error renaming {oldPath} to {newPath}: {ex.Message}");
+            }
+        }
+
+        
 
         public static void EnableButton(Button button) => button.Enabled = true;
         public static void DisableButton(Button button) => button.Enabled = false;
