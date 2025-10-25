@@ -23,6 +23,8 @@ namespace FileExplorer
         public static List<Button> _copiedButtons = new List<Button>();
 
         private const String favsPath = "favs.csv";
+        public static String userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name.Split('\\').Last();
+
 
         private const long KB = 1024;
         private const long MB = KB * 1024;
@@ -31,6 +33,23 @@ namespace FileExplorer
 
         public static bool controlHeld = false;
         private static bool isPopupOpen = false;
+
+        private static readonly Dictionary<string, string> _buttonMessages = new Dictionary<string, string> {
+            { "favorite", "Add or remove from favorites" },
+            { "cut", "Cut the selected item" },
+            { "copy", "Copy the selected item" },
+            { "paste", "Paste the copied or cut item" },
+            { "rename", "Rename the selected item" },
+            { "reload", "Reload or refresh the current view" },
+            { "return", "Go back to the previous location" },
+            { "forward", "Go forward to the next location" },
+            { "delete", "Delete the selected item" },
+            { "back", "Go to the parent directory of the current one" },
+            { "desktop", @$"C:\Users\{userName}\Desktop" },
+            { "images", @$"C:\Users\{userName}\Pictures"  },
+            { "documents", @$"C:\Users\{userName}\Documents"  },
+            { "downloads", @$"C:\Users\{userName}\Downloads"  }
+        };
 
 
 

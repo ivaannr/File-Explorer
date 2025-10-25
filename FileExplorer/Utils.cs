@@ -453,8 +453,8 @@ namespace FileExplorer
             }
         }
 
-        
 
+        private static String GetButtonName(Button button) => button.Name.Substring(0, button.Name.Length - 6);
         public static void EnableButton(Button button) => button.Enabled = true;
         public static void DisableButton(Button button) => button.Enabled = false;
 

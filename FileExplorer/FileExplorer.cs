@@ -9,8 +9,6 @@ namespace FileExplorer
 
     public partial class FileExplorer : Form
     {
-
-        private String userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name.Split('\\').Last();
         private bool suppressTextChanged = false;
         private CancellationTokenSource cts;
         private String path = "C:\\";
@@ -51,6 +49,7 @@ namespace FileExplorer
                                   .Where(d => d.IsReady)
                                   .ToArray();
 
+            Utils.SetUpTooltips(utilsWrapperPanel, mainFoldersWrapper);
             Utils.ChangeButtonsState(utilsButtons);
             ChangeDirectory(pathTextBox.Text, CancellationToken.None);
             ThemeAllControls();
@@ -280,22 +279,22 @@ namespace FileExplorer
 
         private void desktopButton_Click(object sender, EventArgs e)
         {
-            pathTextBox.Text = $@"C:\Users\{userName}\Desktop";
+            pathTextBox.Text = $@"C:\Users\{Utils.userName}\Desktop";
         }
 
         private void downloadsButton_Click(object sender, EventArgs e)
         {
-            pathTextBox.Text = $@"C:\Users\{userName}\Downloads";
+            pathTextBox.Text = $@"C:\Users\{Utils.userName}\Downloads";
         }
 
         private void documentsButton_Click(object sender, EventArgs e)
         {
-            pathTextBox.Text = $@"C:\Users\{userName}\Documents";
+            pathTextBox.Text = $@"C:\Users\{Utils.userName}\Documents";
         }
 
         private void imagesButton_Click(object sender, EventArgs e)
         {
-            pathTextBox.Text = $@"C:\Users\{userName}\Pictures";
+            pathTextBox.Text = $@"C:\Users\{Utils.userName}\Pictures";
         }
 
 

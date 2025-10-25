@@ -438,7 +438,57 @@ namespace FileExplorer
             }
         }
 
-        
+        public static void SetUpTooltips(params Panel[] panels) {
+
+            ToolTip toolTip = new ToolTip
+            {
+                ToolTipTitle = "Information",        
+                AutoPopDelay = 5000,
+                InitialDelay = 500,
+                ReshowDelay = 200,
+                ShowAlways = true
+            };
+
+            toolTip.BackColor = Color.FromArgb(30, 30, 30);
+            toolTip.ForeColor = Color.White;
+
+            toolTip.OwnerDraw = true;
+            toolTip.Draw += (s, e) =>
+            {
+                e.Graphics.FillRectangle(new SolidBrush(toolTip.BackColor), e.Bounds);
+
+                using (Font boldFont = new Font(SystemFonts.DialogFont, FontStyle.Bold))
+                {
+                    TextRenderer.DrawText(e.Graphics, e.ToolTipText, boldFont, e.Bounds, toolTip.ForeColor);
+                }
+            };
+            toolTip.Popup += (s, e) =>
+            {
+                using (Font boldFont = new Font(SystemFonts.DialogFont, FontStyle.Bold))
+                {
+                    
+                    Size textSize = TextRenderer.MeasureText(_buttonMessages[GetButtonName((Button) e.AssociatedControl!)], boldFont);
+
+                    int paddingHorizontal = 25;
+                    int paddingVertical = 17;
+
+                    e.ToolTipSize = new Size(textSize.Width + paddingHorizontal, textSize.Height + paddingVertical);
+                }
+            };
+
+
+            var buttons = panels[0].Controls.OfType<Button>().ToList();
+
+            panels[1].Controls.OfType<Button>()
+                .ToList()
+                .ForEach(b => buttons.Add(b));
+            
+            foreach (Button button in buttons.ToList()) {
+                toolTip.SetToolTip(button, _buttonMessages[GetButtonName(button)]);
+            }
+        }
+
+
 
 
     }
