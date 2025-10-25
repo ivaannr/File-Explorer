@@ -25,6 +25,7 @@ namespace FileExplorer
             button.Text = text;
             button.FlatStyle = FlatStyle.Flat;
             button.UseVisualStyleBackColor = false;
+            button.Enabled = string.IsNullOrEmpty(text) ? false : true;
 
 
             return button;
@@ -487,7 +488,6 @@ namespace FileExplorer
                 toolTip.SetToolTip(button, _buttonMessages[GetButtonName(button)]);
             }
         }
-
 
 
 

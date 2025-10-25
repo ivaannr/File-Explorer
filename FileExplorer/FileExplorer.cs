@@ -49,6 +49,7 @@ namespace FileExplorer
                                   .Where(d => d.IsReady)
                                   .ToArray();
 
+            SetupOnEnabledChanged();
             Utils.SetUpTooltips(utilsWrapperPanel, mainFoldersWrapper);
             Utils.ChangeButtonsState(utilsButtons);
             ChangeDirectory(pathTextBox.Text, CancellationToken.None);
@@ -643,8 +644,50 @@ namespace FileExplorer
 
         private void favoriteDirectoriesPanel_Paint(object sender, PaintEventArgs e)
         {
+            
 
         }
+
+        private void SetupOnEnabledChanged() {
+            renameButton.EnabledChanged += (s, e) => {
+                Button b = s as Button;
+                b.Image = b.Enabled ? Resources.KEYBOARD : Resources.RENAME_DISABLED;
+            };
+            favoriteButton.EnabledChanged += (s, e) => {
+                var b = s as Button;
+                b.Image = b.Enabled ? Resources.STAR : Resources.FAVORITE_DISABLED;
+            };
+            cutButton.EnabledChanged += (s, e) => {
+                var b = s as Button;
+                b.Image = b.Enabled ? Resources.SCISSORS : Resources.CUT_DISABLED;
+            };
+            deleteButton.EnabledChanged += (s, e) => {
+                var b = s as Button;
+                b.Image = b.Enabled ? Resources.PAPER_BIN : Resources.DELETE_DISABLED;
+            };
+            pasteButton.EnabledChanged += (s, e) => {
+                var b = s as Button;
+                b.Image = b.Enabled ? Resources.CONTENT_PASTE : Resources.PASTE_DISABLED;
+            };
+            copyButton.EnabledChanged += (s, e) => {
+                var b = s as Button;
+                b.Image = b.Enabled ? Resources.CONTENT_COPY : Resources.COPY_DISABLED;
+            };
+            forwardButton.EnabledChanged += (s, e) => {
+                var b = s as Button;
+                b.Image = b.Enabled ? Resources.ARROW_FORWARD : Resources.FORWARD_DISABLED;
+            };
+            returnButton.EnabledChanged += (s, e) => {
+                var b = s as Button;
+                b.Image = b.Enabled ? Resources.ARROW_FORWARD : Resources.FORWARD_DISABLED;
+            };
+            backButton.EnabledChanged += (s, e) => {
+                var b = s as Button;
+                b.Image = b.Enabled ? Resources.ARROW_BACK : Resources.BACK_DISABLED;
+            };
+        }
+
+        
     }
 
     public enum DwmWindowAttribute

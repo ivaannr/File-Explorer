@@ -93,6 +93,16 @@ namespace FileExplorer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BACK_DISABLED {
+            get {
+                object obj = ResourceManager.GetObject("BACK_DISABLED", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CODE {
             get {
                 object obj = ResourceManager.GetObject("CODE", resourceCulture);
@@ -143,6 +153,26 @@ namespace FileExplorer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap COPY_DISABLED {
+            get {
+                object obj = ResourceManager.GetObject("COPY_DISABLED", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CUT_DISABLED {
+            get {
+                object obj = ResourceManager.GetObject("CUT_DISABLED", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DATA {
             get {
                 object obj = ResourceManager.GetObject("DATA", resourceCulture);
@@ -156,6 +186,16 @@ namespace FileExplorer.Properties {
         internal static System.Drawing.Bitmap DATABASE {
             get {
                 object obj = ResourceManager.GetObject("DATABASE", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DELETE_DISABLED {
+            get {
+                object obj = ResourceManager.GetObject("DELETE_DISABLED", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -223,6 +263,16 @@ namespace FileExplorer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FAVORITE_DISABLED {
+            get {
+                object obj = ResourceManager.GetObject("FAVORITE_DISABLED", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap FILE {
             get {
                 object obj = ResourceManager.GetObject("FILE", resourceCulture);
@@ -247,6 +297,16 @@ namespace FileExplorer.Properties {
             get {
                 object obj = ResourceManager.GetObject("FOLDER_ICON", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FORWARD_DISABLED {
+            get {
+                object obj = ResourceManager.GetObject("FORWARD_DISABLED", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -343,9 +403,39 @@ namespace FileExplorer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap PASTE_DISABLED {
+            get {
+                object obj = ResourceManager.GetObject("PASTE_DISABLED", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RENAME_DISABLED {
+            get {
+                object obj = ResourceManager.GetObject("RENAME_DISABLED", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap REPEAT {
             get {
                 object obj = ResourceManager.GetObject("REPEAT", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RETURN_DISABLED {
+            get {
+                object obj = ResourceManager.GetObject("RETURN_DISABLED", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
