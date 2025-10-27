@@ -359,10 +359,6 @@ namespace FileExplorer
 
                 if (Utils._selectedButtons.Count > 0)
                 {
-
-                    Console.WriteLine("Selected Buttons Count Before: " + Utils._selectedButtons.Count);
-                    Console.WriteLine("Coppied Buttons Count Before: " + Utils._copiedButtons.Count);
-
                     directoriesViewPanel.SuspendLayout();
 
                     foreach (var but in Utils._selectedButtons.ToList())
@@ -372,21 +368,14 @@ namespace FileExplorer
                         Utils._copiedButtons.Add(but);
                         Utils._selectedButtons.Remove(but);
 
-                        directoriesViewPanel.Controls.Remove(but);
-                        
+                        int row = directoriesViewPanel.GetRow(but);
+
+                        Utils.DeleteRowFromTableLayoutPanel(directoriesViewPanel, row);
 
                         Utils.ClearCurrentSelectedButton();
-
-                        await ChangeDirectory(pathTextBox.Text, CancellationToken.None);
                     }
 
-                    Console.WriteLine("Selected Buttons Count After: " + Utils._selectedButtons.Count);
-                    Console.WriteLine("Coppied Buttons Count After: " + Utils._copiedButtons.Count);
-
-                    await ReloadUI();
-
                     Utils.EnableButton(pasteButton);
-
                 }
 
             }
@@ -443,8 +432,12 @@ namespace FileExplorer
 
         private async void pasteButton_Click(object sender, EventArgs e)
         {
+
             try
             {
+
+                List<RowItems> rowItems = new List<RowItems>();
+
                 List<Button> directories = directoriesViewPanel.Controls
                     .OfType<Button>()
                     .Where(b => b.Tag is ButtonMetadata)
@@ -480,9 +473,11 @@ namespace FileExplorer
                     directoriesViewPanel.SuspendLayout();
                     await Task.Run(() =>
                     {
-                        foreach (var d in commonDirectories)
+                        foreach (var directoryButton in commonDirectories)
                         {
-                            var metadata = d.Tag as ButtonMetadata;
+
+                            int row = directoriesViewPanel.GetRow(directoryButton);
+                            var metadata = directoryButton.Tag as ButtonMetadata;
                             if (metadata == null) continue;
 
                             string destination = Path.Combine(currentPath, Path.GetFileName(metadata.Path)!);
@@ -516,8 +511,9 @@ namespace FileExplorer
                                 }
                                 else
                                 {
-                                    Console.WriteLine($"Source path does not exist: {metadata.Path}");
+                                    throw new Exception($"Source path does not exist: {metadata.Path}");
                                 }
+                                rowItems.Add(Utils.GetItemsFromRow(directoriesViewPanel, directoryButton));
                             }
                             catch (Exception ex)
                             {
@@ -527,9 +523,9 @@ namespace FileExplorer
                             Console.WriteLine($"After move: exists? File: {File.Exists(metadata.Path)}, Dir: {Directory.Exists(metadata.Path)}");
                             Console.WriteLine($"Destination exists? File: {File.Exists(destination)}, Dir: {Directory.Exists(destination)}");
                         }
-                    });
 
-                    await ReloadUI();
+                        Utils.AddRowToTableLayoutPanel(directoriesViewPanel, rowItems);
+                    });
 
                     Utils.DisableButton(pasteButton);
 

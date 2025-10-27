@@ -1,9 +1,10 @@
-﻿using System;
+﻿using FileExplorer.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FileExplorer.Model;
+using System.Windows.Forms;
 
 namespace FileExplorer
 {
@@ -489,7 +490,92 @@ namespace FileExplorer
             }
         }
 
+        public static void AddRowToTableLayoutPanel(TableLayoutPanel panel, List<RowItems> rowItems)
+        {
 
+            if (!rowItems.Any()) { return; }
+
+            panel.SuspendLayout();
+
+            int newRows = rowItems.Count;
+          
+            var controlsToMove = panel.Controls.Cast<Control>()
+                .Where(c => panel.GetRow(c) >= 0)
+                .OrderByDescending(c => panel.GetRow(c))
+                .ToList();
+
+            foreach (var control in controlsToMove)
+            {
+                panel.SetRow(control, panel.GetRow(control) + newRows);
+            }
+
+            
+            panel.RowCount += newRows;
+            
+            for (int row = 0; row < newRows; row++)
+            {
+                RowItems items = rowItems[row];
+                AddToTableView(panel, items.NameButton, 0, row);
+                AddToTableView(panel, items.ExtensionButton, 1, row);
+                AddToTableView(panel, items.SizeLabel, 2, row);
+            }
+
+            panel.ResumeLayout();
+        }
+
+        public static RowItems GetItemsFromRow(TableLayoutPanel panel, Control control)
+        {
+            int targetRow = panel.GetRow(control);
+
+            var rowControls = panel.Controls
+                .Cast<Control>()
+                .Where(c => panel.GetRow(c) == targetRow)
+                .OrderBy(c => panel.GetColumn(c))
+                .ToList();
+
+            if (rowControls.Count < 3) {
+                throw new InvalidOperationException($"Expected at least 3 controls in row {targetRow}, found {rowControls.Count}.");
+            }
+
+            return new RowItems(
+                nameButton: rowControls[0] as Button,
+                extensionButton: rowControls[1] as Button,
+                sizeLabel: rowControls[2] as Label
+            );
+        }
+
+        public static void DeleteRowFromTableLayoutPanel(TableLayoutPanel panel, int targetRow)
+        {
+            panel.SuspendLayout();
+
+            int totalRows = panel.RowCount;
+
+            var controlsInRow = panel.Controls.Cast<Control>()
+                .Where(c => panel.GetRow(c) == targetRow)
+                .ToList();
+
+            foreach (var control in controlsInRow)
+            {
+                panel.Controls.Remove(control);
+                control.Dispose(); 
+            }
+
+            for (int row = targetRow + 1; row < totalRows; row++)
+            {
+                var controlsBelow = panel.Controls.Cast<Control>()
+                    .Where(c => panel.GetRow(c) == row)
+                    .ToList();
+
+                foreach (var control in controlsBelow)
+                {
+                    panel.SetRow(control, row - 1);
+                }
+            }
+
+            panel.RowCount--;
+
+            panel.ResumeLayout();
+        }
 
     }
 }
