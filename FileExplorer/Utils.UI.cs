@@ -59,18 +59,20 @@ namespace FileExplorer
         {
             buttons.ForEach(b => {
                 b.Enabled = !b.Enabled;
-
-                //TODO => Make button icons turn slightly darker when disabled
-
             });
         }
 
         public static void DisableUtilsButtons(List<Button> buttons) {
-            buttons.ForEach(b => {
+
+            var buttonsToDisable =
+                !_copiedButtons.Any() 
+                ? buttons 
+                : buttons.Where(b => b.Name != "pasteButton")
+                         .ToList();
+
+
+            buttonsToDisable.ForEach(b => {
                 b.Enabled = false;
-
-                //TODO => Make button icons turn slightly darker when disabled
-
             });
         }
 
@@ -78,9 +80,6 @@ namespace FileExplorer
         {
             buttons.ForEach(b => {
                 b.Enabled = true;
-
-                //TODO => Make button icons turn slightly darker when disabled
-
             });
         }
 

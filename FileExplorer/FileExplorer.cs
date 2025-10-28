@@ -357,6 +357,8 @@ namespace FileExplorer
             try
             {
 
+                Utils.DisableUtilsButtons(utilsButtons!);
+
                 if (Utils._selectedButtons.Count > 0)
                 {
                     directoriesViewPanel.SuspendLayout();
@@ -436,6 +438,8 @@ namespace FileExplorer
             try
             {
 
+                String currentPath = pathTextBox.Text;
+
                 List<RowItems> rowItems = new List<RowItems>();
 
                 List<Button> directories = directoriesViewPanel.Controls
@@ -468,24 +472,18 @@ namespace FileExplorer
 
                     if (result == DialogResult.No) return;
 
-                    var currentPath = pathTextBox.Text;
-
                     directoriesViewPanel.SuspendLayout();
+
                     await Task.Run(() =>
                     {
                         foreach (var directoryButton in commonDirectories)
                         {
 
-                            int row = directoriesViewPanel.GetRow(directoryButton);
                             var metadata = directoryButton.Tag as ButtonMetadata;
+
                             if (metadata == null) continue;
 
                             string destination = Path.Combine(currentPath, Path.GetFileName(metadata.Path)!);
-
-                            Console.WriteLine($"Attempting to move from '{metadata.Path}' to '{destination}'");
-
-                            Console.WriteLine($"Before move: exists? File: {File.Exists(metadata.Path)}, Dir: {Directory.Exists(metadata.Path)}");
-                            Console.WriteLine($"Destination exists? File: {File.Exists(destination)}, Dir: {Directory.Exists(destination)}");
 
                             try
                             {
@@ -519,9 +517,6 @@ namespace FileExplorer
                             {
                                 Console.WriteLine($"Error moving {metadata.Path} to {destination}: {ex.Message}");
                             }
-
-                            Console.WriteLine($"After move: exists? File: {File.Exists(metadata.Path)}, Dir: {Directory.Exists(metadata.Path)}");
-                            Console.WriteLine($"Destination exists? File: {File.Exists(destination)}, Dir: {Directory.Exists(destination)}");
                         }
 
                         Utils.AddRowToTableLayoutPanel(directoriesViewPanel, rowItems);
@@ -529,11 +524,6 @@ namespace FileExplorer
 
                     Utils.DisableButton(pasteButton);
 
-                    directoriesViewPanel.ResumeLayout();
-
-                    Console.WriteLine(currentPath);
-
-                    return;
                 }
             }
             catch (Exception ex)
