@@ -5,6 +5,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Resources;
 using System.Security;
 using System.Security.AccessControl;
@@ -453,6 +454,70 @@ namespace FileExplorer
             }
         }
 
+        /// <summary>
+        /// Moves the directory specified in <paramref name="metadata.Path"/> to the <paramref name="destination"/> path.
+        /// If the destination directory exists, it will be deleted first. 
+        /// To avoid conflicts, the source directory is first moved into a temporary folder before being moved to the final destination.
+        /// </summary>
+        /// <param name="metadata">An ButtonMetadata object containing the path of the directory to move.</param>
+        /// <param name="destination">The target path where the directory should be moved.</param>
+        public static Task PasteSystemFiles(ButtonMetadata metadata, String destination)
+        {
+            return Task.Run(() => {
+
+                string baseFolder = Path.GetDirectoryName(metadata.Path)!;
+                string tempFolder = Path.Combine(baseFolder, $"temp_{Guid.NewGuid()}");
+
+                try {
+
+                    if (File.Exists(metadata.Path))
+                    {
+                        Directory.CreateDirectory(tempFolder);
+
+                        string tempFilePath = Path.Combine(tempFolder, Path.GetFileName(metadata.Path));
+                        File.Move(metadata.Path, tempFilePath);
+
+                        if (File.Exists(destination))
+                        {
+                            File.Delete(destination);
+                        }
+
+                        File.Move(tempFilePath, destination);
+                        Directory.Delete(tempFolder);
+                    }
+                    else if (Directory.Exists(metadata.Path))
+                    {
+
+                        Directory.CreateDirectory(tempFolder);
+
+                        string tempFilePath = Path.Combine(tempFolder, Path.GetFileName(metadata.Path));
+                        Directory.Move(metadata.Path, tempFilePath);
+
+                        if (Directory.Exists(destination))
+                        {
+                            Directory.Delete(destination, true);
+                        }
+
+                        Directory.Move(tempFilePath, destination);
+                        Directory.Delete(tempFolder, true);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Source path does not exist: {metadata.Path}");
+                    }
+                
+                }
+                catch (Exception ex) { 
+
+                    Console.WriteLine(ex.Message); 
+
+                } finally {
+                    if (Directory.Exists(tempFolder)) {
+                        Directory.Delete(tempFolder, true);
+                    }   
+                }
+            });
+        }
 
         private static String GetButtonName(Button button) => button.Name.Substring(0, button.Name.Length - 6);
         public static void EnableButton(Button button) => button.Enabled = true;

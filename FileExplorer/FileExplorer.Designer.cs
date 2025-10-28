@@ -84,7 +84,6 @@ namespace FileExplorer
             sideBar.Name = "sideBar";
             sideBar.Size = new Size(236, 532);
             sideBar.TabIndex = 0;
-            sideBar.Paint += sideBar_Paint;
             // 
             // favoriteDirectoriesPanel
             // 
@@ -97,7 +96,6 @@ namespace FileExplorer
             favoriteDirectoriesPanel.Size = new Size(213, 206);
             favoriteDirectoriesPanel.TabIndex = 0;
             favoriteDirectoriesPanel.WrapContents = false;
-            favoriteDirectoriesPanel.Paint += favoriteDirectoriesPanel_Paint;
             // 
             // folderSeparator2
             // 
@@ -281,7 +279,6 @@ namespace FileExplorer
             utilsWrapperPanel.Name = "utilsWrapperPanel";
             utilsWrapperPanel.Size = new Size(539, 32);
             utilsWrapperPanel.TabIndex = 0;
-            utilsWrapperPanel.Paint += utilsWrapperPanel_Paint;
             // 
             // renameButton
             // 
@@ -446,7 +443,6 @@ namespace FileExplorer
             directoryPanel.Name = "directoryPanel";
             directoryPanel.Size = new Size(770, 402);
             directoryPanel.TabIndex = 3;
-            directoryPanel.Paint += directoryPanel_Paint;
             // 
             // directoriesViewPanel
             // 

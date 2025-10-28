@@ -174,13 +174,12 @@ namespace FileExplorer
         }
 
         public static void ClearSelectedButtons() {
-            Console.WriteLine("aaa");
             foreach (var button in Utils._selectedButtons)
             {
                 button.BackColor = Color.FromArgb(27, 27, 27);
             }
-            Utils._selectedButtons.Clear();
-            Utils.DisableUtilsButtons(FileExplorer.utilsButtons!);
+            _selectedButtons.Clear();
+            DisableUtilsButtons(FileExplorer.utilsButtons!);
         }
 
         public static async Task ReloadFavoriteDirectories(Panel panel, TextBox pathTextBox)
@@ -575,6 +574,8 @@ namespace FileExplorer
 
             panel.ResumeLayout();
         }
+
+
 
     }
 }

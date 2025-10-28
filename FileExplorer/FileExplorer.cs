@@ -298,15 +298,6 @@ namespace FileExplorer
             pathTextBox.Text = $@"C:\Users\{Utils.userName}\Pictures";
         }
 
-
-
-        private void utilsWrapperPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-
-
-        }
-
         private void backButton_Click(object sender, EventArgs e)
         {
             String parentFullPath = Directory.GetParent(pathTextBox.Text)?.FullName!;
@@ -356,7 +347,6 @@ namespace FileExplorer
         {
             try
             {
-
                 Utils.DisableUtilsButtons(utilsButtons!);
 
                 if (Utils._selectedButtons.Count > 0)
@@ -368,24 +358,54 @@ namespace FileExplorer
                         var metadata = (but.Tag as ButtonMetadata)!;
 
                         Utils._copiedButtons.Add(but);
-                        Utils._selectedButtons.Remove(but);
 
-                        int row = directoriesViewPanel.GetRow(but);
+                    }
+                }
 
-                        Utils.DeleteRowFromTableLayoutPanel(directoriesViewPanel, row);
+                Utils.EnableButton(pasteButton);
 
-                        Utils.ClearCurrentSelectedButton();
+            } catch (NullReferenceException nullReference) {
+
+                Console.WriteLine($"ERROR {nullReference.Message}");
+
+            } finally {
+                Utils.ClearSelectedButtons();
+                directoriesViewPanel.ResumeLayout();
+            }
+        }
+
+        private void copyButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Utils.DisableUtilsButtons(utilsButtons!);
+
+                if (Utils._selectedButtons.Count > 0)
+                {
+                    directoriesViewPanel.SuspendLayout();
+
+                    foreach (var but in Utils._selectedButtons.ToList())
+                    {
+                        var metadata = (but.Tag as ButtonMetadata)!;
+
+                        Utils._copiedButtons.Add(but);
+
+                        Console.WriteLine($"{but.Name} coppied");
                     }
 
                     Utils.EnableButton(pasteButton);
                 }
 
+                
             }
             catch (NullReferenceException nullReference)
             {
                 Console.WriteLine($"ERROR {nullReference.Message}");
             }
-            finally { directoriesViewPanel.ResumeLayout(); }
+            finally {
+                Utils.ClearSelectedButtons();
+                directoriesViewPanel.ResumeLayout(); 
+            }
         }
 
         private async void favoriteButton_Click(object sender, EventArgs e)
@@ -434,10 +454,8 @@ namespace FileExplorer
 
         private async void pasteButton_Click(object sender, EventArgs e)
         {
-
             try
             {
-
                 String currentPath = pathTextBox.Text;
 
                 List<RowItems> rowItems = new List<RowItems>();
@@ -452,7 +470,7 @@ namespace FileExplorer
                     .Where(b => b.Tag is ButtonMetadata)
                     .ToList();
 
-                if (!directoriesToPaste.Any()) return;
+                if (!directoriesToPaste.Any()) { return; }
 
                 HashSet<Button> existingPaths = new HashSet<Button>(directories, new ButtonMetadataComparer());
 
@@ -470,60 +488,29 @@ namespace FileExplorer
 
                     var result = overwrite.ShowDialog();
 
-                    if (result == DialogResult.No) return;
+                    if (result == DialogResult.No) { return; }
 
                     directoriesViewPanel.SuspendLayout();
-
                     await Task.Run(() =>
                     {
                         foreach (var directoryButton in commonDirectories)
                         {
-
                             var metadata = directoryButton.Tag as ButtonMetadata;
 
-                            if (metadata == null) continue;
+                            if (metadata == null) { continue; }
 
                             string destination = Path.Combine(currentPath, Path.GetFileName(metadata.Path)!);
 
                             try
                             {
-                                if (File.Exists(metadata.Path))
-                                {
-                                    if (File.Exists(destination))
-                                    {
-                                        Console.WriteLine($"Deleting existing file at destination: {destination}");
-                                        File.Delete(destination);
-                                    }
-
-                                    File.Move(metadata.Path, destination);
-                                }
-                                else if (Directory.Exists(metadata.Path))
-                                {
-                                    if (Directory.Exists(destination))
-                                    {
-                                        Console.WriteLine($"Deleting existing directory at destination: {destination}");
-                                        Directory.Delete(destination, recursive: true);
-                                    }
-
-                                    Directory.Move(metadata.Path, destination);
-                                }
-                                else
-                                {
-                                    throw new Exception($"Source path does not exist: {metadata.Path}");
-                                }
-                                rowItems.Add(Utils.GetItemsFromRow(directoriesViewPanel, directoryButton));
+                                Utils.PasteSystemFiles(metadata, destination);
                             }
                             catch (Exception ex)
                             {
                                 Console.WriteLine($"Error moving {metadata.Path} to {destination}: {ex.Message}");
                             }
                         }
-
-                        Utils.AddRowToTableLayoutPanel(directoriesViewPanel, rowItems);
                     });
-
-                    Utils.DisableButton(pasteButton);
-
                 }
             }
             catch (Exception ex)
@@ -532,9 +519,15 @@ namespace FileExplorer
             }
             finally
             {
+                Utils.DisableButton(pasteButton);
                 directoriesViewPanel.ResumeLayout();
             }
+
+            
         }
+
+
+        
 
 
         private async void renameButton_Click(object sender, EventArgs e)
@@ -579,26 +572,6 @@ namespace FileExplorer
             }
         }
 
-        private void sideBar_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void mainFoldersWrapper_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void FileExplorer_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void directoryPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void CheckKey()
         {
             while (isRunning)
@@ -629,43 +602,8 @@ namespace FileExplorer
             }
         }
 
-        private void favoriteDirectoriesPanel_Paint(object sender, PaintEventArgs e)
-        {
-            
 
-        }
 
-        private void copyButton_Click(object sender, EventArgs e) {
-            try
-            {
-
-                Utils.DisableUtilsButtons(utilsButtons!);
-
-                if (Utils._selectedButtons.Count > 0)
-                {
-                    directoriesViewPanel.SuspendLayout();
-
-                    foreach (var but in Utils._selectedButtons.ToList())
-                    {
-                        var metadata = (but.Tag as ButtonMetadata)!;
-
-                        Utils._copiedButtons.Add(but);
-                        
-                        Console.WriteLine($"{but.Name} coppied");
-                    }
-
-                    Utils.EnableButton(pasteButton);
-                }
-                
-                Utils.ClearSelectedButtons();
-                Utils._selectedButtons.Clear();
-            }
-            catch (NullReferenceException nullReference)
-            {
-                Console.WriteLine($"ERROR {nullReference.Message}");
-            }
-            finally { directoriesViewPanel.ResumeLayout(); }
-        }
 
         private void SetupOnEnabledChanged() {
             renameButton.EnabledChanged += (s, e) => {
