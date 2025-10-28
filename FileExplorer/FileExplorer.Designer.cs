@@ -370,6 +370,7 @@ namespace FileExplorer
             copyButton.TabIndex = 6;
             copyButton.Tag = buttonMetadata1;
             copyButton.UseVisualStyleBackColor = true;
+            copyButton.Click += copyButton_Click;
             // 
             // separatorPanel2
             // 

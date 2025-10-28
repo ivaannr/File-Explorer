@@ -635,6 +635,38 @@ namespace FileExplorer
 
         }
 
+        private void copyButton_Click(object sender, EventArgs e) {
+            try
+            {
+
+                Utils.DisableUtilsButtons(utilsButtons!);
+
+                if (Utils._selectedButtons.Count > 0)
+                {
+                    directoriesViewPanel.SuspendLayout();
+
+                    foreach (var but in Utils._selectedButtons.ToList())
+                    {
+                        var metadata = (but.Tag as ButtonMetadata)!;
+
+                        Utils._copiedButtons.Add(but);
+                        
+                        Console.WriteLine($"{but.Name} coppied");
+                    }
+
+                    Utils.EnableButton(pasteButton);
+                }
+                
+                Utils.ClearSelectedButtons();
+                Utils._selectedButtons.Clear();
+            }
+            catch (NullReferenceException nullReference)
+            {
+                Console.WriteLine($"ERROR {nullReference.Message}");
+            }
+            finally { directoriesViewPanel.ResumeLayout(); }
+        }
+
         private void SetupOnEnabledChanged() {
             renameButton.EnabledChanged += (s, e) => {
                 Button b = s as Button;

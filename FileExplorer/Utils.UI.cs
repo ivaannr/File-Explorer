@@ -174,7 +174,7 @@ namespace FileExplorer
         }
 
         public static void ClearSelectedButtons() {
-
+            Console.WriteLine("aaa");
             foreach (var button in Utils._selectedButtons)
             {
                 button.BackColor = Color.FromArgb(27, 27, 27);
