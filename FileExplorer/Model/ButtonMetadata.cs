@@ -10,7 +10,7 @@ namespace FileExplorer.Model
     {
         public string? Path { get; set; }
         public string? Type { get; set; }
-
+        public string? Size { get; set; }
         public bool? CanDisable { get; set; }
     }
 }

@@ -124,13 +124,6 @@ namespace FileExplorer
 
         private static async void directoryButton_MouseClick(object sender, MouseEventArgs me)
         {
-
-            /*
-             * TODO List
-             * make that when clicking on a directory the fav buttons state change
-             * change util buttons state when a button is clicked
-            */
-
             await Task.Run(() => {
                 try
                 {
@@ -160,7 +153,6 @@ namespace FileExplorer
                         selectedButton!.BackColor = Color.FromArgb(50,50,50);
 
                         Console.WriteLine("Clicked right button while holding ctrl");
-
 
                         return;
                     }
@@ -575,6 +567,21 @@ namespace FileExplorer
             panel.ResumeLayout();
         }
 
+        /// <summary>
+        /// Establishes the button's background to rgb(50, 50, 50) (selected)
+        /// </summary>
+        /// <param name="button"></param>
+        public static void HighlightButton(Button button) { 
+            button.BackColor = Color.FromArgb(50, 50, 50);
+        }
+
+        /// <summary>
+        /// Establishes the button's background to rgb(27, 27, 27) (not selected)
+        /// </summary>
+        /// <param name="button"></param>
+        public static void LowlightButton(Button button) {
+            button.BackColor = Color.FromArgb(27, 27, 27);
+        }
 
 
     }

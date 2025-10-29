@@ -1,6 +1,7 @@
 using FileExplorer.Model;
 using FileExplorer.Properties;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
 using System.Windows.Forms;
 
@@ -458,8 +459,6 @@ namespace FileExplorer
             {
                 String currentPath = pathTextBox.Text;
 
-                List<RowItems> rowItems = new List<RowItems>();
-
                 List<Button> directories = directoriesViewPanel.Controls
                     .OfType<Button>()
                     .Where(b => b.Tag is ButtonMetadata)
@@ -491,26 +490,54 @@ namespace FileExplorer
                     if (result == DialogResult.No) { return; }
 
                     directoriesViewPanel.SuspendLayout();
-                    await Task.Run(() =>
+                    await Task.Run(async () =>
                     {
                         foreach (var directoryButton in commonDirectories)
                         {
-                            var metadata = directoryButton.Tag as ButtonMetadata;
-
-                            if (metadata == null) { continue; }
+                            if (directoryButton.Tag is not ButtonMetadata metadata) { continue; }
 
                             string destination = Path.Combine(currentPath, Path.GetFileName(metadata.Path)!);
 
                             try
                             {
-                                Utils.PasteSystemFiles(metadata, destination);
+                                await Utils.PasteSystemFiles(metadata, destination);
                             }
                             catch (Exception ex)
                             {
                                 Console.WriteLine($"Error moving {metadata.Path} to {destination}: {ex.Message}");
                             }
+
+                            if (directoryButton.InvokeRequired) {
+                                directoryButton.Invoke(() => {
+                                    Utils.HighlightButton(directoryButton);
+                                });
+                            } else { 
+                                Utils.HighlightButton(directoryButton);
+                            }
+
+                            Utils._selectedButtons.Add(directoryButton);
                         }
                     });
+                }
+
+                List<RowItems> rowItems = new List<RowItems>();
+
+                foreach (var directoryButton in directoriesToPaste) {
+
+                    if (directoryButton.Tag is not ButtonMetadata metadata) { continue; }
+
+                    string destination = Path.Combine(currentPath, Path.GetFileName(metadata.Path)!);
+
+                    //TODO => MAKE UI DIRECTORIES APPEAR
+
+                    try
+                    {
+                        await Utils.PasteSystemFiles(metadata, destination);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error moving {metadata.Path} to {destination}: {ex.Message}");
+                    }
                 }
             }
             catch (Exception ex)
@@ -523,12 +550,7 @@ namespace FileExplorer
                 directoriesViewPanel.ResumeLayout();
             }
 
-            
         }
-
-
-        
-
 
         private async void renameButton_Click(object sender, EventArgs e)
         {
