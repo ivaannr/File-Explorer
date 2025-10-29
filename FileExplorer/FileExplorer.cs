@@ -356,10 +356,16 @@ namespace FileExplorer
 
                     foreach (var but in Utils._selectedButtons.ToList())
                     {
-                        var metadata = (but.Tag as ButtonMetadata)!;
+                        ButtonMetadata metadata = (but.Tag as ButtonMetadata)!;
+
+                        RowItems items = Utils.GetItemsFromRow(directoriesViewPanel, but);
+
+                        metadata.Type = items.ExtensionButton.Text;
+                        metadata.Size = items.SizeLabel.Text;
+
+                        but.Tag = metadata;
 
                         Utils._copiedButtons.Add(but);
-
                     }
                 }
 
@@ -387,7 +393,14 @@ namespace FileExplorer
 
                     foreach (var but in Utils._selectedButtons.ToList())
                     {
-                        var metadata = (but.Tag as ButtonMetadata)!;
+                        ButtonMetadata metadata = (but.Tag as ButtonMetadata)!;
+
+                        RowItems items = Utils.GetItemsFromRow(directoriesViewPanel, but);
+
+                        metadata.Type = items.ExtensionButton.Text;
+                        metadata.Size = items.SizeLabel.Text;
+
+                        but.Tag = metadata;
 
                         Utils._copiedButtons.Add(but);
 
@@ -487,7 +500,11 @@ namespace FileExplorer
 
                     var result = overwrite.ShowDialog();
 
-                    if (result == DialogResult.No) { return; }
+                    if (result == DialogResult.No) {
+                        Utils.ClearSelectedButtons();
+                        Utils.DisableAllUtilButtons(utilsButtons!);
+                        return; 
+                    }
 
                     directoriesViewPanel.SuspendLayout();
                     await Task.Run(async () =>
@@ -516,29 +533,60 @@ namespace FileExplorer
                             }
 
                             Utils._selectedButtons.Add(directoryButton);
+                            Utils.EnableUtilsButtons(utilsButtons!);
                         }
                     });
                 }
 
-                List<RowItems> rowItems = new List<RowItems>();
+                await Task.Run( async () => {
 
-                foreach (var directoryButton in directoriesToPaste) {
+                    List<RowItems> rowItems = new List<RowItems>();
 
-                    if (directoryButton.Tag is not ButtonMetadata metadata) { continue; }
-
-                    string destination = Path.Combine(currentPath, Path.GetFileName(metadata.Path)!);
-
-                    //TODO => MAKE UI DIRECTORIES APPEAR
-
-                    try
+                    foreach (var directoryButton in directoriesToPaste)
                     {
-                        await Utils.PasteSystemFiles(metadata, destination);
+                        if (directoryButton.Tag is not ButtonMetadata metadata) { continue; }
+
+                        string destination = Path.Combine(currentPath, Path.GetFileName(metadata.Path)!);
+
+                        try
+                        {
+                            await Utils.PasteSystemFiles(metadata, destination);
+                            rowItems.Add(
+                                new RowItems(
+                                    directoryButton,
+                                    Utils.CreateExtensionButton(metadata.Type!),
+                                    Utils.CreateSizeLabel(new Dir("", $"placeholder{directoryButton.Name}", 0), metadata.Size)
+                                )
+                            );
+
+                            if (directoryButton.InvokeRequired)
+                            {
+                                directoryButton.Invoke(() => {
+                                    Utils.HighlightButton(directoryButton);
+                                });
+                            }
+                            else
+                            {
+                                Utils.HighlightButton(directoryButton);
+                            }
+
+                            Utils._selectedButtons.Add(directoryButton);
+                            Utils.EnableUtilsButtons(utilsButtons!);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error moving {metadata.Path} to {destination}: {ex.Message}");
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error moving {metadata.Path} to {destination}: {ex.Message}");
+
+                    if (directoriesViewPanel.InvokeRequired) {
+                        directoriesViewPanel.Invoke(() => {
+                            Utils.AddRowToTableLayoutPanel(directoriesViewPanel, rowItems);
+
+                        });
                     }
-                }
+                    else { Utils.AddRowToTableLayoutPanel(directoriesViewPanel, rowItems); }
+                });
             }
             catch (Exception ex)
             {

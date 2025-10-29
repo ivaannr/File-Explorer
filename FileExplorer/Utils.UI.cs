@@ -1,10 +1,4 @@
 ﻿using FileExplorer.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace FileExplorer
 {
@@ -78,7 +72,14 @@ namespace FileExplorer
 
         public static void EnableUtilsButtons(List<Button> buttons)
         {
-            buttons.ForEach(b => {
+            var buttonsToEnable =
+                !_copiedButtons.Any()
+                ? buttons
+                : buttons.Where(b => b.Name != "pasteButton")
+                         .ToList();
+
+
+            buttonsToEnable.ForEach(b => {
                 b.Enabled = true;
             });
         }
@@ -581,6 +582,10 @@ namespace FileExplorer
         /// <param name="button"></param>
         public static void LowlightButton(Button button) {
             button.BackColor = Color.FromArgb(27, 27, 27);
+        }
+
+        public static void DisableAllUtilButtons(List<Button> buttons) {
+            buttons.ForEach(b => { b.Enabled = false; });
         }
 
 

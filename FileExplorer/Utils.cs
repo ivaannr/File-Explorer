@@ -461,12 +461,16 @@ namespace FileExplorer
         /// </summary>
         /// <param name="metadata">An ButtonMetadata object containing the path of the directory to move.</param>
         /// <param name="destination">The target path where the directory should be moved.</param>
-        public static Task PasteSystemFiles(ButtonMetadata metadata, String destination)
+        public static Task PasteSystemFiles(ButtonMetadata metadata, String destination, bool? wasCut = false)
         {
             return Task.Run(() => {
 
+                Console.WriteLine(File.Exists(metadata.Path));
+
                 string baseFolder = Path.GetDirectoryName(metadata.Path)!;
                 string tempFolder = Path.Combine(baseFolder, $"temp_{Guid.NewGuid()}");
+
+                Console.WriteLine(tempFolder);
 
                 try {
 

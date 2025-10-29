@@ -21,6 +21,7 @@ namespace FileExplorer
         private static readonly string[] noVectorialImageExtensions = new string[] { "jpg", "jpeg", "png", "bmp", "gif", "tiff", "ico", "webp" };
         public static List<Button> _selectedButtons = new List<Button>();
         public static List<Button> _copiedButtons = new List<Button>();
+        public static List<Button> _cutButtons = new List<Button>();
 
         private const String favsPath = "favs.csv";
         public static String userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name.Split('\\').Last();
