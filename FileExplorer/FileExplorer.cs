@@ -506,6 +506,9 @@ namespace FileExplorer
                     {
                         Utils.ClearSelectedButtons();
                         Utils.DisableAllUtilButtons(utilsButtons!);
+                        Utils._copiedButtons.Clear();
+                        Utils.DisableButton(pasteButton);
+                        directoriesViewPanel.ResumeLayout();
                         return;
                     }
 
@@ -526,13 +529,12 @@ namespace FileExplorer
             }
             finally
             {
+                Utils._copiedButtons.Clear();
                 Utils.DisableButton(pasteButton);
                 directoriesViewPanel.ResumeLayout();
             }
 
         }
-
-
 
         private async void renameButton_Click(object sender, EventArgs e)
         {

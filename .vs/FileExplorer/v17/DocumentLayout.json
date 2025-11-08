@@ -47,8 +47,11 @@
               "ViewState": "AgIAABwCAAAAAAAAAAAqwFkCAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-11T23:33:13.453Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
@@ -60,12 +63,7 @@
               "RelativeToolTip": "FileExplorer\\FileExplorer.Designer.cs",
               "ViewState": "AgIAABkBAAAAAAAAAAAkwFkBAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-08T11:59:32.647Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+              "WhenOpened": "2025-11-08T11:59:32.647Z"
             },
             {
               "$type": "Document",
@@ -75,7 +73,7 @@
               "RelativeDocumentMoniker": "FileExplorer\\FileExplorer.cs",
               "ToolTip": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\FileExplorer.cs",
               "RelativeToolTip": "FileExplorer\\FileExplorer.cs",
-              "ViewState": "AgIAAAMCAAAAAAAAAAD4v+ABAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAANMBAAAAAAAAAAAtwP0BAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-09T07:05:11.358Z",
               "EditorCaption": ""
@@ -113,8 +111,7 @@
               "RelativeToolTip": "FileExplorer\\Utils.UI.cs",
               "ViewState": "AgIAABYCAAAAAAAAAAAWwOMBAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T20:16:01.687Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-28T20:16:01.687Z"
             }
           ]
         }
