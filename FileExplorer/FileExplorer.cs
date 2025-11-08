@@ -519,8 +519,8 @@ namespace FileExplorer
                 }
 
                 await Utils.PasteDirectories(
-                    currentPath, 
-                    directoriesToPaste.Except(commonDirectories).ToList(), 
+                    currentPath,
+                    directoriesToPaste.Except(commonDirectories).ToList(),
                     directoriesViewPanel
                 );
             }
@@ -530,7 +530,8 @@ namespace FileExplorer
             }
             finally
             {
-                if (Utils._selectedButtons.Any()) {
+                if (Utils._selectedButtons.Any())
+                {
                     Utils.EnableUtilsButtons(utilsButtons!);
                 }
 
@@ -663,9 +664,27 @@ namespace FileExplorer
                 var b = s as Button;
                 b.Image = b.Enabled ? Resources.ARROW_BACK : Resources.BACK_DISABLED;
             };
+            selectAllButton.EnabledChanged += (s, e) =>
+            {
+                var b = s as Button;
+                b.Image = b.Enabled ? Resources.SELECT_ALL : Resources.SELECT_ALL_DISABLED;
+            };
         }
 
+        private void selectAllButton_Click(object sender, EventArgs e)
+        {
+            const int TARGET_COLUMN = 0;
+            var buttonsToSelect = directoriesViewPanel.Controls
+                                    .OfType<Button>()
+                                    .Where(btn => directoriesViewPanel.GetColumn(btn) == TARGET_COLUMN)
+                                    .ToList();
 
+            Utils.ClearSelectedButtons();
+
+            foreach (var button in buttonsToSelect) {
+                Utils.HighlightAndSelectButton(button);
+            }
+        }
     }
 
     public enum DwmWindowAttribute

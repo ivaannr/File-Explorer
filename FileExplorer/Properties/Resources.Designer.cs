@@ -203,6 +203,26 @@ namespace FileExplorer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DESELECT_ALL {
+            get {
+                object obj = ResourceManager.GetObject("DESELECT_ALL", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DESELECT_ALL_DISABLED {
+            get {
+                object obj = ResourceManager.GetObject("DESELECT_ALL_DISABLED", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DESKTOP_MAC {
             get {
                 object obj = ResourceManager.GetObject("DESKTOP_MAC", resourceCulture);
@@ -353,6 +373,26 @@ namespace FileExplorer.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap INVERT_SELECTION {
+            get {
+                object obj = ResourceManager.GetObject("INVERT_SELECTION", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap INVERT_SELECTION_DISABLED {
+            get {
+                object obj = ResourceManager.GetObject("INVERT_SELECTION_DISABLED", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap KEYBOARD {
             get {
                 object obj = ResourceManager.GetObject("KEYBOARD", resourceCulture);
@@ -446,6 +486,26 @@ namespace FileExplorer.Properties {
         internal static System.Drawing.Bitmap SCISSORS {
             get {
                 object obj = ResourceManager.GetObject("SCISSORS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SELECT_ALL {
+            get {
+                object obj = ResourceManager.GetObject("SELECT_ALL", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SELECT_ALL_DISABLED {
+            get {
+                object obj = ResourceManager.GetObject("SELECT_ALL_DISABLED", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

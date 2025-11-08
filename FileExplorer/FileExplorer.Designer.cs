@@ -48,6 +48,8 @@ namespace FileExplorer
             pathTextBox = new TextBox();
             toolsPanel = new Panel();
             utilsWrapperPanel = new Panel();
+            selectAllButton = new Button();
+            panel1 = new Panel();
             renameButton = new Button();
             favoriteButton = new Button();
             separatorPanel3 = new Panel();
@@ -262,6 +264,8 @@ namespace FileExplorer
             // 
             // utilsWrapperPanel
             // 
+            utilsWrapperPanel.Controls.Add(selectAllButton);
+            utilsWrapperPanel.Controls.Add(panel1);
             utilsWrapperPanel.Controls.Add(renameButton);
             utilsWrapperPanel.Controls.Add(favoriteButton);
             utilsWrapperPanel.Controls.Add(separatorPanel3);
@@ -280,6 +284,27 @@ namespace FileExplorer
             utilsWrapperPanel.Size = new Size(539, 32);
             utilsWrapperPanel.TabIndex = 0;
             // 
+            // selectAllButton
+            // 
+            selectAllButton.AutoEllipsis = true;
+            selectAllButton.FlatAppearance.BorderSize = 0;
+            selectAllButton.FlatStyle = FlatStyle.Flat;
+            selectAllButton.Image = Resources.SELECT_ALL;
+            selectAllButton.Location = new Point(352, 6);
+            selectAllButton.Name = "selectAllButton";
+            selectAllButton.Size = new Size(22, 20);
+            selectAllButton.TabIndex = 14;
+            selectAllButton.UseVisualStyleBackColor = true;
+            selectAllButton.Click += selectAllButton_Click;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.FromArgb(227, 226, 227);
+            panel1.Location = new Point(340, 5);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(2, 24);
+            panel1.TabIndex = 13;
+            // 
             // renameButton
             // 
             renameButton.FlatAppearance.BorderSize = 0;
@@ -291,6 +316,7 @@ namespace FileExplorer
             renameButton.TabIndex = 12;
             buttonMetadata1.CanDisable = true;
             buttonMetadata1.Path = null;
+            buttonMetadata1.Size = null;
             buttonMetadata1.Type = null;
             renameButton.Tag = buttonMetadata1;
             renameButton.UseVisualStyleBackColor = true;
@@ -353,7 +379,7 @@ namespace FileExplorer
             pasteButton.Size = new Size(20, 20);
             pasteButton.TabIndex = 7;
             pasteButton.Tag = buttonMetadata1;
-            pasteButton.UseVisualStyleBackColor = true;            
+            pasteButton.UseVisualStyleBackColor = true;
             // 
             // copyButton
             // 
@@ -522,5 +548,7 @@ namespace FileExplorer
         private Panel folderSeparator2;
         private FlowLayoutPanel favoriteDirectoriesPanel;
         private TableLayoutPanel directoriesViewPanel;
+        private Panel panel1;
+        private Button selectAllButton;
     }
 }

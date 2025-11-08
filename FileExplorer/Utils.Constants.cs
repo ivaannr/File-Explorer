@@ -45,6 +45,7 @@ namespace FileExplorer
             { "return", "Go back to the previous location" },
             { "forward", "Go forward to the next location" },
             { "delete", "Delete the selected item" },
+            { "selectAll", "Selects all files and folders in the current directory"},
             { "back", "Go to the parent directory of the current one" },
             { "desktop", @$"C:\Users\{userName}\Desktop" },
             { "images", @$"C:\Users\{userName}\Pictures"  },
