@@ -106,7 +106,7 @@ namespace FileExplorer
         {
             try
             {
-                if (!File.Exists(path)) { throw new FileNotFoundException($"File '{path}' not found.");  }
+                if (!File.Exists(path)) { throw new FileNotFoundException($"File '{path}' not found."); }
 
                 string[] lines = File.ReadAllLines(path);
 
@@ -130,7 +130,8 @@ namespace FileExplorer
             return Array.Empty<string>();
         }
 
-        public async static Task<List<string>> GetFavoriteDirectories() {
+        public async static Task<List<string>> GetFavoriteDirectories()
+        {
             try
             {
                 return await Task.Run(() =>
@@ -142,7 +143,8 @@ namespace FileExplorer
                     {
                         var parts = line.Split(";");
 
-                        if (parts.Length < 2) {
+                        if (parts.Length < 2)
+                        {
                             Console.WriteLine($"Invalid line: {line}");
                             continue;
                         }
@@ -178,12 +180,16 @@ namespace FileExplorer
             return new List<String> { };
         }
 
-        public static async Task<List<FavoriteDirectory>> ParseCSVData(List<String> directories) {
-            try {
-                return await Task.Run(() => {
+        public static async Task<List<FavoriteDirectory>> ParseCSVData(List<String> directories)
+        {
+            try
+            {
+                return await Task.Run(() =>
+                {
                     List<FavoriteDirectory> favoriteDirectories = new List<FavoriteDirectory>();
 
-                    foreach (String dir in directories) {
+                    foreach (String dir in directories)
+                    {
 
                         var parts = dir.Split(";");
                         String ID = parts[0];
@@ -193,13 +199,17 @@ namespace FileExplorer
                     }
                     return favoriteDirectories;
                 });
-            } catch (FileNotFoundException ex) {
+            }
+            catch (FileNotFoundException ex)
+            {
                 Console.WriteLine($"File not found: {ex.Message}");
             }
-            catch (DirectoryNotFoundException ex) {
+            catch (DirectoryNotFoundException ex)
+            {
                 Console.WriteLine($"Directory not found: {ex.Message}");
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Console.WriteLine($"ERROR error: {ex.Message}");
             }
 
@@ -236,14 +246,16 @@ namespace FileExplorer
             return ids.Count > 0 ? ids.Last() : "0";
         }
 
-        public static async Task RegisterFavoriteDirectory(String path, Panel favDirsPanel) {
+        public static async Task RegisterFavoriteDirectory(String path, Panel favDirsPanel)
+        {
             try
             {
                 int newID = Convert.ToInt32(await GetLastID()) + 1;
                 String[] line = { $"{newID};{path}" };
                 File.AppendAllLines(favsPath, line);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Utils.ShowPopUp("You may not click the favorite button that fast", "Warning", Resources.WARNING);
                 await RemoveAllFavoriteDirectoriesAsync(favDirsPanel);
             }
@@ -276,7 +288,8 @@ namespace FileExplorer
 
         public static Task DeleteDirectory(ButtonMetadata data)
         {
-            return Task.Run(() => {
+            return Task.Run(() =>
+            {
                 if (data == null || string.IsNullOrWhiteSpace(data.Path)) { return; }
 
                 try
@@ -305,7 +318,8 @@ namespace FileExplorer
 
         }
 
-        public static void ClearCurrentSelectedButton() {
+        public static void ClearCurrentSelectedButton()
+        {
             FileExplorer.CurrentSelectedButton = null;
             ChangeButtonsState(FileExplorer.utilsButtons!);
         }
@@ -365,8 +379,8 @@ namespace FileExplorer
             {
                 Console.WriteLine($"An error occurred while removing favorite directories: {ex.Message}");
             }
-            finally 
-            { 
+            finally
+            {
                 favoriteDirsPanel.ResumeLayout();
             }
         }
@@ -463,7 +477,8 @@ namespace FileExplorer
         /// <param name="destination">The target path where the directory should be moved.</param>
         public static Task PasteSystemFiles(ButtonMetadata metadata, String destination, bool? wasCut = false)
         {
-            return Task.Run(() => {
+            return Task.Run(() =>
+            {
 
                 Console.WriteLine(File.Exists(metadata.Path));
 
@@ -472,7 +487,8 @@ namespace FileExplorer
 
                 Console.WriteLine(tempFolder);
 
-                try {
+                try
+                {
 
                     if (File.Exists(metadata.Path))
                     {
@@ -509,17 +525,84 @@ namespace FileExplorer
                     {
                         Console.WriteLine($"Source path does not exist: {metadata.Path}");
                     }
-                
+
                 }
-                catch (Exception ex) { 
+                catch (Exception ex)
+                {
 
-                    Console.WriteLine(ex.Message); 
+                    Console.WriteLine(ex.Message);
 
-                } finally {
-                    if (Directory.Exists(tempFolder)) {
+                }
+                finally
+                {
+                    if (Directory.Exists(tempFolder))
+                    {
                         Directory.Delete(tempFolder, true);
-                    }   
+                    }
                 }
+            });
+        }
+
+
+        public static async Task PasteExistingDirectories(List<Button> commonDirectories, string currentPath)
+        {
+            foreach (var directoryButton in commonDirectories)
+            {
+                if (directoryButton.Tag is not ButtonMetadata metadata) continue;
+                string destination = Path.Combine(currentPath, Path.GetFileName(metadata.Path)!);
+
+                try
+                {
+                    await PasteSystemFiles(metadata, destination);
+                    HighlightAndSelectButton(directoryButton);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error moving {metadata.Path} to {destination}: {ex.Message}");
+                }
+            }
+        }
+        public static async Task PasteDirectories(string currentPath, List<Button> directoriesToPaste, TableLayoutPanel directoriesViewPanel)
+        {
+            if (directoriesToPaste == null || !directoriesToPaste.Any()) { return; }
+
+            List<RowItems> rowItems = new List<RowItems>();
+
+            foreach (var directoryButton in directoriesToPaste)
+            {
+                if (directoryButton.Tag is not ButtonMetadata metadata) { continue; }
+
+                string destination = Path.Combine(currentPath, Path.GetFileName(metadata.Path)!);
+
+                try
+                {
+                    await PasteSystemFiles(metadata, destination).ConfigureAwait(false);
+
+
+                    var row = new RowItems(
+                        directoryButton,
+                        CreateExtensionButton(metadata.Type!),
+                        CreateSizeLabel(
+                            new Dir(
+                                "",
+                                $"placeholder{directoryButton.Name}", 0),
+                            metadata.Size)
+                    );
+
+                    rowItems.Add(row);
+
+                    InvokeSafely(directoryButton, () => HighlightButton(directoryButton));
+                    _selectedButtons.Add(directoryButton);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error moving {metadata.Path} to {destination}: {ex.Message}");
+                }
+            }
+
+            InvokeSafely(directoriesViewPanel, () =>
+            {
+                AddRowToTableLayoutPanel(directoriesViewPanel, rowItems);
             });
         }
 

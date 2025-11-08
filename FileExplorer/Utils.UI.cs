@@ -588,6 +588,27 @@ namespace FileExplorer
             buttons.ForEach(b => { b.Enabled = false; });
         }
 
+        public static void HighlightAndSelectButton(Button button)
+        {
+            if (button.InvokeRequired) {
+                button.Invoke(() => HighlightButton(button));
+            } else {
+                HighlightButton(button);
+            }
+                
+            _selectedButtons.Add(button);
+            EnableUtilsButtons(FileExplorer.utilsButtons!);
+        }
+
+        public static void InvokeSafely(Control control, Action action)
+        {
+            if (control.InvokeRequired) {
+                control.Invoke(action);
+                return;
+            }
+
+            action();
+        }
 
     }
 }

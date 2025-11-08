@@ -371,11 +371,15 @@ namespace FileExplorer
 
                 Utils.EnableButton(pasteButton);
 
-            } catch (NullReferenceException nullReference) {
+            }
+            catch (NullReferenceException nullReference)
+            {
 
                 Console.WriteLine($"ERROR {nullReference.Message}");
 
-            } finally {
+            }
+            finally
+            {
                 Utils.ClearSelectedButtons();
                 directoriesViewPanel.ResumeLayout();
             }
@@ -410,15 +414,16 @@ namespace FileExplorer
                     Utils.EnableButton(pasteButton);
                 }
 
-                
+
             }
             catch (NullReferenceException nullReference)
             {
                 Console.WriteLine($"ERROR {nullReference.Message}");
             }
-            finally {
+            finally
+            {
                 Utils.ClearSelectedButtons();
-                directoriesViewPanel.ResumeLayout(); 
+                directoriesViewPanel.ResumeLayout();
             }
         }
 
@@ -466,29 +471,26 @@ namespace FileExplorer
             }
         }
 
-        private async void pasteButton_Click(object sender, EventArgs e)
+        private async Task pasteButton_Click(object sender, EventArgs e)
         {
+            directoriesViewPanel.SuspendLayout();
+
             try
             {
                 String currentPath = pathTextBox.Text;
 
-                List<Button> directories = directoriesViewPanel.Controls
-                    .OfType<Button>()
+                List<Button> directories = directoriesViewPanel.Controls.OfType<Button>()
                     .Where(b => b.Tag is ButtonMetadata)
                     .ToList();
 
-                List<Button> directoriesToPaste = Utils._copiedButtons
-                    .OfType<Button>()
+                List<Button> directoriesToPaste = Utils._copiedButtons.OfType<Button>()
                     .Where(b => b.Tag is ButtonMetadata)
                     .ToList();
 
                 if (!directoriesToPaste.Any()) { return; }
 
                 HashSet<Button> existingPaths = new HashSet<Button>(directories, new ButtonMetadataComparer());
-
-                List<Button> commonDirectories = directoriesToPaste
-                    .Where(b => existingPaths.Contains(b))
-                    .ToList();
+                List<Button> commonDirectories = directoriesToPaste.Where(existingPaths.Contains).ToList();
 
                 if (commonDirectories.Any())
                 {
@@ -500,93 +502,23 @@ namespace FileExplorer
 
                     var result = overwrite.ShowDialog();
 
-                    if (result == DialogResult.No) {
+                    if (result == DialogResult.No)
+                    {
                         Utils.ClearSelectedButtons();
                         Utils.DisableAllUtilButtons(utilsButtons!);
-                        return; 
+                        return;
                     }
 
-                    directoriesViewPanel.SuspendLayout();
-                    await Task.Run(async () =>
-                    {
-                        foreach (var directoryButton in commonDirectories)
-                        {
-                            if (directoryButton.Tag is not ButtonMetadata metadata) { continue; }
+                    await Utils.PasteExistingDirectories(commonDirectories, currentPath);
 
-                            string destination = Path.Combine(currentPath, Path.GetFileName(metadata.Path)!);
-
-                            try
-                            {
-                                await Utils.PasteSystemFiles(metadata, destination);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine($"Error moving {metadata.Path} to {destination}: {ex.Message}");
-                            }
-
-                            if (directoryButton.InvokeRequired) {
-                                directoryButton.Invoke(() => {
-                                    Utils.HighlightButton(directoryButton);
-                                });
-                            } else { 
-                                Utils.HighlightButton(directoryButton);
-                            }
-
-                            Utils._selectedButtons.Add(directoryButton);
-                            Utils.EnableUtilsButtons(utilsButtons!);
-                        }
-                    });
+                    return;
                 }
 
-                await Task.Run( async () => {
-
-                    List<RowItems> rowItems = new List<RowItems>();
-
-                    foreach (var directoryButton in directoriesToPaste)
-                    {
-                        if (directoryButton.Tag is not ButtonMetadata metadata) { continue; }
-
-                        string destination = Path.Combine(currentPath, Path.GetFileName(metadata.Path)!);
-
-                        try
-                        {
-                            await Utils.PasteSystemFiles(metadata, destination);
-                            rowItems.Add(
-                                new RowItems(
-                                    directoryButton,
-                                    Utils.CreateExtensionButton(metadata.Type!),
-                                    Utils.CreateSizeLabel(new Dir("", $"placeholder{directoryButton.Name}", 0), metadata.Size)
-                                )
-                            );
-
-                            if (directoryButton.InvokeRequired)
-                            {
-                                directoryButton.Invoke(() => {
-                                    Utils.HighlightButton(directoryButton);
-                                });
-                            }
-                            else
-                            {
-                                Utils.HighlightButton(directoryButton);
-                            }
-
-                            Utils._selectedButtons.Add(directoryButton);
-                            Utils.EnableUtilsButtons(utilsButtons!);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error moving {metadata.Path} to {destination}: {ex.Message}");
-                        }
-                    }
-
-                    if (directoriesViewPanel.InvokeRequired) {
-                        directoriesViewPanel.Invoke(() => {
-                            Utils.AddRowToTableLayoutPanel(directoriesViewPanel, rowItems);
-
-                        });
-                    }
-                    else { Utils.AddRowToTableLayoutPanel(directoriesViewPanel, rowItems); }
-                });
+                await Utils.PasteDirectories(
+                    currentPath, 
+                    directoriesToPaste.Except(commonDirectories).ToList(), 
+                    directoriesViewPanel
+                );
             }
             catch (Exception ex)
             {
@@ -599,6 +531,8 @@ namespace FileExplorer
             }
 
         }
+
+
 
         private async void renameButton_Click(object sender, EventArgs e)
         {
@@ -675,46 +609,56 @@ namespace FileExplorer
 
 
 
-        private void SetupOnEnabledChanged() {
-            renameButton.EnabledChanged += (s, e) => {
+        private void SetupOnEnabledChanged()
+        {
+            renameButton.EnabledChanged += (s, e) =>
+            {
                 Button b = s as Button;
                 b.Image = b.Enabled ? Resources.KEYBOARD : Resources.RENAME_DISABLED;
             };
-            favoriteButton.EnabledChanged += (s, e) => {
+            favoriteButton.EnabledChanged += (s, e) =>
+            {
                 var b = s as Button;
                 b.Image = b.Enabled ? Resources.STAR : Resources.FAVORITE_DISABLED;
             };
-            cutButton.EnabledChanged += (s, e) => {
+            cutButton.EnabledChanged += (s, e) =>
+            {
                 var b = s as Button;
                 b.Image = b.Enabled ? Resources.SCISSORS : Resources.CUT_DISABLED;
             };
-            deleteButton.EnabledChanged += (s, e) => {
+            deleteButton.EnabledChanged += (s, e) =>
+            {
                 var b = s as Button;
                 b.Image = b.Enabled ? Resources.PAPER_BIN : Resources.DELETE_DISABLED;
             };
-            pasteButton.EnabledChanged += (s, e) => {
+            pasteButton.EnabledChanged += (s, e) =>
+            {
                 var b = s as Button;
                 b.Image = b.Enabled ? Resources.CONTENT_PASTE : Resources.PASTE_DISABLED;
             };
-            copyButton.EnabledChanged += (s, e) => {
+            copyButton.EnabledChanged += (s, e) =>
+            {
                 var b = s as Button;
                 b.Image = b.Enabled ? Resources.CONTENT_COPY : Resources.COPY_DISABLED;
             };
-            forwardButton.EnabledChanged += (s, e) => {
+            forwardButton.EnabledChanged += (s, e) =>
+            {
                 var b = s as Button;
                 b.Image = b.Enabled ? Resources.ARROW_FORWARD : Resources.FORWARD_DISABLED;
             };
-            returnButton.EnabledChanged += (s, e) => {
+            returnButton.EnabledChanged += (s, e) =>
+            {
                 var b = s as Button;
                 b.Image = b.Enabled ? Resources.ARROW_FORWARD : Resources.FORWARD_DISABLED;
             };
-            backButton.EnabledChanged += (s, e) => {
+            backButton.EnabledChanged += (s, e) =>
+            {
                 var b = s as Button;
                 b.Image = b.Enabled ? Resources.ARROW_BACK : Resources.BACK_DISABLED;
             };
         }
 
-        
+
     }
 
     public enum DwmWindowAttribute
