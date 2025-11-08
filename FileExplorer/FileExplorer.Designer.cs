@@ -353,8 +353,7 @@ namespace FileExplorer
             pasteButton.Size = new Size(20, 20);
             pasteButton.TabIndex = 7;
             pasteButton.Tag = buttonMetadata1;
-            pasteButton.UseVisualStyleBackColor = true;
-            pasteButton.Click += async (s, e) => await pasteButton_Click(s, e);
+            pasteButton.UseVisualStyleBackColor = true;            
             // 
             // copyButton
             // 

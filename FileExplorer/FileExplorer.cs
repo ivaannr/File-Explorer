@@ -32,6 +32,8 @@ namespace FileExplorer
         {
             InitializeComponent();
 
+            pasteButton.Click += async (s, e) => await pasteButton_Click(s, e);
+
             checkControlKeyThread = new Thread(CheckKey);
             checkControlKeyThread.IsBackground = true;
             checkControlKeyThread.Start();
@@ -505,7 +507,6 @@ namespace FileExplorer
                     if (result == DialogResult.No)
                     {
                         Utils.ClearSelectedButtons();
-                        Utils.DisableAllUtilButtons(utilsButtons!);
                         Utils._copiedButtons.Clear();
                         Utils.DisableButton(pasteButton);
                         directoriesViewPanel.ResumeLayout();
@@ -529,6 +530,10 @@ namespace FileExplorer
             }
             finally
             {
+                if (Utils._selectedButtons.Any()) {
+                    Utils.EnableUtilsButtons(utilsButtons!);
+                }
+
                 Utils._copiedButtons.Clear();
                 Utils.DisableButton(pasteButton);
                 directoriesViewPanel.ResumeLayout();
