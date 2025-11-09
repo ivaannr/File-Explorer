@@ -48,6 +48,8 @@ namespace FileExplorer
             pathTextBox = new TextBox();
             toolsPanel = new Panel();
             utilsWrapperPanel = new Panel();
+            invertSelectionButton = new Button();
+            deselectAllButton = new Button();
             selectAllButton = new Button();
             panel1 = new Panel();
             renameButton = new Button();
@@ -264,6 +266,8 @@ namespace FileExplorer
             // 
             // utilsWrapperPanel
             // 
+            utilsWrapperPanel.Controls.Add(invertSelectionButton);
+            utilsWrapperPanel.Controls.Add(deselectAllButton);
             utilsWrapperPanel.Controls.Add(selectAllButton);
             utilsWrapperPanel.Controls.Add(panel1);
             utilsWrapperPanel.Controls.Add(renameButton);
@@ -283,6 +287,30 @@ namespace FileExplorer
             utilsWrapperPanel.Name = "utilsWrapperPanel";
             utilsWrapperPanel.Size = new Size(539, 32);
             utilsWrapperPanel.TabIndex = 0;
+            // 
+            // invertSelectionButton
+            // 
+            invertSelectionButton.FlatAppearance.BorderSize = 0;
+            invertSelectionButton.FlatStyle = FlatStyle.Flat;
+            invertSelectionButton.Image = Resources.INVERT_SELECTION;
+            invertSelectionButton.Location = new Point(410, 6);
+            invertSelectionButton.Name = "invertSelectionButton";
+            invertSelectionButton.Size = new Size(22, 20);
+            invertSelectionButton.TabIndex = 16;
+            invertSelectionButton.UseVisualStyleBackColor = true;
+            invertSelectionButton.Click += invertSelectionButton_Click;
+            // 
+            // deselectAllButton
+            // 
+            deselectAllButton.FlatAppearance.BorderSize = 0;
+            deselectAllButton.FlatStyle = FlatStyle.Flat;
+            deselectAllButton.Image = Resources.DESELECT_ALL;
+            deselectAllButton.Location = new Point(381, 6);
+            deselectAllButton.Name = "deselectAllButton";
+            deselectAllButton.Size = new Size(22, 20);
+            deselectAllButton.TabIndex = 15;
+            deselectAllButton.UseVisualStyleBackColor = true;
+            deselectAllButton.Click += deselectAllButton_Click;
             // 
             // selectAllButton
             // 
@@ -550,5 +578,7 @@ namespace FileExplorer
         private TableLayoutPanel directoriesViewPanel;
         private Panel panel1;
         private Button selectAllButton;
+        private Button deselectAllButton;
+        private Button invertSelectionButton;
     }
 }

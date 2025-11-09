@@ -44,7 +44,9 @@ namespace FileExplorer
                                     copyButton,
                                     pasteButton,
                                     cutButton,
-                                    renameButton
+                                    renameButton,
+                                    deselectAllButton,
+                                    invertSelectionButton
             };
 
             drivesInfo = DriveInfo.GetDrives()
@@ -669,6 +671,16 @@ namespace FileExplorer
                 var b = s as Button;
                 b.Image = b.Enabled ? Resources.SELECT_ALL : Resources.SELECT_ALL_DISABLED;
             };
+            deselectAllButton.EnabledChanged += (s, e) =>
+            {
+                var b = s as Button;
+                b.Image = b.Enabled ? Resources.DESELECT_ALL : Resources.DESELECT_ALL_DISABLED;
+            };
+            invertSelectionButton.EnabledChanged += (s, e) =>
+            {
+                var b = s as Button;
+                b.Image = b.Enabled ? Resources.INVERT_SELECTION : Resources.INVERT_SELECTION_DISABLED;
+            };
         }
 
         private void selectAllButton_Click(object sender, EventArgs e)
@@ -681,9 +693,35 @@ namespace FileExplorer
 
             Utils.ClearSelectedButtons();
 
-            foreach (var button in buttonsToSelect) {
+            foreach (var button in buttonsToSelect)
+            {
                 Utils.HighlightAndSelectButton(button);
             }
+        }
+
+        private void deselectAllButton_Click(object sender, EventArgs e)
+        {
+            if (!Utils._selectedButtons.Any()) { throw new Exception("There are no selected buttons."); }
+            Utils.ClearSelectedButtons();
+        }
+
+        private void invertSelectionButton_Click(object sender, EventArgs e)
+        {
+            if (!Utils._selectedButtons.Any()) { throw new Exception("There are no selected buttons."); }
+
+            const int TARGET_COLUMN = 0;
+            var buttons = directoriesViewPanel.Controls
+                                    .OfType<Button>()
+                                    .Where(btn => directoriesViewPanel.GetColumn(btn) == TARGET_COLUMN)
+                                    .ToList();
+
+            var selectedButtons = Utils._selectedButtons.ToList();
+            Utils.ClearSelectedButtons();
+
+            buttons
+                .Where(b => !selectedButtons.Contains(b))
+                .ToList()
+                .ForEach(Utils.HighlightAndSelectButton);
         }
     }
 
