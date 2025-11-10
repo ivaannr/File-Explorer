@@ -31,7 +31,7 @@ namespace FileExplorer
         /// </summary>
         private void InitializeComponent()
         {
-            ButtonMetadata buttonMetadata1 = new ButtonMetadata();
+            ButtonMetadata buttonMetadata2 = new ButtonMetadata();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileExplorer));
             sideBar = new Panel();
             favoriteDirectoriesPanel = new FlowLayoutPanel();
@@ -64,7 +64,7 @@ namespace FileExplorer
             separatorPanel = new Panel();
             forwardButton = new Button();
             returnButton = new Button();
-            backButton = new Button();
+            parentButton = new Button();
             directoryPanel = new Panel();
             directoriesViewPanel = new TableLayoutPanel();
             sideBar.SuspendLayout();
@@ -282,7 +282,7 @@ namespace FileExplorer
             utilsWrapperPanel.Controls.Add(separatorPanel);
             utilsWrapperPanel.Controls.Add(forwardButton);
             utilsWrapperPanel.Controls.Add(returnButton);
-            utilsWrapperPanel.Controls.Add(backButton);
+            utilsWrapperPanel.Controls.Add(parentButton);
             utilsWrapperPanel.Location = new Point(8, 10);
             utilsWrapperPanel.Name = "utilsWrapperPanel";
             utilsWrapperPanel.Size = new Size(539, 32);
@@ -342,11 +342,11 @@ namespace FileExplorer
             renameButton.Name = "renameButton";
             renameButton.Size = new Size(22, 20);
             renameButton.TabIndex = 12;
-            buttonMetadata1.CanDisable = true;
-            buttonMetadata1.Path = null;
-            buttonMetadata1.Size = null;
-            buttonMetadata1.Type = null;
-            renameButton.Tag = buttonMetadata1;
+            buttonMetadata2.CanDisable = true;
+            buttonMetadata2.Path = null;
+            buttonMetadata2.Size = null;
+            buttonMetadata2.Type = null;
+            renameButton.Tag = buttonMetadata2;
             renameButton.UseVisualStyleBackColor = true;
             renameButton.Click += renameButton_Click;
             // 
@@ -359,7 +359,6 @@ namespace FileExplorer
             favoriteButton.Name = "favoriteButton";
             favoriteButton.Size = new Size(20, 20);
             favoriteButton.TabIndex = 11;
-            favoriteButton.Tag = buttonMetadata1;
             favoriteButton.UseVisualStyleBackColor = true;
             favoriteButton.Click += favoriteButton_Click;
             // 
@@ -380,7 +379,6 @@ namespace FileExplorer
             cutButton.Name = "cutButton";
             cutButton.Size = new Size(20, 20);
             cutButton.TabIndex = 9;
-            cutButton.Tag = buttonMetadata1;
             cutButton.UseVisualStyleBackColor = true;
             cutButton.Click += cutButton_Click;
             // 
@@ -393,7 +391,6 @@ namespace FileExplorer
             deleteButton.Name = "deleteButton";
             deleteButton.Size = new Size(20, 20);
             deleteButton.TabIndex = 8;
-            deleteButton.Tag = buttonMetadata1;
             deleteButton.UseVisualStyleBackColor = true;
             deleteButton.Click += deleteButton_Click;
             // 
@@ -406,7 +403,6 @@ namespace FileExplorer
             pasteButton.Name = "pasteButton";
             pasteButton.Size = new Size(20, 20);
             pasteButton.TabIndex = 7;
-            pasteButton.Tag = buttonMetadata1;
             pasteButton.UseVisualStyleBackColor = true;
             // 
             // copyButton
@@ -418,7 +414,6 @@ namespace FileExplorer
             copyButton.Name = "copyButton";
             copyButton.Size = new Size(20, 20);
             copyButton.TabIndex = 6;
-            copyButton.Tag = buttonMetadata1;
             copyButton.UseVisualStyleBackColor = true;
             copyButton.Click += copyButton_Click;
             // 
@@ -475,18 +470,18 @@ namespace FileExplorer
             returnButton.UseVisualStyleBackColor = false;
             returnButton.Click += returnButton_Click;
             // 
-            // backButton
+            // parentButton
             // 
-            backButton.BackColor = Color.FromArgb(30, 30, 30);
-            backButton.FlatAppearance.BorderSize = 0;
-            backButton.FlatStyle = FlatStyle.Flat;
-            backButton.Image = Resources.DOUBLE_ARROW_BACK;
-            backButton.Location = new Point(3, 6);
-            backButton.Name = "backButton";
-            backButton.Size = new Size(20, 20);
-            backButton.TabIndex = 0;
-            backButton.UseVisualStyleBackColor = false;
-            backButton.Click += backButton_Click;
+            parentButton.BackColor = Color.FromArgb(30, 30, 30);
+            parentButton.FlatAppearance.BorderSize = 0;
+            parentButton.FlatStyle = FlatStyle.Flat;
+            parentButton.Image = Resources.DOUBLE_ARROW_BACK;
+            parentButton.Location = new Point(3, 6);
+            parentButton.Name = "parentButton";
+            parentButton.Size = new Size(20, 20);
+            parentButton.TabIndex = 0;
+            parentButton.UseVisualStyleBackColor = false;
+            parentButton.Click += backButton_Click;
             // 
             // directoryPanel
             // 
@@ -558,7 +553,7 @@ namespace FileExplorer
         private Button desktopButton;
         private Button imagesButton;
         private Panel utilsWrapperPanel;
-        private Button backButton;
+        private Button parentButton;
         private Button returnButton;
         private Button forwardButton;
         private Panel separatorPanel;

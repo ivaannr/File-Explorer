@@ -48,7 +48,7 @@ namespace FileExplorer
             { "selectAll", "Selects all files and folders in the current directory"},
             { "deselectAll", "Deselects all selected files and folders" },
             { "invertSelection", "Reverses the current selection: selects unselected items and deselects selected ones" },
-            { "back", "Go to the parent directory of the current one" },
+            { "parent", "Go to the parent directory of the current one" },
             { "desktop", @$"C:\Users\{userName}\Desktop" },
             { "images", @$"C:\Users\{userName}\Pictures"  },
             { "documents", @$"C:\Users\{userName}\Documents"  },

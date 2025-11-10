@@ -1,9 +1,8 @@
 using FileExplorer.Model;
 using FileExplorer.Properties;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
-using System.Windows.Forms;
+using System.Text;
 
 namespace FileExplorer
 {
@@ -12,11 +11,16 @@ namespace FileExplorer
     {
         private bool suppressTextChanged = false;
         private CancellationTokenSource cts;
-        private String path = "C:\\";
         private readonly List<ISystemFile> systemFiles = new List<ISystemFile>();
         private DriveInfo[] drivesInfo;
         private List<FavoriteDirectory> favDirs;
         private volatile bool isRunning = true;
+
+        private String path = "C:\\";
+
+        private Stack<String> backHistory = new(),
+                              forwardHistory = new();
+
         public static Button? CurrentSelectedButton { get; set; } = null;
 
         internal List<ISystemFile> SystemFiles => systemFiles;
@@ -27,6 +31,14 @@ namespace FileExplorer
         private static extern short GetAsyncKeyState(int key);
 
         Thread checkControlKeyThread = null;
+
+        private void printList(List<String> list, string comment) {
+            var b = new StringBuilder();
+            foreach (var item in list) {
+                b.Append($"{item} ");
+            }
+            Console.WriteLine($"{comment}: {b}");
+        }
 
         public FileExplorer()
         {
@@ -62,6 +74,9 @@ namespace FileExplorer
             PreparePathBox();
             SetUpFavoriteDirectories();
             SetUpDrives();
+
+            returnButton.Enabled = false;
+            forwardButton.Enabled = false;
 
             bool isAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent())
                 .IsInRole(WindowsBuiltInRole.Administrator);
@@ -115,14 +130,16 @@ namespace FileExplorer
 
                 foreach (var file in Directory.EnumerateFiles(path))
                 {
-                    try {
+                    try
+                    {
                         token.ThrowIfCancellationRequested();
                         systemFiles.Add(new FsFile(file));
-                    } catch (HiddenFileException ex) {
-                        Console.WriteLine("Skipping file: " + ex.Message);
+                    }
+                    catch (HiddenFileException ex)
+                    {
                         continue;
                     }
-                     
+
                 }
             }
             catch (Exception ex)
@@ -201,7 +218,18 @@ namespace FileExplorer
                 cts?.Cancel();
                 cts = new CancellationTokenSource();
 
+                if (pathTextBox.Text != this.path)
+                {
+                    backHistory.Push(this.path);
+                    forwardHistory.Clear();
+
+                    if (!returnButton.Enabled) { returnButton.Enabled = true; }
+                }
+
                 String currentPath = pathTextBox.Text;
+                this.printList(backHistory.ToList(), "backHistory");
+                Console.WriteLine();
+                this.printList(forwardHistory.ToList(), "forwardHistory");
                 if (!Directory.Exists(currentPath))
                 {
                     AddNotFound();
@@ -212,6 +240,10 @@ namespace FileExplorer
             catch (Exception ex)
             {
                 Console.WriteLine("Error: " + ex.Message);
+            }
+            finally 
+            {
+                this.path = pathTextBox.Text;
             }
         }
 
@@ -288,7 +320,7 @@ namespace FileExplorer
 
 
         }
-
+        
         private void desktopButton_Click(object sender, EventArgs e)
         {
             pathTextBox.Text = $@"C:\Users\{Utils.userName}\Desktop";
@@ -326,12 +358,63 @@ namespace FileExplorer
 
         private void returnButton_Click(object sender, EventArgs e)
         {
+            try
+            {
+                this.printList(backHistory.ToList(), "backHistory");
+                Console.WriteLine();
+                this.printList(forwardHistory.ToList(), "forwardHistory");
+                if (!backHistory.Any()) { throw new Exception("There is no back history."); }
 
+                string? backPath = backHistory.Pop();
+
+                if (!backHistory.Any()) { returnButton.Enabled = false; }
+
+                forwardHistory.Push(path);
+
+                if (!forwardButton.Enabled) { forwardButton.Enabled = true; }
+
+                Console.WriteLine("Actual path " + path);
+                this.path = backPath;
+                pathTextBox.Text = backPath;
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowPopUp(
+                    $"An error ocurred:\n{ex.Message}",
+                    "Warning",
+                    Resources.NOTIFICATION_IMPORTANT
+                );
+            }
         }
 
         private void forwardButton_Click(object sender, EventArgs e)
         {
+            try
+            {
+                this.printList(backHistory.ToList(), "backHistory");
+                Console.WriteLine();
+                this.printList(forwardHistory.ToList(), "forwardHistory");
+                if (!forwardHistory.Any()) { throw new Exception("There is no forward history."); }
 
+                string? forwardPath = forwardHistory.Pop();
+
+                if (!forwardHistory.Any()) { forwardButton.Enabled = false; }
+
+                backHistory.Push(this.path);
+
+                if (!returnButton.Enabled) { returnButton.Enabled = true; }
+                
+                this.path = forwardPath;
+                pathTextBox.Text = forwardPath;
+            }
+            catch (Exception ex)
+            {
+                Utils.ShowPopUp(
+                    $"An error ocurred:\n{ex.Message}",
+                    "Warning",
+                    Resources.NOTIFICATION_IMPORTANT
+                );
+            }
         }
 
         private async void deleteButton_Click(object sender, EventArgs e)
@@ -354,7 +437,7 @@ namespace FileExplorer
             await ChangeDirectory(pathTextBox.Text, CancellationToken.None);
         }
 
-        private async void cutButton_Click(object sender, EventArgs e)
+        private void cutButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -665,12 +748,12 @@ namespace FileExplorer
             returnButton.EnabledChanged += (s, e) =>
             {
                 var b = s as Button;
-                b.Image = b.Enabled ? Resources.ARROW_FORWARD : Resources.FORWARD_DISABLED;
+                b.Image = b.Enabled ? Resources.ARROW_BACK : Resources.RETURN_DISABLED;
             };
-            backButton.EnabledChanged += (s, e) =>
+            parentButton.EnabledChanged += (s, e) =>
             {
                 var b = s as Button;
-                b.Image = b.Enabled ? Resources.ARROW_BACK : Resources.BACK_DISABLED;
+                b.Image = b.Enabled ? Resources.DOUBLE_ARROW_BACK : Resources.BACK_DISABLED;
             };
             selectAllButton.EnabledChanged += (s, e) =>
             {
