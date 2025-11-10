@@ -21,6 +21,8 @@ namespace FileExplorer
         private Stack<String> backHistory = new(),
                               forwardHistory = new();
 
+        private List<String> history = new List<string>();
+
         public static Button? CurrentSelectedButton { get; set; } = null;
 
         internal List<ISystemFile> SystemFiles => systemFiles;
@@ -31,14 +33,6 @@ namespace FileExplorer
         private static extern short GetAsyncKeyState(int key);
 
         Thread checkControlKeyThread = null;
-
-        private void printList(List<String> list, string comment) {
-            var b = new StringBuilder();
-            foreach (var item in list) {
-                b.Append($"{item} ");
-            }
-            Console.WriteLine($"{comment}: {b}");
-        }
 
         public FileExplorer()
         {
@@ -77,6 +71,7 @@ namespace FileExplorer
 
             returnButton.Enabled = false;
             forwardButton.Enabled = false;
+            historyButton.Enabled = false;
 
             bool isAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent())
                 .IsInRole(WindowsBuiltInRole.Administrator);
@@ -226,10 +221,12 @@ namespace FileExplorer
                     if (!returnButton.Enabled) { returnButton.Enabled = true; }
                 }
 
+                Utils.AddToHistory(history, pathTextBox.Text);
+
+                if (!historyButton.Enabled) { historyButton.Enabled = true; }
+
                 String currentPath = pathTextBox.Text;
-                this.printList(backHistory.ToList(), "backHistory");
-                Console.WriteLine();
-                this.printList(forwardHistory.ToList(), "forwardHistory");
+
                 if (!Directory.Exists(currentPath))
                 {
                     AddNotFound();
@@ -241,13 +238,11 @@ namespace FileExplorer
             {
                 Console.WriteLine("Error: " + ex.Message);
             }
-            finally 
+            finally
             {
                 this.path = pathTextBox.Text;
             }
         }
-
-
         private void ThemeAllControls(Control parent = null)
         {
             parent = parent ?? this;
@@ -320,7 +315,7 @@ namespace FileExplorer
 
 
         }
-        
+
         private void desktopButton_Click(object sender, EventArgs e)
         {
             pathTextBox.Text = $@"C:\Users\{Utils.userName}\Desktop";
@@ -360,9 +355,6 @@ namespace FileExplorer
         {
             try
             {
-                this.printList(backHistory.ToList(), "backHistory");
-                Console.WriteLine();
-                this.printList(forwardHistory.ToList(), "forwardHistory");
                 if (!backHistory.Any()) { throw new Exception("There is no back history."); }
 
                 string? backPath = backHistory.Pop();
@@ -391,9 +383,7 @@ namespace FileExplorer
         {
             try
             {
-                this.printList(backHistory.ToList(), "backHistory");
-                Console.WriteLine();
-                this.printList(forwardHistory.ToList(), "forwardHistory");
+
                 if (!forwardHistory.Any()) { throw new Exception("There is no forward history."); }
 
                 string? forwardPath = forwardHistory.Pop();
@@ -403,7 +393,7 @@ namespace FileExplorer
                 backHistory.Push(this.path);
 
                 if (!returnButton.Enabled) { returnButton.Enabled = true; }
-                
+
                 this.path = forwardPath;
                 pathTextBox.Text = forwardPath;
             }
@@ -705,9 +695,6 @@ namespace FileExplorer
             }
         }
 
-
-
-
         private void SetupOnEnabledChanged()
         {
             renameButton.EnabledChanged += (s, e) =>
@@ -770,6 +757,11 @@ namespace FileExplorer
                 var b = s as Button;
                 b.Image = b.Enabled ? Resources.INVERT_SELECTION : Resources.INVERT_SELECTION_DISABLED;
             };
+            historyButton.EnabledChanged += (s, e) =>
+            {
+                var b = s as Button;
+                b.Image = b.Enabled ? Resources.HISTORY : Resources.HISTORY_DISABLED;
+            };
         }
 
         private void selectAllButton_Click(object sender, EventArgs e)
@@ -811,6 +803,11 @@ namespace FileExplorer
                 .Where(b => !selectedButtons.Contains(b))
                 .ToList()
                 .ForEach(Utils.HighlightAndSelectButton);
+        }
+
+        private void historyButton_Click(object sender, EventArgs e)
+        {
+            Utils.CreateListPopUp("History", Resources.HISTORY_DISABLED_ICON, history, pathTextBox);
         }
     }
 

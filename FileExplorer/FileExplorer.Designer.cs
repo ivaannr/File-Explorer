@@ -31,7 +31,7 @@ namespace FileExplorer
         /// </summary>
         private void InitializeComponent()
         {
-            ButtonMetadata buttonMetadata2 = new ButtonMetadata();
+            ButtonMetadata buttonMetadata1 = new ButtonMetadata();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileExplorer));
             sideBar = new Panel();
             favoriteDirectoriesPanel = new FlowLayoutPanel();
@@ -60,7 +60,7 @@ namespace FileExplorer
             pasteButton = new Button();
             copyButton = new Button();
             separatorPanel2 = new Panel();
-            reloadButton = new Button();
+            historyButton = new Button();
             separatorPanel = new Panel();
             forwardButton = new Button();
             returnButton = new Button();
@@ -278,7 +278,7 @@ namespace FileExplorer
             utilsWrapperPanel.Controls.Add(pasteButton);
             utilsWrapperPanel.Controls.Add(copyButton);
             utilsWrapperPanel.Controls.Add(separatorPanel2);
-            utilsWrapperPanel.Controls.Add(reloadButton);
+            utilsWrapperPanel.Controls.Add(historyButton);
             utilsWrapperPanel.Controls.Add(separatorPanel);
             utilsWrapperPanel.Controls.Add(forwardButton);
             utilsWrapperPanel.Controls.Add(returnButton);
@@ -342,11 +342,11 @@ namespace FileExplorer
             renameButton.Name = "renameButton";
             renameButton.Size = new Size(22, 20);
             renameButton.TabIndex = 12;
-            buttonMetadata2.CanDisable = true;
-            buttonMetadata2.Path = null;
-            buttonMetadata2.Size = null;
-            buttonMetadata2.Type = null;
-            renameButton.Tag = buttonMetadata2;
+            buttonMetadata1.CanDisable = true;
+            buttonMetadata1.Path = null;
+            buttonMetadata1.Size = null;
+            buttonMetadata1.Type = null;
+            renameButton.Tag = buttonMetadata1;
             renameButton.UseVisualStyleBackColor = true;
             renameButton.Click += renameButton_Click;
             // 
@@ -425,16 +425,17 @@ namespace FileExplorer
             separatorPanel2.Size = new Size(2, 24);
             separatorPanel2.TabIndex = 5;
             // 
-            // reloadButton
+            // historyButton
             // 
-            reloadButton.FlatAppearance.BorderSize = 0;
-            reloadButton.FlatStyle = FlatStyle.Flat;
-            reloadButton.Image = Resources.REPEAT;
-            reloadButton.Location = new Point(97, 6);
-            reloadButton.Name = "reloadButton";
-            reloadButton.Size = new Size(20, 20);
-            reloadButton.TabIndex = 4;
-            reloadButton.UseVisualStyleBackColor = true;
+            historyButton.FlatAppearance.BorderSize = 0;
+            historyButton.FlatStyle = FlatStyle.Flat;
+            historyButton.Image = Resources.HISTORY;
+            historyButton.Location = new Point(97, 6);
+            historyButton.Name = "historyButton";
+            historyButton.Size = new Size(20, 20);
+            historyButton.TabIndex = 4;
+            historyButton.UseVisualStyleBackColor = true;
+            historyButton.Click += historyButton_Click;
             // 
             // separatorPanel
             // 
@@ -557,7 +558,7 @@ namespace FileExplorer
         private Button returnButton;
         private Button forwardButton;
         private Panel separatorPanel;
-        private Button reloadButton;
+        private Button historyButton;
         private Panel separatorPanel2;
         private Button copyButton;
         private Button pasteButton;

@@ -41,7 +41,7 @@ namespace FileExplorer
             { "copy", "Copy the selected item" },
             { "paste", "Paste the copied or cut item" },
             { "rename", "Rename the selected item" },
-            { "reload", "Reload or refresh the current view" },
+            { "history", "Shows the current path history" },
             { "return", "Go back to the previous location" },
             { "forward", "Go forward to the next location" },
             { "delete", "Delete the selected item" },

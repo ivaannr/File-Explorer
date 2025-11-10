@@ -1,4 +1,7 @@
 ﻿using FileExplorer.Model;
+using System.Runtime.InteropServices;
+using static System.Net.Mime.MediaTypeNames;
+using Font = System.Drawing.Font;
 
 namespace FileExplorer
 {
@@ -25,6 +28,8 @@ namespace FileExplorer
 
             return button;
         }
+
+
 
         public static Label CreateSizeLabel(ISystemFile sf, string? customText = null)
         {
@@ -59,8 +64,8 @@ namespace FileExplorer
         public static void DisableUtilsButtons(List<Button> buttons) {
 
             var buttonsToDisable =
-                !_copiedButtons.Any() 
-                ? buttons 
+                !_copiedButtons.Any()
+                ? buttons
                 : buttons.Where(b => b.Name != "pasteButton")
                          .ToList();
 
@@ -151,7 +156,7 @@ namespace FileExplorer
 
                         Console.WriteLine("Count after selecting: " + _selectedButtons!.Count);
 
-                        selectedButton!.BackColor = Color.FromArgb(50,50,50);
+                        selectedButton!.BackColor = Color.FromArgb(50, 50, 50);
 
                         Console.WriteLine("Clicked right button while holding ctrl");
 
@@ -334,6 +339,76 @@ namespace FileExplorer
             return textBoxText;
         }
 
+        private static Button CreatePopUpListButton(String path, Form box) {
+            Button button = new Button();
+            button.FlatAppearance.BorderSize = 1;
+            button.FlatAppearance.BorderColor = Color.FromArgb(35,35,35);
+            button.FlatStyle = FlatStyle.Flat;
+            button.Text = TruncateFilename(path, len: 50);
+            button.ForeColor = Color.White;
+            button.BackColor = Color.FromArgb(27, 27, 27);
+            button.TextAlign = ContentAlignment.MiddleLeft;
+            button.Height = 35;
+            button.Width = 377;
+            button.Dock = DockStyle.Left;
+            button.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            button.Click += (sender, e) =>
+            {
+                box.Tag = path;
+                box.Close();
+            };
+
+            return button;
+        }
+
+
+        public static void CreateListPopUp(string title, Icon? icon, List<String> history, TextBox pathTextBox) {
+
+
+            if (isPopupOpen) { return; }
+
+            isPopupOpen = true;
+
+            Form customBox = new Form();
+            customBox.Text = title;
+            customBox.BackColor = Color.FromArgb(30, 30, 30);
+            customBox.Size = new Size(450, 250);
+            customBox.StartPosition = FormStartPosition.CenterScreen;
+            customBox.ShowIcon = true;
+            customBox.ShowInTaskbar = false;
+            customBox.TopMost = true;
+            customBox.Icon = icon;
+            customBox.FormBorderStyle = FormBorderStyle.FixedDialog;
+            customBox.MaximizeBox = false;
+            customBox.MinimizeBox = false;
+            customBox.AutoScroll = false;
+            
+
+            FlowLayoutPanel panel = new FlowLayoutPanel();
+            panel.Size = new Size(410, 192);
+            panel.BackColor = Color.FromArgb(30, 30, 30);
+            panel.FlowDirection = FlowDirection.TopDown;
+            panel.WrapContents = false;       
+            panel.AutoScroll = true;
+            panel.Location = new Point(10, 10);
+
+            foreach (String path in history) {
+                panel.Controls.Add(CreatePopUpListButton(path, customBox));
+            }
+
+            customBox.Controls.Add(panel);
+
+            customBox.FormClosed += (s, e) => {
+                isPopupOpen = false;
+                String selectedPath = customBox.Tag as String;
+
+                if (selectedPath is null) { return; }
+
+                pathTextBox.Text = selectedPath;
+            };
+
+            customBox.Show();
+        }
 
         public static Form CreateDecisionPopUp(string message, string title, Icon? icon)
         {
@@ -609,6 +684,7 @@ namespace FileExplorer
 
             action();
         }
+
 
     }
 }
