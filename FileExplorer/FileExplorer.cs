@@ -115,8 +115,14 @@ namespace FileExplorer
 
                 foreach (var file in Directory.EnumerateFiles(path))
                 {
-                    token.ThrowIfCancellationRequested();
-                    systemFiles.Add(new FsFile(file));
+                    try {
+                        token.ThrowIfCancellationRequested();
+                        systemFiles.Add(new FsFile(file));
+                    } catch (HiddenFileException ex) {
+                        Console.WriteLine("Skipping file: " + ex.Message);
+                        continue;
+                    }
+                     
                 }
             }
             catch (Exception ex)

@@ -22,6 +22,9 @@ namespace FileExplorer.Model
             string nameWithoutExt = System.IO.Path.GetFileNameWithoutExtension(path);
             string ext = System.IO.Path.GetExtension(path);
 
+            if (nameWithoutExt == "desktop" && ext == ".ini") { throw new HiddenFileException("desktop.ini files shouldn't be shown."); }
+
+
             if (string.IsNullOrEmpty(nameWithoutExt))
             {
                 Name = ext;
