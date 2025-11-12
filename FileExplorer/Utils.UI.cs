@@ -364,7 +364,6 @@ namespace FileExplorer
 
         public static void CreateListPopUp(string title, Icon? icon, List<String> history, TextBox pathTextBox) {
 
-
             if (isPopupOpen) { return; }
 
             isPopupOpen = true;
@@ -406,6 +405,8 @@ namespace FileExplorer
 
                 pathTextBox.Text = selectedPath;
             };
+
+            ThemePopUp(customBox);
 
             customBox.Show();
         }
@@ -608,6 +609,31 @@ namespace FileExplorer
                 extensionButton: rowControls[1] as Button,
                 sizeLabel: rowControls[2] as Label
             );
+        }
+
+        private static void ThemePopUp(Control parent)
+        {
+            if (parent == null) return;
+
+            int trueValue = 0x01;
+
+            Action<Control> Theme = control =>
+            {
+                try
+                {
+                    NativeMethods.SetWindowTheme(control.Handle, "DarkMode_Explorer", null);
+                    NativeMethods.DwmSetWindowAttribute(control.Handle, DwmWindowAttribute.DWMWA_USE_IMMERSIVE_DARK_MODE, ref trueValue, Marshal.SizeOf(typeof(int)));
+                    NativeMethods.DwmSetWindowAttribute(control.Handle, DwmWindowAttribute.DWMWA_MICA_EFFECT, ref trueValue, Marshal.SizeOf(typeof(int)));
+                }
+                catch { }
+            };
+
+            Theme(parent);
+
+            foreach (Control control in parent.Controls)
+            {
+                ThemePopUp(control);
+            }
         }
 
         public static void DeleteRowFromTableLayoutPanel(TableLayoutPanel panel, int targetRow)

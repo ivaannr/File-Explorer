@@ -1,18 +1,19 @@
-﻿using FileExplorer.Model;
-using FileExplorer.Properties;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Resources;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
 using System.Security.Permissions;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using FileExplorer.Model;
+using FileExplorer.Properties;
 
 namespace FileExplorer
 {
@@ -614,8 +615,6 @@ namespace FileExplorer
 
             history.Add(pathToAdd);
         }
-            
-        
 
         private static String GetButtonName(Button button) => button.Name.Substring(0, button.Name.Length - 6);
         public static void EnableButton(Button button) => button.Enabled = true;

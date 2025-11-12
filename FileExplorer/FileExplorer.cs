@@ -310,12 +310,6 @@ namespace FileExplorer
             directoriesViewPanel.ResumeLayout();
         }
 
-        private void pathTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-
-
-        }
-
         private void desktopButton_Click(object sender, EventArgs e)
         {
             pathTextBox.Text = $@"C:\Users\{Utils.userName}\Desktop";
