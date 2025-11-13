@@ -23,8 +23,8 @@ namespace FileExplorer
         public static List<Button> _copiedButtons = new List<Button>();
         public static List<Button> _cutButtons = new List<Button>();
 
-        private const String favsPath = "favs.csv";
-        public static String userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name.Split('\\').Last();
+        private const string favsPath = "favs.csv";
+        public static string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name.Split('\\').Last();
 
 
         private const long KB = 1024;
@@ -32,6 +32,7 @@ namespace FileExplorer
         private const long GB = MB * 1024;
         private const long TB = GB * 1024;
 
+        public static bool animationPlaying = false;
         public static bool controlHeld = false;
         private static bool isPopupOpen = false;
 

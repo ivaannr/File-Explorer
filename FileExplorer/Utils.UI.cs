@@ -1,4 +1,5 @@
 ﻿using FileExplorer.Model;
+using FileExplorer.Properties;
 using System.Runtime.InteropServices;
 using static System.Net.Mime.MediaTypeNames;
 using Font = System.Drawing.Font;
@@ -56,12 +57,14 @@ namespace FileExplorer
 
         public static void ChangeButtonsState(List<Button> buttons)
         {
-            buttons.ForEach(b => {
+            buttons.ForEach(b =>
+            {
                 b.Enabled = !b.Enabled;
             });
         }
 
-        public static void DisableUtilsButtons(List<Button> buttons) {
+        public static void DisableUtilsButtons(List<Button> buttons)
+        {
 
             var buttonsToDisable =
                 !_copiedButtons.Any()
@@ -70,7 +73,8 @@ namespace FileExplorer
                          .ToList();
 
 
-            buttonsToDisable.ForEach(b => {
+            buttonsToDisable.ForEach(b =>
+            {
                 b.Enabled = false;
             });
         }
@@ -84,7 +88,8 @@ namespace FileExplorer
                          .ToList();
 
 
-            buttonsToEnable.ForEach(b => {
+            buttonsToEnable.ForEach(b =>
+            {
                 b.Enabled = true;
             });
         }
@@ -118,7 +123,8 @@ namespace FileExplorer
 
             button.MouseDoubleClick += (s, e) =>
             {
-                if (e.Button == MouseButtons.Right) { return; };
+                if (e.Button == MouseButtons.Right) { return; }
+                ;
                 if (type != "folder") { return; }
 
                 Console.WriteLine("Doble clicked on " + button.Name);
@@ -130,20 +136,24 @@ namespace FileExplorer
 
         private static async void directoryButton_MouseClick(object sender, MouseEventArgs me)
         {
-            await Task.Run(() => {
+            await Task.Run(() =>
+            {
                 try
                 {
 
-                    if (controlHeld && me.Button == MouseButtons.Right) {
+                    if (controlHeld && me.Button == MouseButtons.Right)
+                    {
 
                         Button? selectedButton = sender as Button;
 
-                        if (_selectedButtons.Contains(selectedButton!)) {
+                        if (_selectedButtons.Contains(selectedButton!))
+                        {
                             _selectedButtons.Remove(selectedButton!);
                             Console.WriteLine("Count after deselecting: " + _selectedButtons.Count);
                             selectedButton!.BackColor = Color.FromArgb(27, 27, 27);
 
-                            if (_selectedButtons.Count == 0) {
+                            if (_selectedButtons.Count == 0)
+                            {
                                 DisableUtilsButtons(FileExplorer.utilsButtons!);
                             }
 
@@ -171,7 +181,8 @@ namespace FileExplorer
 
         }
 
-        public static void ClearSelectedButtons() {
+        public static void ClearSelectedButtons()
+        {
             foreach (var button in _selectedButtons)
             {
                 button.BackColor = Color.FromArgb(27, 27, 27);
@@ -339,10 +350,11 @@ namespace FileExplorer
             return textBoxText;
         }
 
-        private static Button CreatePopUpListButton(String path, Form box) {
+        private static Button CreatePopUpListButton(String path, Form box)
+        {
             Button button = new Button();
             button.FlatAppearance.BorderSize = 1;
-            button.FlatAppearance.BorderColor = Color.FromArgb(35,35,35);
+            button.FlatAppearance.BorderColor = Color.FromArgb(35, 35, 35);
             button.FlatStyle = FlatStyle.Flat;
             button.Text = TruncateFilename(path, len: 50);
             button.ForeColor = Color.White;
@@ -362,7 +374,8 @@ namespace FileExplorer
         }
 
 
-        public static void CreateListPopUp(string title, Icon? icon, List<String> history, TextBox pathTextBox) {
+        public static void CreateListPopUp(string title, Icon? icon, List<String> history, TextBox pathTextBox)
+        {
 
             if (isPopupOpen) { return; }
 
@@ -381,23 +394,25 @@ namespace FileExplorer
             customBox.MaximizeBox = false;
             customBox.MinimizeBox = false;
             customBox.AutoScroll = false;
-            
+
 
             FlowLayoutPanel panel = new FlowLayoutPanel();
             panel.Size = new Size(410, 192);
             panel.BackColor = Color.FromArgb(30, 30, 30);
             panel.FlowDirection = FlowDirection.TopDown;
-            panel.WrapContents = false;       
+            panel.WrapContents = false;
             panel.AutoScroll = true;
             panel.Location = new Point(10, 10);
 
-            foreach (String path in history) {
+            foreach (String path in history)
+            {
                 panel.Controls.Add(CreatePopUpListButton(path, customBox));
             }
 
             customBox.Controls.Add(panel);
 
-            customBox.FormClosed += (s, e) => {
+            customBox.FormClosed += (s, e) =>
+            {
                 isPopupOpen = false;
                 String selectedPath = customBox.Tag as String;
 
@@ -507,11 +522,12 @@ namespace FileExplorer
             }
         }
 
-        public static void SetUpTooltips(params Panel[] panels) {
+        public static void SetUpTooltips(params Panel[] panels)
+        {
 
             ToolTip toolTip = new ToolTip
             {
-                ToolTipTitle = "Information",        
+                ToolTipTitle = "Information",
                 AutoPopDelay = 5000,
                 InitialDelay = 500,
                 ReshowDelay = 200,
@@ -535,8 +551,8 @@ namespace FileExplorer
             {
                 using (Font boldFont = new Font(SystemFonts.DialogFont, FontStyle.Bold))
                 {
-                    
-                    Size textSize = TextRenderer.MeasureText(_buttonMessages[GetButtonName((Button) e.AssociatedControl!)], boldFont);
+
+                    Size textSize = TextRenderer.MeasureText(_buttonMessages[GetButtonName((Button)e.AssociatedControl!)], boldFont);
 
                     int paddingHorizontal = 25;
                     int paddingVertical = 17;
@@ -551,8 +567,9 @@ namespace FileExplorer
             panels[1].Controls.OfType<Button>()
                 .ToList()
                 .ForEach(b => buttons.Add(b));
-            
-            foreach (Button button in buttons.ToList()) {
+
+            foreach (Button button in buttons.ToList())
+            {
                 toolTip.SetToolTip(button, _buttonMessages[GetButtonName(button)]);
             }
         }
@@ -565,7 +582,7 @@ namespace FileExplorer
             panel.SuspendLayout();
 
             int newRows = rowItems.Count;
-          
+
             var controlsToMove = panel.Controls.Cast<Control>()
                 .Where(c => panel.GetRow(c) >= 0)
                 .OrderByDescending(c => panel.GetRow(c))
@@ -576,9 +593,9 @@ namespace FileExplorer
                 panel.SetRow(control, panel.GetRow(control) + newRows);
             }
 
-            
+
             panel.RowCount += newRows;
-            
+
             for (int row = 0; row < newRows; row++)
             {
                 RowItems items = rowItems[row];
@@ -600,7 +617,8 @@ namespace FileExplorer
                 .OrderBy(c => panel.GetColumn(c))
                 .ToList();
 
-            if (rowControls.Count < 3) {
+            if (rowControls.Count < 3)
+            {
                 throw new InvalidOperationException($"Expected at least 3 controls in row {targetRow}, found {rowControls.Count}.");
             }
 
@@ -649,7 +667,7 @@ namespace FileExplorer
             foreach (var control in controlsInRow)
             {
                 panel.Controls.Remove(control);
-                control.Dispose(); 
+                control.Dispose();
             }
 
             for (int row = targetRow + 1; row < totalRows; row++)
@@ -673,7 +691,8 @@ namespace FileExplorer
         /// Establishes the button's background to rgb(50, 50, 50) (selected)
         /// </summary>
         /// <param name="button"></param>
-        public static void HighlightButton(Button button) { 
+        public static void HighlightButton(Button button)
+        {
             button.BackColor = Color.FromArgb(50, 50, 50);
         }
 
@@ -681,29 +700,35 @@ namespace FileExplorer
         /// Establishes the button's background to rgb(27, 27, 27) (not selected)
         /// </summary>
         /// <param name="button"></param>
-        public static void LowlightButton(Button button) {
+        public static void LowlightButton(Button button)
+        {
             button.BackColor = Color.FromArgb(27, 27, 27);
         }
 
-        public static void DisableAllUtilButtons(List<Button> buttons) {
+        public static void DisableAllUtilButtons(List<Button> buttons)
+        {
             buttons.ForEach(b => { b.Enabled = false; });
         }
 
         public static void HighlightAndSelectButton(Button button)
         {
-            if (button.InvokeRequired) {
+            if (button.InvokeRequired)
+            {
                 button.Invoke(() => HighlightButton(button));
-            } else {
+            }
+            else
+            {
                 HighlightButton(button);
             }
-                
+
             _selectedButtons.Add(button);
             EnableUtilsButtons(FileExplorer.utilsButtons!);
         }
 
         public static void InvokeSafely(Control control, Action action)
         {
-            if (control.InvokeRequired) {
+            if (control.InvokeRequired)
+            {
                 control.Invoke(action);
                 return;
             }
@@ -711,6 +736,80 @@ namespace FileExplorer
             action();
         }
 
+        public static async Task AnimateLabel(
+            CancellationToken token,
+            Label targetLabel,
+            Panel directoriesViewPanel,
+            TextBox pathTextBox,
+            string? text = null
+        )
+        {
+            var labelParent = targetLabel.Parent!;
+            targetLabel.Left = (labelParent.Width - targetLabel.Width) / 2;
+            targetLabel.Top = (labelParent.Height - targetLabel.Height) / 2;
+
+            long seconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+            targetLabel.Show();
+
+            try
+            {
+                int i = 0;
+                string originalText = text ?? "Loading";
+                while (!token.IsCancellationRequested)
+                {
+                    Console.WriteLine("Hola");
+
+                    if (i == 4) { i = 0; }
+
+                    InvokeSafely(targetLabel, () => { targetLabel.Text = $"{text}{new string('.', i)}"; });
+
+                    long currentSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+                    bool timePassed = currentSeconds == seconds + 2;
+
+                    if (timePassed) { throw new TimeoutException("Directory missing or search limit exceeded."); }
+
+                    i++;
+                    await Task.Delay(250);
+
+                    Console.WriteLine("Susn't");
+                }
+            }
+            catch (OperationCanceledException oce)
+            {
+                Console.WriteLine("Animation was cancelled");
+            }
+            catch (TimeoutException te)
+            {
+                Console.WriteLine(te.Message);
+
+                ShowPopUp(te.Message, "Time exceeded", Resources.EXCLAMATION);
+                string latestPath = FileExplorer.history.DefaultIfEmpty(@"C:\").Max()!;
+
+                if (!string.IsNullOrEmpty(latestPath) && latestPath.EndsWith("\\"))
+                {
+                    latestPath = latestPath.Remove(latestPath.Length - 1);
+                }
+
+                Console.WriteLine(latestPath);
+
+                InvokeSafely(directoriesViewPanel, () => {
+                    directoriesViewPanel.Show();
+                    directoriesViewPanel.ResumeLayout();
+                });
+
+                pathTextBox.Text = latestPath;
+            }
+            finally
+            {
+                pathTextBox.SelectionStart = pathTextBox.Text.Length;
+                pathTextBox.SelectionLength = 0;
+                animationPlaying = false;
+                targetLabel.Hide();
+                Console.WriteLine(animationPlaying);
+            }
+        }
 
     }
 }

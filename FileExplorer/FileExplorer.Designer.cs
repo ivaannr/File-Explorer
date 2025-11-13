@@ -66,6 +66,7 @@ namespace FileExplorer
             returnButton = new Button();
             parentButton = new Button();
             directoryPanel = new Panel();
+            loadingLabel = new Label();
             directoriesViewPanel = new TableLayoutPanel();
             sideBar.SuspendLayout();
             mainFoldersWrapper.SuspendLayout();
@@ -487,11 +488,24 @@ namespace FileExplorer
             // directoryPanel
             // 
             directoryPanel.AutoScroll = true;
+            directoryPanel.Controls.Add(loadingLabel);
             directoryPanel.Controls.Add(directoriesViewPanel);
             directoryPanel.Location = new Point(241, 118);
             directoryPanel.Name = "directoryPanel";
             directoryPanel.Size = new Size(770, 402);
             directoryPanel.TabIndex = 3;
+            // 
+            // loadingLabel
+            // 
+            loadingLabel.AutoSize = true;
+            loadingLabel.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            loadingLabel.ForeColor = SystemColors.ButtonFace;
+            loadingLabel.Location = new Point(316, 171);
+            loadingLabel.Name = "loadingLabel";
+            loadingLabel.Size = new Size(106, 32);
+            loadingLabel.TabIndex = 1;
+            loadingLabel.Text = "Loading";
+            loadingLabel.Visible = false;
             // 
             // directoriesViewPanel
             // 
@@ -576,5 +590,6 @@ namespace FileExplorer
         private Button selectAllButton;
         private Button deselectAllButton;
         private Button invertSelectionButton;
+        private Label loadingLabel;
     }
 }

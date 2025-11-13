@@ -11,6 +11,7 @@ namespace FileExplorer
     {
         private bool suppressTextChanged = false;
         private CancellationTokenSource cts;
+        private CancellationTokenSource animationCts;
         private readonly List<ISystemFile> systemFiles = new List<ISystemFile>();
         private DriveInfo[] drivesInfo;
         private List<FavoriteDirectory> favDirs;
@@ -21,7 +22,7 @@ namespace FileExplorer
         private Stack<String> backHistory = new(),
                               forwardHistory = new();
 
-        private List<String> history = new List<string>();
+        public static List<String> history = new List<string>();
 
         public static Button? CurrentSelectedButton { get; set; } = null;
 
@@ -77,7 +78,11 @@ namespace FileExplorer
                 .IsInRole(WindowsBuiltInRole.Administrator);
 
             Console.WriteLine("Admin: " + (isAdmin ? "Yes" : "No"));
+
+            
         }
+
+        
 
         private async void SetUpFavoriteDirectories()
         {
@@ -104,6 +109,7 @@ namespace FileExplorer
 
         private async void PreparePathBox()
         {
+
             await Task.Delay(100);
             pathTextBox.Text = path;
             pathTextBox.SelectionStart = pathTextBox.Text.Length;
@@ -149,6 +155,10 @@ namespace FileExplorer
         {
             ClearAll();
 
+            if (!directoriesViewPanel.Visible) {
+                directoriesViewPanel.Show();
+            }
+
             try
             {
                 Utils.ClearSelectedButtons();
@@ -186,9 +196,11 @@ namespace FileExplorer
                                 dir.Size = size;
 
                                 if (sizeLabel.InvokeRequired)
+                                {
                                     sizeLabel.Invoke(() => sizeLabel.Text = Utils.CastToCorrectSize(dir.Size, true));
-                                else
-                                    sizeLabel.Text = Utils.CastToCorrectSize(dir.Size, true);
+                                }
+                                else { sizeLabel.Text = Utils.CastToCorrectSize(dir.Size, true); }
+                                   
                             }
                             catch (OperationCanceledException) { Console.WriteLine("The loading was cancelled"); }
                             catch (Exception ex) { Console.WriteLine("ERROR " + ex.Message); }
@@ -210,8 +222,27 @@ namespace FileExplorer
         {
             try
             {
+                Console.WriteLine(Utils.animationPlaying);
+
+                string currentPath = pathTextBox.Text;
+
                 cts?.Cancel();
                 cts = new CancellationTokenSource();
+
+                if (!Directory.Exists(currentPath) && !Utils.animationPlaying)
+                {
+                    Utils.animationPlaying = true;
+
+                    _ = Task.Run(ExecuteLoadingAnimation);
+
+                    return;
+                }
+                else 
+                {
+                    if (Utils.animationPlaying) {
+                        animationCts?.Cancel();
+                    }
+                }
 
                 if (pathTextBox.Text != this.path)
                 {
@@ -225,14 +256,7 @@ namespace FileExplorer
 
                 if (!historyButton.Enabled) { historyButton.Enabled = true; }
 
-                String currentPath = pathTextBox.Text;
-
-                if (!Directory.Exists(currentPath))
-                {
-                    AddNotFound();
-                    return;
-                }
-                await ChangeDirectory(currentPath, cts.Token);
+                await ChangeDirectory(currentPath, token: cts.Token);
             }
             catch (Exception ex)
             {
@@ -279,16 +303,22 @@ namespace FileExplorer
             directoriesViewPanel.ResumeLayout();
         }
 
-        private async void AddNotFound()
+        private async void ExecuteLoadingAnimation()
         {
+            animationCts = new CancellationTokenSource();
+
             directoriesViewPanel.SuspendLayout();
-            await Task.Delay(100);
             ClearAll();
-            directoriesViewPanel.RowCount = 1;
-            Utils.AddToTableView(directoriesViewPanel, Utils.CreateLabel("Directory not found"), 0, 0);
-            Utils.AddToTableView(directoriesViewPanel, Utils.CreateLabel("-"), 1, 0);
-            Utils.AddToTableView(directoriesViewPanel, Utils.CreateLabel("-"), 2, 0);
-            directoriesViewPanel.ResumeLayout();
+            directoriesViewPanel.Hide();
+
+            await Utils.AnimateLabel(
+                animationCts.Token, 
+                loadingLabel, 
+                directoriesViewPanel, 
+                pathTextBox, 
+                "Checking path"
+            );
+
         }
 
         public async Task ReloadUI()
