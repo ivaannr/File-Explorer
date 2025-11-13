@@ -10,3 +10,15 @@
 - Open source and easy to modify
 
 ---
+
+## How to run
+
+- ### With dotnet run
+```bash
+git clone https://github.com/ivaannr/File-Explorer.git
+cd File-Explorer\FileExplorer
+dotnet run
+```
+
+
+---
