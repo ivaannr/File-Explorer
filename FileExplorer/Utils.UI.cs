@@ -774,8 +774,6 @@ namespace FileExplorer
                     i++;
 
                     await Task.Delay(250);
-
-                    Console.WriteLine("aaaa5");
                 }
             }
             catch (OperationCanceledException oce)
@@ -788,7 +786,7 @@ namespace FileExplorer
                 targetLabel.Hide();
 
                 ShowPopUp(te.Message, "Time exceeded", Resources.EXCLAMATION);
-                string latestPath = FileExplorer.history.DefaultIfEmpty(@"C:\").Max()!;
+                string latestPath = await GetValidLatestPath(GetLatestPath());
 
                 if (!string.IsNullOrEmpty(latestPath) && (latestPath.EndsWith("\\") && latestPath != "C:\\"))
                 {

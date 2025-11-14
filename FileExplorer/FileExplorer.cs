@@ -154,9 +154,6 @@ namespace FileExplorer
 
         private async Task ChangeDirectory(string path, CancellationToken token)
         {
-
-            Console.WriteLine("Cargando...");
-
             ClearAll();
 
             if (!directoriesViewPanel.Visible) {
@@ -243,7 +240,7 @@ namespace FileExplorer
 
                     return;
                 }
-                else 
+                else
                 {
                     if (Utils.animationPlaying) {
                         if (dirExists) {
@@ -251,6 +248,9 @@ namespace FileExplorer
                         }
                     }
                 }
+
+                Utils.HandleReparsePoint(currentPath);
+
                 if (pathTextBox.Text != this.path)
                 {
                     backHistory.Push(this.path);
@@ -266,6 +266,12 @@ namespace FileExplorer
                 if (!historyButton.Enabled) { historyButton.Enabled = true; }
 
                 await ChangeDirectory(currentPath, token: cts.Token);
+            }
+            catch (UserCanceledException uce)
+            {
+                string latestPath = await Utils.GetValidLatestPath(Utils.GetLatestPath());
+                Console.WriteLine(latestPath);
+                pathTextBox.Text = latestPath;
             }
             catch (Exception ex)
             {

@@ -620,13 +620,40 @@ namespace FileExplorer
             history.Add(pathToAdd);
         }
 
-        public static void GoToPreviousPath() { 
-        
+        public static void HandleReparsePoint(string path) {
 
+            bool isSensitive = sensitiveFolders.Contains(path);
 
+            if (!isSensitive) { return; }
+
+            Form form = CreateDecisionPopUp(
+                "This folder may contain important files. Do you want to continue?",
+                "Warning", 
+                Resources.INFO_CIRCLE_ICON
+            );
+
+            var result = form.ShowDialog();
+
+            if (result == DialogResult.No)  { throw new UserCanceledException(); } 
         }
 
-        private static String GetButtonName(Button button) => button.Name.Substring(0, button.Name.Length - 6);
+        public static async Task<string> GetValidLatestPath(string path)
+        {
+            return await Task.Run(() =>
+            {
+                if (!sensitiveFolders.Contains(path)) { return path; }
+
+                foreach (string hPath in FileExplorer.history.ToList())
+                {
+                    if (!sensitiveFolders.Contains(hPath)) { return hPath; }
+                }
+
+                return "C:\\";
+            });
+        }
+
+        public static string GetLatestPath() => FileExplorer.history.LastOrDefault() ?? @"C:\";
+        private static string GetButtonName(Button button) => button.Name.Substring(0, button.Name.Length - 6);
         public static void EnableButton(Button button) => button.Enabled = true;
         public static void DisableButton(Button button) => button.Enabled = false;
 
