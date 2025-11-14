@@ -609,6 +609,10 @@ namespace FileExplorer
 
         public static void AddToHistory(List<String> history, String pathToAdd) {
 
+            string normalizedPath = pathToAdd.TrimEnd('\\');
+
+            if (history.Contains(normalizedPath)) { return; }
+
             if (string.IsNullOrEmpty(pathToAdd)) { return; }
 
             if (history.Contains(pathToAdd)) { return; }

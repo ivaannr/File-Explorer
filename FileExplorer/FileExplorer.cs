@@ -1,5 +1,6 @@
 using FileExplorer.Model;
 using FileExplorer.Properties;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
@@ -153,6 +154,9 @@ namespace FileExplorer
 
         private async Task ChangeDirectory(string path, CancellationToken token)
         {
+
+            Console.WriteLine("Cargando...");
+
             ClearAll();
 
             if (!directoriesViewPanel.Visible) {
@@ -229,7 +233,9 @@ namespace FileExplorer
                 cts?.Cancel();
                 cts = new CancellationTokenSource();
 
-                if (!Directory.Exists(currentPath) && !Utils.animationPlaying)
+                bool dirExists = Directory.Exists(currentPath);
+
+                if (!dirExists && !Utils.animationPlaying)
                 {
                     Utils.animationPlaying = true;
 
@@ -240,10 +246,11 @@ namespace FileExplorer
                 else 
                 {
                     if (Utils.animationPlaying) {
-                        animationCts?.Cancel();
+                        if (dirExists) {
+                            CancelAnimation();
+                        }
                     }
                 }
-
                 if (pathTextBox.Text != this.path)
                 {
                     backHistory.Push(this.path);
@@ -252,7 +259,9 @@ namespace FileExplorer
                     if (!returnButton.Enabled) { returnButton.Enabled = true; }
                 }
 
-                Utils.AddToHistory(history, pathTextBox.Text);
+                if (dirExists) {
+                    Utils.AddToHistory(history, pathTextBox.Text);
+                }
 
                 if (!historyButton.Enabled) { historyButton.Enabled = true; }
 
@@ -266,6 +275,15 @@ namespace FileExplorer
             {
                 this.path = pathTextBox.Text;
             }
+        }
+
+        private void CancelAnimation() {
+            Console.WriteLine("Cancelling");
+            animationCts?.Cancel();
+            directoriesViewPanel.Show();
+            directoriesViewPanel.ResumeLayout();
+            loadingLabel.Hide();
+
         }
         private void ThemeAllControls(Control parent = null)
         {
@@ -307,9 +325,12 @@ namespace FileExplorer
         {
             animationCts = new CancellationTokenSource();
 
-            directoriesViewPanel.SuspendLayout();
-            ClearAll();
-            directoriesViewPanel.Hide();
+
+            Utils.InvokeSafely(directoriesViewPanel, () => {
+                directoriesViewPanel.SuspendLayout();
+                ClearAll();
+                directoriesViewPanel.Hide();
+            });
 
             await Utils.AnimateLabel(
                 animationCts.Token, 

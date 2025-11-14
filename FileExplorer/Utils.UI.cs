@@ -1,5 +1,6 @@
 ﻿using FileExplorer.Model;
 using FileExplorer.Properties;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using static System.Net.Mime.MediaTypeNames;
 using Font = System.Drawing.Font;
@@ -756,9 +757,9 @@ namespace FileExplorer
             {
                 int i = 0;
                 string originalText = text ?? "Loading";
-                while (!token.IsCancellationRequested)
+                while (true)
                 {
-                    Console.WriteLine("Hola");
+                    token.ThrowIfCancellationRequested();
 
                     if (i == 4) { i = 0; }
 
@@ -766,14 +767,15 @@ namespace FileExplorer
 
                     long currentSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
-                    bool timePassed = currentSeconds == seconds + 2;
+                    bool timePassed = currentSeconds == seconds + 10;
 
                     if (timePassed) { throw new TimeoutException("Directory missing or search limit exceeded."); }
 
                     i++;
+
                     await Task.Delay(250);
 
-                    Console.WriteLine("Susn't");
+                    Console.WriteLine("aaaa5");
                 }
             }
             catch (OperationCanceledException oce)
@@ -783,6 +785,7 @@ namespace FileExplorer
             catch (TimeoutException te)
             {
                 Console.WriteLine(te.Message);
+                targetLabel.Hide();
 
                 ShowPopUp(te.Message, "Time exceeded", Resources.EXCLAMATION);
                 string latestPath = FileExplorer.history.DefaultIfEmpty(@"C:\").Max()!;
@@ -794,19 +797,24 @@ namespace FileExplorer
 
                 Console.WriteLine(latestPath);
 
-                InvokeSafely(directoriesViewPanel, () => {
+                InvokeSafely(directoriesViewPanel, () =>
+                {
                     directoriesViewPanel.Show();
                     directoriesViewPanel.ResumeLayout();
                 });
 
                 pathTextBox.Text = latestPath;
             }
+            catch (Exception ex) 
+            {
+                Console.WriteLine("An error ocurred: " + ex.StackTrace);
+            }
             finally
             {
                 pathTextBox.SelectionStart = pathTextBox.Text.Length;
                 pathTextBox.SelectionLength = 0;
                 animationPlaying = false;
-                targetLabel.Hide();
+                
                 Console.WriteLine(animationPlaying);
             }
         }
