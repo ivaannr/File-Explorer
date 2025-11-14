@@ -790,7 +790,7 @@ namespace FileExplorer
                 ShowPopUp(te.Message, "Time exceeded", Resources.EXCLAMATION);
                 string latestPath = FileExplorer.history.DefaultIfEmpty(@"C:\").Max()!;
 
-                if (!string.IsNullOrEmpty(latestPath) && latestPath.EndsWith("\\"))
+                if (!string.IsNullOrEmpty(latestPath) && (latestPath.EndsWith("\\") && latestPath != "C:\\"))
                 {
                     latestPath = latestPath.Remove(latestPath.Length - 1);
                 }
