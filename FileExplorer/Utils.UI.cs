@@ -83,7 +83,7 @@ namespace FileExplorer
         public static void EnableUtilsButtons(List<Button> buttons)
         {
             var buttonsToEnable =
-                !_copiedButtons.Any()
+                _copiedButtons.Any()
                 ? buttons
                 : buttons.Where(b => b.Name != "pasteButton")
                          .ToList();
