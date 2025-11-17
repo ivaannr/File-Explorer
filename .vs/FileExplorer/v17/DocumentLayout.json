@@ -46,8 +46,7 @@
               "RelativeToolTip": "FileExplorer\\FileExplorer.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-08T16:09:44.89Z",
-              "IsPinned": true,
-              "EditorCaption": " [Dise\u00F1o]"
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -69,7 +68,7 @@
               "RelativeDocumentMoniker": "FileExplorer\\Utils.UI.cs",
               "ToolTip": "C:\\Users\\Usuario\\Proyectos\\Winforms\\File-Explorer\\FileExplorer\\Utils.UI.cs",
               "RelativeToolTip": "FileExplorer\\Utils.UI.cs",
-              "ViewState": "AgIAADUAAAAAAAAAAAAWwE4AAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAWwE4AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-28T20:16:01.687Z",
               "EditorCaption": ""
@@ -96,8 +95,7 @@
               "RelativeToolTip": "FileExplorer\\FileExplorer.cs",
               "ViewState": "AgIAAAMBAAAAAAAAAAAawBUBAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-09T07:05:11.358Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-09T07:05:11.358Z"
             },
             {
               "$type": "Document",
@@ -109,8 +107,7 @@
               "RelativeToolTip": "FileExplorer\\FileExplorer.Designer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-08T16:34:41.694Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-08T16:34:41.694Z"
             },
             {
               "$type": "Document",

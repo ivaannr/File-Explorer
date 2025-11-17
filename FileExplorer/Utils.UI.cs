@@ -1,8 +1,6 @@
 ﻿using FileExplorer.Model;
 using FileExplorer.Properties;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using static System.Net.Mime.MediaTypeNames;
 using Font = System.Drawing.Font;
 
 namespace FileExplorer
@@ -76,7 +74,7 @@ namespace FileExplorer
 
             buttonsToDisable.ForEach(b =>
             {
-                b.Enabled = false;
+                InvokeSafely(b, () => { b.Enabled = false; } );
             });
         }
 
@@ -91,8 +89,11 @@ namespace FileExplorer
 
             buttonsToEnable.ForEach(b =>
             {
-                b.Enabled = true;
+                InvokeSafely(b, () => { b.Enabled = true; });
             });
+
+            
+
         }
 
         public static Button CreateDirectoryButton(ISystemFile sf, TextBox pathTextBox)
@@ -167,7 +168,10 @@ namespace FileExplorer
 
                         Console.WriteLine("Count after selecting: " + _selectedButtons!.Count);
 
-                        selectedButton!.BackColor = Color.FromArgb(50, 50, 50);
+                        InvokeSafely(selectedButton!, () =>
+                        {
+                            selectedButton!.BackColor = Color.FromArgb(50, 50, 50);
+                        });
 
                         Console.WriteLine("Clicked right button while holding ctrl");
 
@@ -176,7 +180,7 @@ namespace FileExplorer
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Selecting a new directory threw an error: " + ex.Message);
+                    Console.WriteLine("Selecting a new directory threw an error: " + ex.StackTrace);
                 }
             });
 
