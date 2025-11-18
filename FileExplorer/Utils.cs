@@ -476,12 +476,12 @@ namespace FileExplorer
         /// </summary>
         /// <param name="metadata">An ButtonMetadata object containing the path of the directory to move.</param>
         /// <param name="destination">The target path where the directory should be moved.</param>
-        public static Task PasteSystemFiles(ButtonMetadata metadata, String destination, bool? wasCut = false)
+        public static async Task PasteSystemFiles(ButtonMetadata metadata, String destination)
         {
-            return Task.Run(() =>
+            await Task.Run(async () =>
             {
 
-                Console.WriteLine(File.Exists(metadata.Path));
+                Console.WriteLine("File exists: " + File.Exists(metadata.Path));
 
                 string baseFolder = Path.GetDirectoryName(metadata.Path)!;
                 string tempFolder = Path.Combine(baseFolder, $"temp_{Guid.NewGuid()}");
@@ -490,9 +490,13 @@ namespace FileExplorer
 
                 try
                 {
-
                     if (File.Exists(metadata.Path))
                     {
+                        if (!metadata.DeleteOnPaste) {
+                            File.Copy(metadata.Path, destination, overwrite: true);
+                            return;
+                        }
+
                         Directory.CreateDirectory(tempFolder);
 
                         string tempFilePath = Path.Combine(tempFolder, Path.GetFileName(metadata.Path));
@@ -508,6 +512,12 @@ namespace FileExplorer
                     }
                     else if (Directory.Exists(metadata.Path))
                     {
+
+                        if (!metadata.DeleteOnPaste)
+                        {
+                            await CopyDirectoryAsync(metadata.Path, destination, copySubDirs: true, overwrite: true);
+                            return;
+                        }
 
                         Directory.CreateDirectory(tempFolder);
 
@@ -544,6 +554,39 @@ namespace FileExplorer
             });
         }
 
+        public static void CopyDirectory(String sourceDir, String destDir, bool copySubDirs, bool overwrite = false) {
+
+            DirectoryInfo dir = new DirectoryInfo(sourceDir);
+
+            if (!dir.Exists) { throw new DirectoryNotFoundException($"{sourceDir} directory doesn't exist."); }
+
+            if (Directory.Exists(destDir) && overwrite) {
+                Directory.Delete(destDir, recursive: true);
+            }
+
+            DirectoryInfo[] dirs = dir.EnumerateDirectories().ToArray();
+            Directory.CreateDirectory(destDir);
+
+            foreach (FileInfo file in dir.EnumerateFiles()) {
+                string tempPath = Path.Combine(destDir, file.Name);
+                file.CopyTo(tempPath, overwrite: true);
+            }
+
+            if (copySubDirs)
+            {
+                foreach (DirectoryInfo subdir in dirs)
+                {
+                    string tempPath = Path.Combine(destDir, subdir.Name);
+                    CopyDirectory(subdir.FullName, tempPath, copySubDirs: true, overwrite: true);
+                }
+            }
+
+        }
+
+        public static async Task CopyDirectoryAsync(string sourceDir, string destDir, bool copySubDirs, bool overwrite = false)
+        {
+            await Task.Run(() => CopyDirectory(sourceDir, destDir, copySubDirs, overwrite));
+        }
 
         public static async Task PasteExistingDirectories(List<Button> commonDirectories, string currentPath)
         {

@@ -25,11 +25,8 @@ namespace FileExplorer
             button.UseVisualStyleBackColor = false;
             button.Enabled = string.IsNullOrEmpty(text) ? false : true;
 
-
             return button;
         }
-
-
 
         public static Label CreateSizeLabel(ISystemFile sf, string? customText = null)
         {
@@ -91,9 +88,6 @@ namespace FileExplorer
             {
                 InvokeSafely(b, () => { b.Enabled = true; });
             });
-
-            
-
         }
 
         public static Button CreateDirectoryButton(ISystemFile sf, TextBox pathTextBox)

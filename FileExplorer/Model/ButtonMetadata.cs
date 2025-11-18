@@ -12,5 +12,6 @@ namespace FileExplorer.Model
         public string? Type { get; set; }
         public string? Size { get; set; }
         public bool? CanDisable { get; set; }
+        public bool DeleteOnPaste { get; set; } = true;
     }
 }

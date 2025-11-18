@@ -537,6 +537,7 @@ namespace FileExplorer
 
                         metadata.Type = items.ExtensionButton.Text;
                         metadata.Size = items.SizeLabel.Text;
+                        metadata.DeleteOnPaste = false;
 
                         but.Tag = metadata;
 
@@ -547,8 +548,6 @@ namespace FileExplorer
 
                     Utils.EnableButton(pasteButton);
                 }
-
-
             }
             catch (NullReferenceException nullReference)
             {
