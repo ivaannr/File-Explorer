@@ -71,6 +71,8 @@ namespace FileExplorer
             SetUpFavoriteDirectories();
             SetUpDrives();
 
+            loadingLabel.Location = new Point(290, 185);
+
             returnButton.Enabled = false;
             forwardButton.Enabled = false;
             historyButton.Enabled = false;
@@ -342,7 +344,8 @@ namespace FileExplorer
                 animationCts.Token, 
                 loadingLabel, 
                 directoriesViewPanel, 
-                pathTextBox, 
+                pathTextBox,
+                this,
                 "Checking path"
             );
 

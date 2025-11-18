@@ -344,6 +344,7 @@ namespace FileExplorer
             renameButton.Size = new Size(22, 20);
             renameButton.TabIndex = 12;
             buttonMetadata1.CanDisable = true;
+            buttonMetadata1.DeleteOnPaste = true;
             buttonMetadata1.Path = null;
             buttonMetadata1.Size = null;
             buttonMetadata1.Type = null;
@@ -500,11 +501,11 @@ namespace FileExplorer
             loadingLabel.AutoSize = true;
             loadingLabel.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             loadingLabel.ForeColor = SystemColors.ButtonFace;
-            loadingLabel.Location = new Point(316, 171);
+            loadingLabel.Location = new Point(290, 185);
             loadingLabel.Name = "loadingLabel";
-            loadingLabel.Size = new Size(106, 32);
+            loadingLabel.Size = new Size(176, 32);
             loadingLabel.TabIndex = 1;
-            loadingLabel.Text = "Loading";
+            loadingLabel.Text = "Checking path";
             loadingLabel.Visible = false;
             // 
             // directoriesViewPanel

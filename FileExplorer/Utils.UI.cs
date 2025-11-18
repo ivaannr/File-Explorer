@@ -214,53 +214,65 @@ namespace FileExplorer
                 panel.ResumeLayout();
             }
         }
-        public static void ShowPopUp(string message, string title, Icon? icon)
+        public static void ShowPopUp(string message, string title, Icon? icon, Form? owner = null)
         {
             if (isPopupOpen) return;
 
             isPopupOpen = true;
 
-            Form customBox = new Form();
-            customBox.Text = title;
-            customBox.BackColor = Color.FromArgb(30, 30, 30);
-            customBox.Size = new Size(300, 150);
-            customBox.StartPosition = FormStartPosition.CenterScreen;
-            customBox.ShowIcon = true;
-            customBox.ShowInTaskbar = false;
-            customBox.TopMost = true;
-            customBox.Icon = icon;
-            customBox.FormBorderStyle = FormBorderStyle.FixedDialog;
-            customBox.MaximizeBox = false;
-            customBox.MinimizeBox = false;
+            using (Form customBox = new Form())
+            {
+                customBox.Text = title;
+                customBox.BackColor = Color.FromArgb(30, 30, 30);
+                customBox.Size = new Size(300, 150);
+                customBox.ShowIcon = true;
+                customBox.ShowInTaskbar = false;
+                customBox.Icon = icon;
+                customBox.FormBorderStyle = FormBorderStyle.FixedDialog;
+                customBox.MaximizeBox = false;
+                customBox.MinimizeBox = false;
+                customBox.StartPosition = FormStartPosition.CenterParent;
 
-            Button messageButton = new DisabledButton();
-            messageButton.Text = message;
-            messageButton.Dock = DockStyle.Fill;
-            messageButton.Height = 80;
-            messageButton.FlatAppearance.BorderSize = 0;
-            messageButton.FlatStyle = FlatStyle.Flat;
-            messageButton.BackColor = Color.FromArgb(30, 30, 30);
-            messageButton.Font = new Font("Segoe UI", 12, FontStyle.Bold);
-            messageButton.TextAlign = ContentAlignment.MiddleCenter;
+                Button messageButton = new DisabledButton
+                {
+                    Text = message,
+                    Dock = DockStyle.Fill,
+                    Height = 80,
+                    FlatAppearance = { BorderSize = 0 },
+                    FlatStyle = FlatStyle.Flat,
+                    BackColor = Color.FromArgb(30, 30, 30),
+                    Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                    TextAlign = ContentAlignment.MiddleCenter
+                };
 
-            Button okButton = new Button();
-            okButton.FlatAppearance.BorderSize = 0;
-            okButton.FlatStyle = FlatStyle.Flat;
-            okButton.Text = "OK";
-            okButton.ForeColor = Color.White;
-            okButton.BackColor = Color.FromArgb(27, 27, 27);
-            okButton.Dock = DockStyle.Bottom;
-            okButton.Height = 35;
-            okButton.Font = new Font("Segoe UI", 12, FontStyle.Bold);
-            okButton.Click += (sender, e) => { customBox.Close(); };
+                Button okButton = new Button
+                {
+                    FlatAppearance = { BorderSize = 0 },
+                    FlatStyle = FlatStyle.Flat,
+                    Text = "OK",
+                    ForeColor = Color.White,
+                    BackColor = Color.FromArgb(27, 27, 27),
+                    Dock = DockStyle.Bottom,
+                    Height = 35,
+                    Font = new Font("Segoe UI", 12, FontStyle.Bold)
+                };
 
-            customBox.Controls.Add(messageButton);
-            customBox.Controls.Add(okButton);
+                okButton.Click += (sender, e) =>
+                {
+                    customBox.DialogResult = DialogResult.OK;
+                    customBox.Close();
+                };
 
-            customBox.FormClosed += (sender, e) => { isPopupOpen = false; };
+                customBox.Controls.Add(messageButton);
+                customBox.Controls.Add(okButton);
 
-            customBox.ShowDialog();
+                customBox.FormClosed += (sender, e) => { isPopupOpen = false; };
+
+                owner?.Activate();
+                customBox.ShowDialog(owner);
+            }
         }
+
 
         public static string? ShowTextBoxPopUp(string title, Icon? icon, String text = "Write...", String closeButtonText = "OK")
         {
@@ -740,12 +752,11 @@ namespace FileExplorer
             Label targetLabel,
             Panel directoriesViewPanel,
             TextBox pathTextBox,
+            Form owner,
             string? text = null
         )
         {
-            var labelParent = targetLabel.Parent!;
-            targetLabel.Left = (labelParent.Width - targetLabel.Width) / 2;
-            targetLabel.Top = (labelParent.Height - targetLabel.Height) / 2;
+            targetLabel.Location = new Point(290, 185);
 
             long seconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
@@ -783,7 +794,7 @@ namespace FileExplorer
                 Console.WriteLine(te.Message);
                 targetLabel.Hide();
 
-                ShowPopUp(te.Message, "Time exceeded", Resources.EXCLAMATION);
+                ShowPopUp(te.Message, "Time exceeded", Resources.EXCLAMATION, owner);
                 string latestPath = await GetValidLatestPath(GetLatestPath());
 
                 if (!string.IsNullOrEmpty(latestPath) && (latestPath.EndsWith("\\") && latestPath != "C:\\"))
