@@ -477,6 +477,8 @@ namespace FileExplorer
             }
 
             Utils.ClearCurrentSelectedButton();
+            Utils.ClearSelectedButtons();
+            Console.WriteLine("SelectedButtons count" + Utils._selectedButtons.Count);
 
             await ChangeDirectory(pathTextBox.Text, CancellationToken.None);
         }
