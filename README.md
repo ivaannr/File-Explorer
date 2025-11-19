@@ -28,7 +28,6 @@ Download the **latest compiled version** from: <br>
 Then just **run the executable**.
 
 ## Shortcuts 
-<br>
 
 | Shortcut                  | Action                                           | Notes |
 |--------------------------- |------------------------------------------------ |:-----:|
