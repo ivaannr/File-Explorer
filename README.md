@@ -38,7 +38,7 @@ Then just **run the executable**.
 
 | Shortcut                  | Action                                           | Notes |
 |--------------------------- |------------------------------------------------ |:-----:|
-| **Ctrl + Right Click**      | **Selects** the clicked directory without affecting other selections | - |
+| **Hold Ctrl + Right Click**      | **Selects** the clicked directory without affecting other selections | - |
 | **Escape**                 | **Clears** all selections, deselecting every selected item | - |
 | **Double click (folder)**  | **Opens** the clicked folder and navigates into it | - |
 | **Double click (file)**    | **Opens** the clicked file with its default application | - |
