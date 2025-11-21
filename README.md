@@ -1,7 +1,14 @@
-# File-Explorer
+<p align="center">
+  <img width="128" align="center" src="/FileExplorer/Images/LOGO.png">
+</p>
+<h1 align="center">
+  File-Explorer
+</h1>
+<p align="center">
+  A lightweight app built in C#, inspired by the classic Windows File Explorer.
+</p>
 
-**File-Explorer** is a lightweight app built in C#, inspired by the classic Windows File Explorer.
-
+---
 ## Main Features
 
 - Fast navigation between drives and folders
