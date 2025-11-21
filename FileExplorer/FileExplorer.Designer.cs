@@ -31,7 +31,6 @@ namespace FileExplorer
         /// </summary>
         private void InitializeComponent()
         {
-            ButtonMetadata buttonMetadata1 = new ButtonMetadata();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileExplorer));
             sideBar = new Panel();
             favoriteDirectoriesPanel = new FlowLayoutPanel();
@@ -343,12 +342,6 @@ namespace FileExplorer
             renameButton.Name = "renameButton";
             renameButton.Size = new Size(22, 20);
             renameButton.TabIndex = 12;
-            buttonMetadata1.CanDisable = true;
-            buttonMetadata1.DeleteOnPaste = true;
-            buttonMetadata1.Path = null;
-            buttonMetadata1.Size = null;
-            buttonMetadata1.Type = null;
-            renameButton.Tag = buttonMetadata1;
             renameButton.UseVisualStyleBackColor = true;
             renameButton.Click += renameButton_Click;
             // 

@@ -14,7 +14,7 @@
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <PublishTrimmed>false</PublishTrimmed>
     <SatelliteResourceLanguages>es</SatelliteResourceLanguages>
-    <ApplicationIcon>Images\FOLDER.ico</ApplicationIcon>
+    <ApplicationIcon>Images\ICON.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
