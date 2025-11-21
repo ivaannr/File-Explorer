@@ -3,7 +3,6 @@ using FileExplorer.Properties;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
-using System.Text;
 
 namespace FileExplorer
 {

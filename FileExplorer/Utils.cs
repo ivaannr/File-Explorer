@@ -1,18 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Resources;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Security.AccessControl;
-using System.Security.Permissions;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using FileExplorer.Model;
+﻿using FileExplorer.Model;
 using FileExplorer.Properties;
 
 namespace FileExplorer
@@ -478,96 +464,98 @@ namespace FileExplorer
         /// <param name="destination">The target path where the directory should be moved.</param>
         public static async Task PasteSystemFiles(ButtonMetadata metadata, String destination)
         {
-            await Task.Run(async () =>
+
+            Console.WriteLine("File exists: " + File.Exists(metadata.Path));
+
+            string baseFolder = Path.GetDirectoryName(metadata.Path)!;
+            string tempFolder = Path.Combine(baseFolder, $"temp_{Guid.NewGuid()}");
+
+            Console.WriteLine(tempFolder);
+
+            try
+            {
+                if (File.Exists(metadata.Path))
+                {
+                    if (!metadata.DeleteOnPaste)
+                    {
+                        File.Copy(metadata.Path, destination, overwrite: true);
+                        return;
+                    }
+
+                    Directory.CreateDirectory(tempFolder);
+
+                    string tempFilePath = Path.Combine(tempFolder, Path.GetFileName(metadata.Path));
+                    File.Move(metadata.Path, tempFilePath);
+
+                    if (File.Exists(destination))
+                    {
+                        File.Delete(destination);
+                    }
+
+                    File.Move(tempFilePath, destination);
+                    Directory.Delete(tempFolder);
+                }
+                else if (Directory.Exists(metadata.Path))
+                {
+
+                    if (!metadata.DeleteOnPaste)
+                    {
+                        await CopyDirectoryAsync(metadata.Path, destination, copySubDirs: true, overwrite: true);
+                        return;
+                    }
+
+                    Directory.CreateDirectory(tempFolder);
+
+                    string tempFilePath = Path.Combine(tempFolder, Path.GetFileName(metadata.Path));
+                    Directory.Move(metadata.Path, tempFilePath);
+
+                    if (Directory.Exists(destination))
+                    {
+                        Directory.Delete(destination, true);
+                    }
+
+                    Directory.Move(tempFilePath, destination);
+                    Directory.Delete(tempFolder, true);
+                }
+                else
+                {
+                    Console.WriteLine($"Source path does not exist: {metadata.Path}");
+                }
+
+            }
+            catch (Exception ex)
             {
 
-                Console.WriteLine("File exists: " + File.Exists(metadata.Path));
+                Console.WriteLine(ex.Message);
 
-                string baseFolder = Path.GetDirectoryName(metadata.Path)!;
-                string tempFolder = Path.Combine(baseFolder, $"temp_{Guid.NewGuid()}");
-
-                Console.WriteLine(tempFolder);
-
-                try
+            }
+            finally
+            {
+                if (Directory.Exists(tempFolder))
                 {
-                    if (File.Exists(metadata.Path))
-                    {
-                        if (!metadata.DeleteOnPaste) {
-                            File.Copy(metadata.Path, destination, overwrite: true);
-                            return;
-                        }
-
-                        Directory.CreateDirectory(tempFolder);
-
-                        string tempFilePath = Path.Combine(tempFolder, Path.GetFileName(metadata.Path));
-                        File.Move(metadata.Path, tempFilePath);
-
-                        if (File.Exists(destination))
-                        {
-                            File.Delete(destination);
-                        }
-
-                        File.Move(tempFilePath, destination);
-                        Directory.Delete(tempFolder);
-                    }
-                    else if (Directory.Exists(metadata.Path))
-                    {
-
-                        if (!metadata.DeleteOnPaste)
-                        {
-                            await CopyDirectoryAsync(metadata.Path, destination, copySubDirs: true, overwrite: true);
-                            return;
-                        }
-
-                        Directory.CreateDirectory(tempFolder);
-
-                        string tempFilePath = Path.Combine(tempFolder, Path.GetFileName(metadata.Path));
-                        Directory.Move(metadata.Path, tempFilePath);
-
-                        if (Directory.Exists(destination))
-                        {
-                            Directory.Delete(destination, true);
-                        }
-
-                        Directory.Move(tempFilePath, destination);
-                        Directory.Delete(tempFolder, true);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Source path does not exist: {metadata.Path}");
-                    }
-
+                    Directory.Delete(tempFolder, true);
                 }
-                catch (Exception ex)
-                {
+            }
 
-                    Console.WriteLine(ex.Message);
-
-                }
-                finally
-                {
-                    if (Directory.Exists(tempFolder))
-                    {
-                        Directory.Delete(tempFolder, true);
-                    }
-                }
-            });
         }
 
-        public static void CopyDirectory(String sourceDir, String destDir, bool copySubDirs, bool overwrite = false) {
+        public static void CopyDirectory(String sourceDir, String destDir, bool copySubDirs, bool overwrite = false)
+        {
 
             DirectoryInfo dir = new DirectoryInfo(sourceDir);
 
             if (!dir.Exists) { throw new DirectoryNotFoundException($"{sourceDir} directory doesn't exist."); }
 
-            if (Directory.Exists(destDir) && overwrite) {
+            if (Directory.Exists(destDir) && overwrite)
+            {
                 Directory.Delete(destDir, recursive: true);
             }
 
             DirectoryInfo[] dirs = dir.EnumerateDirectories().ToArray();
             Directory.CreateDirectory(destDir);
 
-            foreach (FileInfo file in dir.EnumerateFiles()) {
+            foreach (FileInfo file in dir.EnumerateFiles())
+            {
                 string tempPath = Path.Combine(destDir, file.Name);
                 file.CopyTo(tempPath, overwrite: true);
             }
@@ -650,7 +638,8 @@ namespace FileExplorer
             });
         }
 
-        public static void AddToHistory(List<String> history, String pathToAdd) {
+        public static void AddToHistory(List<String> history, String pathToAdd)
+        {
 
             string normalizedPath = pathToAdd.TrimEnd('\\');
 
@@ -663,7 +652,8 @@ namespace FileExplorer
             history.Add(pathToAdd);
         }
 
-        public static void HandleReparsePoint(string path) {
+        public static void HandleReparsePoint(string path)
+        {
 
             bool isSensitive = sensitiveFolders.Contains(path);
 
@@ -671,13 +661,13 @@ namespace FileExplorer
 
             Form form = CreateDecisionPopUp(
                 "This folder may contain important files. Do you want to continue?",
-                "Warning", 
+                "Warning",
                 Resources.INFO_CIRCLE_ICON
             );
 
             var result = form.ShowDialog();
 
-            if (result == DialogResult.No)  { throw new UserCanceledException(); } 
+            if (result == DialogResult.No) { throw new UserCanceledException(); }
         }
 
         public static async Task<string> GetValidLatestPath(string path)

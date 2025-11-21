@@ -127,9 +127,9 @@ namespace FileExplorer
                 pathTextBox.Text = $"{sf.Path}";
             };
             button.MouseClick += directoryButton_MouseClick!;
+
             return button;
         }
-
         private static async void directoryButton_MouseClick(object sender, MouseEventArgs me)
         {
             await Task.Run(() =>
@@ -760,7 +760,7 @@ namespace FileExplorer
 
             long seconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
-            targetLabel.Show();
+            Utils.InvokeSafely(targetLabel, () => { targetLabel.Show(); });
 
             try
             {
@@ -804,8 +804,7 @@ namespace FileExplorer
 
                 Console.WriteLine(latestPath);
 
-                InvokeSafely(directoriesViewPanel, () =>
-                {
+                InvokeSafely(directoriesViewPanel, () => {
                     directoriesViewPanel.Show();
                     directoriesViewPanel.ResumeLayout();
                 });
@@ -818,8 +817,10 @@ namespace FileExplorer
             }
             finally
             {
-                pathTextBox.SelectionStart = pathTextBox.Text.Length;
-                pathTextBox.SelectionLength = 0;
+                Utils.InvokeSafely(pathTextBox, () => {
+                    pathTextBox.SelectionStart = pathTextBox.Text.Length;
+                    pathTextBox.SelectionLength = 0;
+                });
                 animationPlaying = false;
                 
                 Console.WriteLine(animationPlaying);
