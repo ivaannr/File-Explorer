@@ -34,6 +34,12 @@ Download the **latest compiled version** from: <br>
 **https://github.com/ivaannr/File-Explorer/releases/latest** <br>
 Then just **run the executable**.
 
+## Planned Features
+
+- Tabs
+- Embedded Git client
+- Fast file searching
+
 ## Shortcuts 
 
 | Shortcut                  | Action                                           | Notes |
